@@ -4,7 +4,7 @@ module "worker" {
   environment       = "${var.environment}"
   account           = "${var.account}"
   service_name      = "${var.service_name}"
-  purpose           = "etl"
+  purpose           = "shell"
   ami               = "${var.ami}"
   ssh_key_file      = "${var.ssh_key_file}"
   ssh_key_name      = "${var.ssh_key_name}"

@@ -1,0 +1,11 @@
+{
+  "variables": {
+    "builders": [
+      "amazon-ebs-centos"
+    ],
+    "project_description": "Vertical ETL Host",
+    "project_name": "vertical-etl",
+    "project_version": "v2.1.0_{{env `GIT_COMMIT_SHA`}}",
+    "source_ami_project_version": "v2.1.0"
+  }
+}

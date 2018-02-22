@@ -31,5 +31,5 @@ variable "nubis_sudo_groups" {
 }
 
 variable "nubis_user_groups" {
-  default = ""
+  default = "team_dbeng"
 }

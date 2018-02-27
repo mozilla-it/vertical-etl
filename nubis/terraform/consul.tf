@@ -17,7 +17,7 @@ provider "consul" {
 # Publish our outputs into Consul for our application to consume
 data "consul_keys" "vertical" {
   key {
-    name   = "client_security_group_id"
-    path   = "${module.consul_vertical.config_prefix}/clients/security-group-id"
+    name = "client_security_group_id"
+    path = "${module.consul_vertical.config_prefix}/clients/security-group-id"
   }
 }

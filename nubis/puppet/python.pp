@@ -1,7 +1,8 @@
 class { 'python':
-  version => 'system',
-  pip     => true,
-  dev     => true,
+  version    => 'python34',
+  pip        => true,
+  dev        => true,
+  virtualenv => true,
 }
 
 package { 'gcc-c++':

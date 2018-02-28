@@ -1,3 +1,5 @@
+$virtualenv_path = '/usr/local/virtualenvs'
+
 class { 'python':
   version    => 'python34',
   pip        => true,
@@ -5,15 +7,15 @@ class { 'python':
   virtualenv => true,
 }
 
-file { '/usr/local/virtualenvs':
+file { $virtualenv_path:
   ensure => directory,
 }
 
-python::pyvenv { '/usr/local/virtualenvs/data-collectors' :
+python::pyvenv { "${virtualenv_path}/data-collectors" :
   ensure  => present,
   version => '3.4',
   require => [
-    File['/usr/local/virtualenvs'],
+    File[$virtualenv_path],
   ],
 }
 
@@ -30,7 +32,7 @@ package { 'unixODBC-devel':
 # Install Mozilla's data-collector
 python::pip { 'data-collectors':
   ensure     => 'present',
-  virtualenv => '/usr/local/virtualenvs/data-collectors',
+  virtualenv => "${virtualenv_path}/data-collectors",
   url        => 'git+https://github.com/mozilla-it/data-collectors',
   require    => [
     Package['gcc-c++'],

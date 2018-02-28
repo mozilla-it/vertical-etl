@@ -33,7 +33,7 @@ package { 'unixODBC-devel':
 python::pip { 'data-collectors':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/data-collectors",
-  url        => 'git+https://github.com/mozilla-it/data-collectors',
+  url        => 'git+https://github.com/gozer/data-collectors@cdf44388106e62a4b5740008579dd2ea2631e1af',
   require    => [
     Package['gcc-c++'],
     Package['unixODBC-devel'],

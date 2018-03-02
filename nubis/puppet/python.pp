@@ -39,3 +39,30 @@ python::pip { 'data-collectors':
     Package['unixODBC-devel'],
   ],
 }
+
+file { '/etc/odbc.ini':
+  ensure  => 'present',
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0640',
+  content => @(EOF),
+[vertica]
+Driver = /opt/vertica/lib64/libverticaodbc.so
+Servername = vertical.service.consul
+Database = nubis
+Port = 5433
+UserName = dbadmin
+EOF
+}
+
+file { '/etc/data-collectors':
+  ensure => directory,
+}
+
+file { '/usr/local/virtualenvs/data-collectors/lib/python3.4/site-packages/collectors/defaults':
+  ensure => link,
+  target => '../../../../collectors/defaults',
+  require => [
+    Python::Pip['data-collectors'],
+  ],
+}

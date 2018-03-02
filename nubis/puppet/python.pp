@@ -60,8 +60,8 @@ file { '/etc/data-collectors':
 }
 
 file { '/usr/local/virtualenvs/data-collectors/lib/python3.4/site-packages/collectors/defaults':
-  ensure => link,
-  target => '../../../../collectors/defaults',
+  ensure  => link,
+  target  => '../../../../collectors/defaults',
   require => [
     Python::Pip['data-collectors'],
   ],

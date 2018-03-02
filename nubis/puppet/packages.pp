@@ -10,3 +10,12 @@ package { 'vsql':
     '--noscripts',
   ],
 }
+
+file { '/opt/vertica/lib64/en-US':
+  ensure  => present,
+  type    => link,
+  target  => '../en-US',
+  require => [
+    package['vsql'],
+  ],
+}

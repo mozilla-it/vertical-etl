@@ -11,9 +11,9 @@ package { 'vsql':
   ],
 }
 
+# Fix missing error XML file
 file { '/opt/vertica/lib64/en-US':
-  ensure  => present,
-  type    => link,
+  ensure  => 'link',
   target  => '../en-US',
   require => [
     Package['vsql'],

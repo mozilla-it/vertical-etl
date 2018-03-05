@@ -16,6 +16,6 @@ file { '/opt/vertica/lib64/en-US':
   type    => link,
   target  => '../en-US',
   require => [
-    package['vsql'],
+    Package['vsql'],
   ],
 }

@@ -1,0 +1,11 @@
+---
+data_dir: /var/data-collectors
+
+vertica:
+  dsn: vertica
+
+adjust:
+  token: {{ getv "/config/Adjust/Token" }}
+    firefox: {{ getv "/config/Adjust/data/firefox" }}
+    focus: {{ getv "/config/Adjust/data/focus" }}
+    klar: {{ getv "/config/Adjust/data/klar" }}

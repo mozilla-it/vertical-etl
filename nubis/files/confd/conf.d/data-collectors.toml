@@ -1,0 +1,13 @@
+[template]
+src = "data-collectors.tmpl"
+dest = "/etc/data-collectors/data-collectors.yml"
+prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
+
+uid = 0
+gid = 0
+mode = "0644"
+
+keys = [
+    "/config/*",
+    "/config"
+]

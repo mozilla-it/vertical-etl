@@ -49,7 +49,7 @@ file { '/etc/odbc.ini':
 [vertica]
 Driver = /opt/vertica/lib64/libverticaodbc.so
 Servername = vertical.service.consul
-Database = nubis
+Database = metrics
 Port = 5433
 UserName = dbadmin
 EOF

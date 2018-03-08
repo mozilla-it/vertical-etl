@@ -27,6 +27,14 @@ python::pyvenv { "${virtualenv_path}/salesforce-fetcher" :
   ],
 }
 
+python::pyvenv { "${virtualenv_path}/vertica-csv-loader" :
+  ensure  => present,
+  version => '3.4',
+  require => [
+    File[$virtualenv_path],
+  ],
+}
+
 # System dependencies
 
 package { 'gcc-c++':
@@ -53,6 +61,15 @@ python::pip { 'salesforce-fetcher':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/salesforce-fetcher",
   url        => 'git+https://github.com/gozer/salesforce-fetcher@e86480d02fcd86122ee31094c01edd92dc1b9590',
+  require    => [
+  ],
+}
+
+# Install Mozilla's vertica-csv-loader
+python::pip { 'vertica-csv-loader':
+  ensure     => 'present',
+  virtualenv => "${virtualenv_path}/vertica-csv-loader",
+  url        => 'git+https://github.com/gozer/vertica-csv-loader@17522d11b18e490bb6df4db1bfa021f022d20166',
   require    => [
   ],
 }

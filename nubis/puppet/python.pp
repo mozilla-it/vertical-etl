@@ -19,6 +19,14 @@ python::pyvenv { "${virtualenv_path}/data-collectors" :
   ],
 }
 
+python::pyvenv { "${virtualenv_path}/salesforce-fetcher" :
+  ensure  => present,
+  version => '3.4',
+  require => [
+    File[$virtualenv_path],
+  ],
+}
+
 # System dependencies
 
 package { 'gcc-c++':
@@ -37,6 +45,15 @@ python::pip { 'data-collectors':
   require    => [
     Package['gcc-c++'],
     Package['unixODBC-devel'],
+  ],
+}
+
+# Install Mozilla's salesforce-fetcher
+python::pip { 'salesforce-fetcher':
+  ensure     => 'present',
+  virtualenv => "${virtualenv_path}/salesforce-fetcher",
+  url        => 'git+https://github.com/gozer/salesforce-fetcher@e86480d02fcd86122ee31094c01edd92dc1b9590',
+  require    => [
   ],
 }
 

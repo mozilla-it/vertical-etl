@@ -1,0 +1,14 @@
+#!/bin/bash
+
+NUBIS_ENVIRONMENT=$(nubis-metadata NUBIS_ENVIRONMENT)
+
+echo "Generating /etc/odbc.ini"
+
+cat << EOF > /etc/odbc.ini
+[vertica]
+Driver = /opt/vertica/lib64/libverticaodbc.so
+Servername = $NUBIS_ENVIRONMENT.vertical.service.consul
+Database = metrics
+Port = 5433
+UserName = dbadmin
+EOF

@@ -57,21 +57,6 @@ python::pip { 'salesforce-fetcher':
   ],
 }
 
-file { '/etc/odbc.ini':
-  ensure  => 'present',
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0640',
-  content => @(EOF),
-[vertica]
-Driver = /opt/vertica/lib64/libverticaodbc.so
-Servername = vertical.service.consul
-Database = metrics
-Port = 5433
-UserName = dbadmin
-EOF
-}
-
 file { '/etc/salesforce-fetcher':
   ensure => directory,
 }

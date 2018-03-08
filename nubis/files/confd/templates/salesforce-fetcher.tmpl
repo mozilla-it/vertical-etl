@@ -6,9 +6,9 @@ salesforce:
     username: "{{ getv "/config/Salesforce/Username" }}"
     password: "{{ getv "/config/Salesforce/Password" }}"
     security_token: "{{ getv "/config/Salesforce/Token" }}"
-    sandbox: false
+    sandbox: "{{ getv "/config/Salesforce/Sandbox" "false" }}"
 
-  host: https://mozillasalescloud.my.salesforce.com/
+  host: "{{ getv "/config/Salesforce/Host" "https://mozillasalescloud.my.salesforce.com/" }}"
   query_dir: /opt/salesforce-fetcher/queries
   reports:
     contact_donor_count: "{{ getv "/config/Salesforce/Reports/contact_donor_count" }}"

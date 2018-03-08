@@ -60,7 +60,7 @@ python::pip { 'data-collectors':
 python::pip { 'salesforce-fetcher':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/salesforce-fetcher",
-  url        => 'git+https://github.com/gozer/salesforce-fetcher@e86480d02fcd86122ee31094c01edd92dc1b9590',
+  url        => 'git+https://github.com/gozer/salesforce-fetcher@213a4a683df9b0cd264cc50802197f4489e9750c',
   require    => [
   ],
 }

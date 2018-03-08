@@ -6,10 +6,10 @@ salesforce:
     username: "{{ getv "/config/Salesforce/Username" }}"
     password: "{{ getv "/config/Salesforce/Password" }}"
     security_token: "{{ getv "/config/Salesforce/Token" }}"
-    sandbox: "{{ getv "/config/Salesforce/Sandbox" "false" }}"
+    sandbox: {{ getv "/config/Salesforce/Sandbox" "false" }}
 
   host: "{{ getv "/config/Salesforce/Host" "https://mozillasalescloud.my.salesforce.com/" }}"
-  query_dir: /opt/salesforce-fetcher/queries
+  query_dir: /usr/local/virtualenvs/salesforce-fetcher/salesforce-fetcher/queries
   reports:
     contact_donor_count: "{{ getv "/config/Salesforce/Reports/contact_donor_count" }}"
     donation_record_count: "{{ getv "/config/Salesforce/Reports/donation_record_count" }}"

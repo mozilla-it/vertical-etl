@@ -1,0 +1,15 @@
+---
+debug: True
+output_dir: /var/salesforce-fetcher
+salesforce:
+  auth:
+    username: "{{ getv "/config/Salesforce/Username" }}"
+    password: "{{ getv "/config/Salesforce/Password" }}"
+    security_token: "{{ getv "/config/Salesforce/Token" }}"
+    sandbox: false
+
+  host: https://mozillasalescloud.my.salesforce.com/
+  query_dir: /opt/salesforce-fetcher/queries
+  reports:
+    contact_donor_count: "{{ getv "/config/Salesforce/Reports/contact_donor_count" }}"
+    donation_record_count: "{{ getv "/config/Salesforce/Reports/donation_record_count" }}"

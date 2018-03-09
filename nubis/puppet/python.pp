@@ -56,6 +56,14 @@ python::pip { 'data-collectors':
   ],
 }
 
+file { '/usr/local/bin/data-collectors':
+  ensure  => link,
+  target  => '/usr/local/virtualenvs/data-collectors/bin/data-collectors',
+  require => [
+    Python::Pip['data-collectors'],
+  ],
+}
+
 # Install Mozilla's salesforce-fetcher
 python::pip { 'salesforce-fetcher':
   ensure     => 'present',
@@ -65,12 +73,28 @@ python::pip { 'salesforce-fetcher':
   ],
 }
 
+file { '/usr/local/bin/salesforce-fetcher':
+  ensure  => link,
+  target  => '/usr/local/virtualenvs/salesforce-fetcher/bin/salesforce-fetcher',
+  require => [
+    Python::Pip['salesforce-fetcher'],
+  ],
+}
+
 # Install Mozilla's vertica-csv-loader
 python::pip { 'vertica-csv-loader':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/vertica-csv-loader",
   url        => 'git+https://github.com/gozer/vertica-csv-loader@8c5ec54255aa267e0e71a0c68c94c9bf102e6131',
   require    => [
+  ],
+}
+
+file { '/usr/local/bin/vertica-csv-loader':
+  ensure  => link,
+  target  => '/usr/local/virtualenvs/vertica-csv-loader/bin/vertica-csv-loader',
+  require => [
+    Python::Pip['vertica-csv-loader'],
   ],
 }
 

@@ -85,7 +85,7 @@ file { '/usr/local/bin/salesforce-fetcher':
 python::pip { 'vertica-csv-loader':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/vertica-csv-loader",
-  url        => 'git+https://github.com/gozer/vertica-csv-loader@8c5ec54255aa267e0e71a0c68c94c9bf102e6131',
+  url        => 'git+https://github.com/gozer/vertica-csv-loader@e2ce8f7b41948cb585259d5b4b41b1be1fe6bff4',
   require    => [
   ],
 }

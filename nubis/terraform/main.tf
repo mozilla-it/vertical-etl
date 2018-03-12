@@ -11,6 +11,9 @@ module "worker" {
   nubis_sudo_groups = "${var.nubis_sudo_groups}"
   nubis_user_groups = "${var.nubis_user_groups}"
 
+  root_storage_size = "32"
+  instance_type     = "t2.small"
+
   security_group        = "${data.consul_keys.vertical.var.client_security_group_id}"
   security_group_custom = true
 }

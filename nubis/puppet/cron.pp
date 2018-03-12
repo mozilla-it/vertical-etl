@@ -73,3 +73,17 @@ cron::daily { "${project_name}-redash-mobile_daily_active_users":
   user    => 'root',
   command => "nubis-cron ${project_name}-redash-mobile_daily_active_users /usr/local/bin/run-${project_name}-redash 14871 mobile_daily_active_users",
 }
+
+cron::daily { "${project_name}-redash-fx_er":
+  hour    => '17',
+  minute  => '36',
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-fx_er /usr/local/bin/run-${project_name}-redash 1687 fx_desktop_er",
+}
+
+cron::daily { "${project_name}-redash-fx_er_by_top_countries":
+  hour    => '17',
+  minute  => '37',
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-fx_er_by_top_countries /usr/local/bin/run-${project_name}-redash 1703 fx_desktop_er_by_top_countries",
+}

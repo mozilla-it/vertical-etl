@@ -21,7 +21,7 @@ file { "/usr/local/bin/run-${project_name}-salesforce":
   owner  => root,
   group  => root,
   mode   => '0755',
-  source => 'puppet:///nubis/run-salesforce',
+  source => 'puppet:///nubis/files/run-salesforce',
 }
 
 cron::daily { "${project_name}-salesforce":
@@ -36,7 +36,7 @@ file { "/usr/local/bin/run-${project_name}-redash":
   owner  => root,
   group  => root,
   mode   => '0755',
-  source => 'puppet:///nubis/run-redash',
+  source => 'puppet:///nubis/files/run-redash',
 }
 
 cron::daily { "${project_name}-redash-ut_desktop_daily_active_users":

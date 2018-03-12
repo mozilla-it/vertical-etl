@@ -1,4 +1,4 @@
-# 2 sample cronjobs
+# Adjust
 
 cron::daily { "${project_name}-adjust_daily_active_users":
   hour    => '0',
@@ -14,26 +14,62 @@ cron::daily { "${project_name}-adjust_retention":
   command => "nubis-cron ${project_name}-adjust_retention /usr/local/bin/data-collectors adjust --job retention --table adjust_retention",
 }
 
+# Salesforce
+
 file { "/usr/local/bin/run-${project_name}-salesforce":
-  ensure  => present,
-  owner   => root,
-  group   => root,
-  mode    => '0755',
-  content => @(EOF)
-#!/bin/bash
-
-# Cleanup
-find /var/salesforce-fetcher/ -name output.csv -mtime +1 -exec rm {} \;
-
-# Import from salesforce
-/usr/local/bin/salesforce-fetcher --config-file /etc/salesforce-fetcher/settings.yml
-
-# Load into Vertica
-/usr/local/bin/vertica-csv-loader /usr/local/virtualenvs/vertica-csv-loader/vertica_loader/configs/salesforce-loads.yaml
-EOF
+  ensure => present,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/run-salesforce',
 }
 
-# Salesforce
 cron::daily { "${project_name}-salesforce":
   command => "nubis-cron ${project_name}-salesforce /usr/local/bin/run-${project_name}-salesforce",
+}
+
+
+# Redash
+
+file { "/usr/local/bin/run-${project_name}-redash":
+  ensure => present,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/run-redash',
+}
+
+cron::daily { "${project_name}-redash-ut_desktop_daily_active_users":
+  hour    => '10',
+  minute  => fqdn_rand(60),
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-ut_desktop_daily_active_users /usr/local/bin/run-${project_name}-redash 49314 ut_desktop_daily_active_users",
+}
+
+cron::daily { "${project_name}-redash-ut_desktop_daily_active_users_extended":
+  hour    => '10',
+  minute  => fqdn_rand(60),
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-ut_desktop_daily_active_users_extended /usr/local/bin/run-${project_name}-redash 51064 ut_desktop_daily_active_users_extended",
+}
+
+cron::daily { "${project_name}-redash-ut_churn":
+  hour    => '10',
+  minute  => fqdn_rand(60),
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-ut_churn /usr/local/bin/run-${project_name}-redash 51764 ut_churn",
+}
+
+cron::daily { "${project_name}-redash-redash_focus_retention":
+  hour    => '11',
+  minute  => fqdn_rand(60),
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-redash_focus_retention /usr/local/bin/run-${project_name}-redash 14209 redash_focus_retention",
+}
+
+cron::daily { "${project_name}-redash-mobile_daily_active_users":
+  hour    => '12',
+  minute  => fqdn_rand(60),
+  user    => 'root',
+  command => "nubis-cron ${project_name}-redash-mobile_daily_active_users /usr/local/bin/run-${project_name}-redash 14871 mobile_daily_active_users",
 }

@@ -26,6 +26,20 @@ file { '/var/salesforce-fetcher':
   ]
 }
 
+# Temporary holding location for data-collectors
+
+file { '/var/data-collectors':
+  ensure  => directory,
+  owner   => 'etl',
+  group   => 'etl',
+  mode    => '0755',
+
+  require => [
+    User['etl'],
+    Group['etl'],
+  ]
+}
+
 # Adjust
 
 cron::daily { "${project_name}-adjust_daily_active_users":

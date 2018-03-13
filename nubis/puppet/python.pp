@@ -102,10 +102,6 @@ file { '/etc/salesforce-fetcher':
   ensure => directory,
 }
 
-file { '/var/salesforce-fetcher':
-  ensure => directory,
-}
-
 file { '/etc/data-collectors':
   ensure => directory,
 }

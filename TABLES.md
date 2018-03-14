@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS public.adjust_retention
 |------------|---------|------------------------|
 | Daily      | Adjust  | data-collectors/redash |
 
-``sql
+```sql
 CREATE TABLE IF NOT EXISTS public.ut_desktop_daily_active_users
 (
     day date,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS public.ut_desktop_daily_active_users
 |------------|---------|------------------------|
 | Daily      | Adjust  | data-collectors/redash |
 
-``sql
+```sql
 CREATE TABLE IF NOT EXISTS public.ut_desktop_daily_active_users_extended
 (
     day date,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS public.ut_desktop_daily_active_users_extended
 |------------|---------|------------------------|
 | Daily      | Adjust  | data-collectors/redash |
 
-``sql
+```sql
 CREATE TABLE IF NOT EXISTS public.redash_focus_retention
 (
     os varchar(10),
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS public.redash_focus_retention
 |------------|---------|------------------------|
 | Daily      | Adjust  | data-collectors/redash |
 
-``sql
+```sql
 CREATE TABLE IF NOT EXISTS public.mobile_daily_active_users
 (
     app varchar(20),
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS public.mobile_daily_active_users
 |------------|---------|------------------------|
 | Daily      | Adjust  | data-collectors/redash |
 
-``sql
+```sql
 CREATE TABLE IF NOT EXISTS public.fx_desktop_er
 (
     activity_date date,
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS public.fx_desktop_er
 |------------|---------|------------------------|
 | Daily      | Adjust  | data-collectors/redash |
 
-``sql
+```sql
 CREATE TABLE IF NOT EXISTS public.fx_desktop_er_by_top_countries
 (
     country char(2),

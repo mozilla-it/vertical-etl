@@ -95,13 +95,6 @@ cron::daily { "${project_name}-redash-ut_desktop_daily_active_users_extended":
   command => "nubis-cron ${project_name}-redash-ut_desktop_daily_active_users_extended /usr/local/bin/run-${project_name}-redash 51064 ut_desktop_daily_active_users_extended",
 }
 
-cron::daily { "${project_name}-redash-ut_churn":
-  hour    => '10',
-  minute  => fqdn_rand(60),
-  user    => 'etl',
-  command => "nubis-cron ${project_name}-redash-ut_churn /usr/local/bin/run-${project_name}-redash 51764 ut_churn",
-}
-
 cron::daily { "${project_name}-redash-redash_focus_retention":
   hour    => '11',
   minute  => fqdn_rand(60),

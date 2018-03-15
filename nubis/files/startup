@@ -1,14 +1,23 @@
 #!/bin/bash
 
 NUBIS_ENVIRONMENT=$(nubis-metadata NUBIS_ENVIRONMENT)
+NUBIS_PROJECT=$(nubis-metadata NUBIS_PROJECT)
+
+KV_PREFIX="$NUBIS_PROJECT-$NUBIS_ENVIRONMENT/$NUBIS_ENVIRONMENT/config"
+
+VERTICA_HOST="$NUBIS_ENVIRONMENT.vertical.service.consul"
 
 echo "Generating /etc/odbc.ini"
 
 cat << EOF > /etc/odbc.ini
 [vertica]
 Driver = /opt/vertica/lib64/libverticaodbc.so
-Servername = $NUBIS_ENVIRONMENT.vertical.service.consul
+Servername = $VERTICA_HOST
 Database = metrics
 Port = 5433
 UserName = dbadmin
 EOF
+
+# Publish some useful bits
+consulate kv set "$KV_PREFIX/Environment" "$NUBIS_ENVIRONMENT"
+consulate kv set "$KV_PREFIX/Vertica/Host" "$VERTICA_HOST"

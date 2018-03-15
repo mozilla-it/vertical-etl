@@ -1,0 +1,17 @@
+from datetime import datetime,timedelta
+config = {
+    'today' : (datetime.now()).strftime("%Y-%m-%d"),
+    'v_username' : '',
+    'v_password' : '',
+    'v_hostname' : '{{ getv "/config/Vertica/Host" }}',
+    'w_username' : '',
+    'w_password' : '',
+    'w_seating_username' : '',
+    'w_seating_password' : '',
+    'w_users_username' : '',
+    'w_users_password' : '',
+    'v_table' :'''mozilla_staff_plus (employee_id,first_name,last_name,email_address,supervisory_organization,cost_center,
+    functional_group,manager_id,manager_lastname,manager_firstname,manager_email,is_manager,hire_date,location,
+    home_city,home_country,home_postal,desk_number,snapshot_date)'''
+}
+

@@ -1,0 +1,13 @@
+[template]
+src = "workday-plus.py.tmpl"
+dest = "/opt/workday/config_plus.py"
+prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
+
+uid = 0
+gid = 0
+mode = "0644"
+
+keys = [
+    "/config/*",
+    "/config"
+]

@@ -8,7 +8,7 @@ file { "/opt/workday/fetch":
   group  => root,
   mode   => '0755',
   require => [
-    File ['/opt/workday'],
+    File['/opt/workday'],
   ],
   source => 'puppet:///nubis/files/workday/fetch_workday_data.py',
 }
@@ -19,7 +19,7 @@ file { "/opt/workday/fetch-plus":
   group  => root,
   mode   => '0755',
   require => [
-    File ['/opt/workday'],
+    File['/opt/workday'],
   ],
   source => 'puppet:///nubis/files/workday/fetch_workday_data_plus.py',
 }

@@ -4,7 +4,7 @@
 <!--ts-->
    * [ETL Jobs](#etl-jobs)
       * [Table of Contents](#table-of-contents)
-      * [Tables](#tables)
+      * [Current Tables](#current-tables)
          * [public.last_updated](#publiclast_updated)
          * [public.adjust_daily_active_users](#publicadjust_daily_active_users)
          * [public.adjust_retention](#publicadjust_retention)
@@ -19,17 +19,30 @@
          * [public.sf_donation_count](#publicsf_donation_count)
          * [public.sf_copyright_petition](#publicsf_copyright_petition)
          * [public.sf_contacts](#publicsf_contacts)
+         * [public.statcounter_monthly](#publicstatcounter_monthly)
+         * [public.mozilla_staff](#publicmozilla_staff)
+         * [public.mozilla_staff_plus](#publicmozilla_staff_plus)
+      * [Broken Tables](#broken-tables)
+         * [public.statcounter](#publicstatcounter)
+         * [public.fx_market_share](#publicfx_market_share)
+         * [public.adjust_ios_daily_active_users](#publicadjust_ios_daily_active_users)
+         * [public.adjust_focus_daily_active_users](#publicadjust_focus_daily_active_users)
+         * [public.adjust_klar_daily_active_users](#publicadjust_klar_daily_active_users)
+         * [public.adjust_android_daily_active_users](#publicadjust_android_daily_active_users)
+         * [public.adjust_fennec_retention_by_os](#publicadjust_fennec_retention_by_os)
+         * [public.adjust_android_monthly](#publicadjust_android_monthly)
+         * [public.adjust_focus_monthly](#publicadjust_focus_monthly)
+         * [public.adjust_ios_monthly](#publicadjust_ios_monthly)
+         * [public.adjust_klar_monthly](#publicadjust_klar_monthly)
+      * [Unused or Empty Tables](#unused-or-empty-tables)
+         * [public.mysql_database](#publicmysql_database)
+         * [public.mysql_host](#publicmysql_host)
+         * [public.mysql_host_metrics](#publicmysql_host_metrics)
+         * [public.mysql_status_counters](#publicmysql_status_counters)
+         * [public.mysql_system](#publicmysql_system)
+      * [Unknown Tables](#unknown-tables)
          * [public.adi_by_region](#publicadi_by_region)
          * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
-         * [public.adjust_android_daily_active_users](#publicadjust_android_daily_active_users)
-         * [public.adjust_android_monthly](#publicadjust_android_monthly)
-         * [public.adjust_fennec_retention_by_os](#publicadjust_fennec_retention_by_os)
-         * [public.adjust_focus_daily_active_users](#publicadjust_focus_daily_active_users)
-         * [public.adjust_focus_monthly](#publicadjust_focus_monthly)
-         * [public.adjust_ios_daily_active_users](#publicadjust_ios_daily_active_users)
-         * [public.adjust_ios_monthly](#publicadjust_ios_monthly)
-         * [public.adjust_klar_daily_active_users](#publicadjust_klar_daily_active_users)
-         * [public.adjust_klar_monthly](#publicadjust_klar_monthly)
          * [public.a_downloads_locale_location_channel](#publica_downloads_locale_location_channel)
          * [public.blocklistDecomposition](#publicblocklistdecomposition)
          * [public.brain_juicer](#publicbrain_juicer)
@@ -49,15 +62,8 @@
          * [public.firefox_download_counts](#publicfirefox_download_counts)
          * [public.fx_adjust_mobile](#publicfx_adjust_mobile)
          * [public.fx_attribution](#publicfx_attribution)
-         * [public.fx_market_share](#publicfx_market_share)
          * [public.fx_product_tmp](#publicfx_product_tmp)
          * [public.locations](#publiclocations)
-         * [public.mozilla_staff](#publicmozilla_staff)
-         * [public.mysql_database](#publicmysql_database)
-         * [public.mysql_host](#publicmysql_host)
-         * [public.mysql_host_metrics](#publicmysql_host_metrics)
-         * [public.mysql_status_counters](#publicmysql_status_counters)
-         * [public.mysql_system](#publicmysql_system)
          * [public.nagios_log_data](#publicnagios_log_data)
          * [public.net_neutrality_petition](#publicnet_neutrality_petition)
          * [public.open_data_day](#publicopen_data_day)
@@ -85,8 +91,6 @@
          * [public.snippet_count_20151104](#publicsnippet_count_20151104)
          * [public.snippet_count_fennec](#publicsnippet_count_fennec)
          * [public.snippet_count_fennec_20151104](#publicsnippet_count_fennec_20151104)
-         * [public.statcounter](#publicstatcounter)
-         * [public.statcounter_monthly](#publicstatcounter_monthly)
          * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
          * [public.user_locales](#publicuser_locales)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
@@ -95,11 +99,11 @@
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
          * [public.vertica_backups](#publicvertica_backups)
 
-<!-- Added by: gozer, at: 2018-03-14T15:07-04:00 -->
+<!-- Added by: gozer, at: 2018-03-15T11:29-04:00 -->
 
 <!--te-->
 
-## Tables
+## Current Tables
 
 ### public.last_updated
 
@@ -367,17 +371,272 @@ CREATE TABLE IF NOT EXISTS public.sf_contacts
 );
 ```
 
+### public.statcounter_monthly
+
+| Frequency  | Source       | Script                 |
+|------------|--------------|------------------------|
+| Monthly    | Statcounter  | **Unknown**            |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.statcounter_monthly
+(
+    st_date date,
+    stat float
+);
+```
+
+### public.mozilla_staff
+
+| Frequency  | Source       | Script                 |
+|------------|--------------|------------------------|
+| Daily      | Workday      | fetch_workday_data.py  |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.mozilla_staff
+(
+    employee_id varchar(255),
+    first_name varchar(255),
+    last_name varchar(255),
+    email_address varchar(512),
+    supervisory_organization varchar(255),
+    cost_center varchar(255),
+    functional_group varchar(255),
+    manager_id varchar(255),
+    manager_lastname varchar(255),
+    manager_firstname varchar(255),
+    is_manager varchar(2),
+    hire_date date,
+    location varchar(255),
+    snapshot_date date
+);
+```
+
+### public.mozilla_staff_plus
+
+| Frequency  | Source       | Script                      |
+|------------|--------------|-----------------------------|
+| Daily      | Workday      | fetch_workday_data_plus.py  |
+
+```sql
+CREATE TABLE public.mozilla_staff_plus
+(
+    employee_id varchar(255),
+    first_name varchar(255),
+    last_name varchar(255),
+    email_address varchar(512),
+    supervisory_organization varchar(255),
+    cost_center varchar(255),
+    functional_group varchar(255),
+    manager_id varchar(255),
+    manager_lastname varchar(255),
+    manager_firstname varchar(255),
+    manager_email varchar(512),
+    is_manager varchar(2),
+    hire_date date,
+    location varchar(255),
+    home_city varchar(255),
+    home_country varchar(255),
+    home_postal varchar(255),
+    desk_number varchar(255),
+    snapshot_date date
+);
+
+```
+
+## Broken Tables
+
+### public.statcounter
+
+| Frequency  | Source       | Script                 | Broken Since |
+|------------|--------------|------------------------|--------------|
+| Daily      | Statcounter  | load_statcounter.sh    | 2017-04-02   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.statcounter
+(
+    st_date date,
+    browser varchar(100),
+    stat float,
+    region varchar(75),
+    device varchar(50)
+);
+```
+
+### public.fx_market_share
+
+| Frequency  | Source       | Script                     | Broken Since |
+|------------|--------------|----------------------------|--------------|
+| Daily      | Statcounter  | load_statcounter-daily.sh  | 2017-07-14   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.fx_market_share
+(
+    fx_date date,
+    fx_mkt_share float
+);
+```
+
+### public.adjust_ios_daily_active_users
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-10-25   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_ios_daily_active_users
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float
+);
+```
+
+### public.adjust_focus_daily_active_users
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-07-25   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_focus_daily_active_users
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float,
+    installs int
+);
+```
+
+### public.adjust_klar_daily_active_users
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-07-25   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_klar_daily_active_users
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float,
+    installs int
+);
+```
+
+### public.adjust_android_daily_active_users
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-07-25   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_android_daily_active_users
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float
+);
+```
+
+### public.adjust_fennec_retention_by_os
+
+| Frequency  | Source       | Script                              | Broken Since |
+|------------|--------------|-------------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_fennec_retention_by_os  | 2017-07-25   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_fennec_retention_by_os
+(
+    date date,
+    os varchar(10),
+    period int,
+    retention numeric(5,4)
+);
+
+```
+
+### public.adjust_android_monthly
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-09-01   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_android_monthly
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float
+);
+```
+
+### public.adjust_focus_monthly
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-09-01   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_focus_monthly
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float,
+    installs int
+);
+```
+
+### public.adjust_ios_monthly
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-09-01   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_ios_monthly
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float
+);
+```
+
+### public.adjust_klar_monthly
+
+| Frequency  | Source       | Script                          | Broken Since |
+|------------|--------------|---------------------------------|--------------|
+| Daily      | Adjust       | load_adjust_daily_active_users  | 2017-09-01   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adjust_klar_monthly
+(
+    adj_date date,
+    daus float,
+    waus float,
+    maus float,
+    installs int
+);
+```
+
+## Unused or Empty Tables
+
+### public.mysql_database
+### public.mysql_host
+### public.mysql_host_metrics
+### public.mysql_status_counters
+### public.mysql_system
+
+## Unknown Tables
+
 ### public.adi_by_region
 ### public.adi_firefox_by_date_version_country_locale_channel
-### public.adjust_android_daily_active_users
-### public.adjust_android_monthly
-### public.adjust_fennec_retention_by_os
-### public.adjust_focus_daily_active_users
-### public.adjust_focus_monthly
-### public.adjust_ios_daily_active_users
-### public.adjust_ios_monthly
-### public.adjust_klar_daily_active_users
-### public.adjust_klar_monthly
 ### public.a_downloads_locale_location_channel
 ### public.blocklistDecomposition
 ### public.brain_juicer
@@ -397,15 +656,8 @@ CREATE TABLE IF NOT EXISTS public.sf_contacts
 ### public.firefox_download_counts
 ### public.fx_adjust_mobile
 ### public.fx_attribution
-### public.fx_market_share
 ### public.fx_product_tmp
 ### public.locations
-### public.mozilla_staff
-### public.mysql_database
-### public.mysql_host
-### public.mysql_host_metrics
-### public.mysql_status_counters
-### public.mysql_system
 ### public.nagios_log_data
 ### public.net_neutrality_petition
 ### public.open_data_day
@@ -433,8 +685,6 @@ CREATE TABLE IF NOT EXISTS public.sf_contacts
 ### public.snippet_count_20151104
 ### public.snippet_count_fennec
 ### public.snippet_count_fennec_20151104
-### public.statcounter
-### public.statcounter_monthly
 ### public.tmp_search_cohort_churn
 ### public.user_locales
 ### public.ut_monthly_rollups

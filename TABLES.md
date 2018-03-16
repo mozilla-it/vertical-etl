@@ -969,6 +969,14 @@ CREATE TABLE IF NOT EXISTS public.fx_adjust_mobile
 
 ## Empty Tables
 
+### public.mysql_database
+
+### public.mysql_host_metrics
+
+### public.mysql_status_counters
+
+### public.mysql_system
+
 ### public.sfmc_bounces
 
 ### public.sfmc_clicks
@@ -979,19 +987,7 @@ CREATE TABLE IF NOT EXISTS public.fx_adjust_mobile
 
 ### public.sfmc_opens
 
-### public.mysql_database
-
-### public.mysql_host_metrics
-
-### public.mysql_status_counters
-
-### public.mysql_system
-
 ## Unknown Tables
-
-### public.f_bugs_snapshot_v2
-### public.f_bugs_status_changes
-### public.f_bugs_status_resolution
 
 ### public.adi_by_region
 ### public.adi_firefox_by_date_version_country_locale_channel
@@ -1003,6 +999,9 @@ CREATE TABLE IF NOT EXISTS public.fx_adjust_mobile
 ### public.copy_cohort_churn
 ### public.country_names
 ### public.engagement_ratio
+### public.f_bugs_snapshot_v2
+### public.f_bugs_status_changes
+### public.f_bugs_status_resolution
 ### public.ffos_dimensional_by_date
 ### public.fhr_rollups_monthly_base
 ### public.firefox_download_counts

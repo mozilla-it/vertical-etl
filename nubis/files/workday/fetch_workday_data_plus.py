@@ -23,7 +23,6 @@ def fetch_data():
 
 def fetch_seating():
   try:
-    proxies = { "https" : "http://proxy.dmz.scl3.mozilla.com:3128"}
     r = requests.get('https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla/ISU_RAAS/WPR_Worker_Space_Number?format=json',auth=(config['w_seating_username'],config['w_seating_password']))
     results = json.loads(r.text)
     wd_seating_chart = {}
@@ -39,7 +38,6 @@ def fetch_seating():
 
 def get_users():
   try:
-    proxies = { "https" : "http://proxy.dmz.scl3.mozilla.com:3128"}
     r = requests.get('https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla/ISU_RAAS/Mozilla_BusContUsers?format=json',auth=(config['w_users_username'],config['w_users_password']))
     results = json.loads(r.text)
     wd_users = {}
@@ -129,7 +127,7 @@ def init_config():
             date = sys.argv[1]
         if date != None:
             config['today'] = date
-        config['tmp_dir'] = "tmp_data"
+        config['tmp_dir'] = "/var/lib/etl/workday"
         mkdir_p(config['tmp_dir'])
         config['tmp_file'] = config['tmp_dir']+"/workday_data_"+config['today']
     except:

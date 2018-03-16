@@ -77,7 +77,7 @@ def init_config():
             date = sys.argv[1]
         if date != None:
             config['today'] = date
-        config['tmp_dir'] = "tmp_data"
+        config['tmp_dir'] = "/var/lib/etl/workday"
         mkdir_p(config['tmp_dir'])
         config['tmp_file'] = config['tmp_dir']+"/workday_data_"+config['today']
     except:

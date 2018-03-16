@@ -12,6 +12,10 @@ user { 'etl':
   managehome => true,
 }
 
+file { '/var/lib/etl':
+  ensure => 'directory',
+}
+
 # Temporary holding location for salesforce
 
 file { '/var/salesforce-fetcher':

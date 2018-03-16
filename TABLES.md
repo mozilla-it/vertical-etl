@@ -24,6 +24,8 @@
          * [public.mozilla_staff_plus](#publicmozilla_staff_plus)
          * [public.snippet_count](#publicsnippet_count)
          * [public.snippet_count_fennec](#publicsnippet_count_fennec)
+         * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date)
+         * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -49,6 +51,7 @@
          * [public.org_okr_keyresult](#publicorg_okr_keyresult)
          * [public.org_okr_stage](#publicorg_okr_stage)
          * [public.org_okr_type](#publicorg_okr_type)
+         * [public.fx_adjust_mobile](#publicfx_adjust_mobile)
       * [Empty Tables](#empty-tables)
          * [public.sfmc_bounces](#publicsfmc_bounces)
          * [public.sfmc_clicks](#publicsfmc_clicks)
@@ -68,16 +71,14 @@
          * [public.a_downloads_locale_location_channel](#publica_downloads_locale_location_channel)
          * [public.churn_cohort](#publicchurn_cohort)
          * [public.cohort_churn](#publiccohort_churn)
-         * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date)
-         * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3)
+         * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date-1)
+         * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3-1)
          * [public.copy_cohort_churn](#publiccopy_cohort_churn)
          * [public.country_names](#publiccountry_names)
          * [public.engagement_ratio](#publicengagement_ratio)
          * [public.ffos_dimensional_by_date](#publicffos_dimensional_by_date)
          * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
-         * [public.fhr_rollups_monthly_base_2015](#publicfhr_rollups_monthly_base_2015)
          * [public.firefox_download_counts](#publicfirefox_download_counts)
-         * [public.fx_adjust_mobile](#publicfx_adjust_mobile)
          * [public.fx_attribution](#publicfx_attribution)
          * [public.fx_product_tmp](#publicfx_product_tmp)
          * [public.locations](#publiclocations)
@@ -91,10 +92,6 @@
          * [public.search_cohort](#publicsearch_cohort)
          * [public.search_cohort_churn](#publicsearch_cohort_churn)
          * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
-         * [public.snippet_count](#publicsnippet_count-1)
-         * [public.snippet_count_20151104](#publicsnippet_count_20151104)
-         * [public.snippet_count_fennec](#publicsnippet_count_fennec-1)
-         * [public.snippet_count_fennec_20151104](#publicsnippet_count_fennec_20151104)
          * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
          * [public.user_locales](#publicuser_locales)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
@@ -102,7 +99,7 @@
          * [public.v4_monthly](#publicv4_monthly)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-16T12:42-04:00 -->
+<!-- Added by: gozer, at: 2018-03-16T13:00-04:00 -->
 
 <!--te-->
 
@@ -509,6 +506,22 @@ CREATE TABLE IF NOT EXISTS public.snippet_count_fennec
     snippet_impression_date varchar(255)
 );
 ```
+
+### public.copy_adi_dimensional_by_date
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Hive         | blp_adi_counts.py ?              |
+
+```sql
+
+```
+
+### public.copy_adi_dimensional_by_date_s3
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | S3           | get_adi_s3.sh + blp_adi_load.py  |
 
 ## Broken Tables
 
@@ -939,6 +952,21 @@ CREATE TABLE IF NOT EXISTS public.org_okr_type
 );
 ```
 
+### public.fx_adjust_mobile
+
+| Frequency  | Source       | Script              | Last Updated |
+|------------|--------------|---------------------|--------------|
+| Unknown    | Unknown      | Unknown             | 2017-06-01   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.fx_adjust_mobile
+(
+    fx_date date,
+    maus float,
+    daus float
+);
+```
+
 ## Empty Tables
 
 ### public.sfmc_bounces
@@ -968,7 +996,6 @@ CREATE TABLE IF NOT EXISTS public.org_okr_type
 ### public.adi_by_region
 ### public.adi_firefox_by_date_version_country_locale_channel
 ### public.a_downloads_locale_location_channel
-
 ### public.churn_cohort
 ### public.cohort_churn
 ### public.copy_adi_dimensional_by_date
@@ -978,17 +1005,13 @@ CREATE TABLE IF NOT EXISTS public.org_okr_type
 ### public.engagement_ratio
 ### public.ffos_dimensional_by_date
 ### public.fhr_rollups_monthly_base
-### public.fhr_rollups_monthly_base_2015
 ### public.firefox_download_counts
-### public.fx_adjust_mobile
 ### public.fx_attribution
 ### public.fx_product_tmp
 ### public.locations
 ### public.nagios_log_data
-
 ### public.open_data_day
 ### public.opt_dates
-
 ### public.product_channels
 ### public.products
 ### public.raw_scvp_okr
@@ -996,10 +1019,6 @@ CREATE TABLE IF NOT EXISTS public.org_okr_type
 ### public.search_cohort
 ### public.search_cohort_churn
 ### public.search_cohort_churn_tmp
-### public.snippet_count
-### public.snippet_count_20151104
-### public.snippet_count_fennec
-### public.snippet_count_fennec_20151104
 ### public.tmp_search_cohort_churn
 ### public.user_locales
 ### public.ut_monthly_rollups

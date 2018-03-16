@@ -26,6 +26,7 @@
          * [public.snippet_count_fennec](#publicsnippet_count_fennec)
          * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date)
          * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3)
+         * [public.ffos_dimensional_by_date](#publicffos_dimensional_by_date)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -52,6 +53,13 @@
          * [public.org_okr_stage](#publicorg_okr_stage)
          * [public.org_okr_type](#publicorg_okr_type)
          * [public.fx_adjust_mobile](#publicfx_adjust_mobile)
+         * [public.a_downloads_locale_location_channel](#publica_downloads_locale_location_channel)
+         * [public.locations](#publiclocations)
+         * [public.releases](#publicreleases)
+         * [public.user_locales](#publicuser_locales)
+         * [public.open_data_day](#publicopen_data_day)
+         * [public.engagement_ratio](#publicengagement_ratio)
+         * [public.fx_product_tmp](#publicfx_product_tmp)
       * [Empty Tables](#empty-tables)
          * [public.sfmc_bounces](#publicsfmc_bounces)
          * [public.sfmc_clicks](#publicsfmc_clicks)
@@ -62,44 +70,35 @@
          * [public.mysql_host_metrics](#publicmysql_host_metrics)
          * [public.mysql_status_counters](#publicmysql_status_counters)
          * [public.mysql_system](#publicmysql_system)
+         * [public.raw_scvp_okr](#publicraw_scvp_okr)
       * [Unknown Tables](#unknown-tables)
          * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
          * [public.f_bugs_status_changes](#publicf_bugs_status_changes)
          * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
-         * [public.adi_by_region](#publicadi_by_region)
-         * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
-         * [public.a_downloads_locale_location_channel](#publica_downloads_locale_location_channel)
-         * [public.churn_cohort](#publicchurn_cohort)
-         * [public.cohort_churn](#publiccohort_churn)
          * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date-1)
          * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3-1)
+         * [public.adi_by_region](#publicadi_by_region)
+         * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
+         * [public.churn_cohort](#publicchurn_cohort)
+         * [public.cohort_churn](#publiccohort_churn)
          * [public.copy_cohort_churn](#publiccopy_cohort_churn)
-         * [public.country_names](#publiccountry_names)
-         * [public.engagement_ratio](#publicengagement_ratio)
-         * [public.ffos_dimensional_by_date](#publicffos_dimensional_by_date)
-         * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
-         * [public.firefox_download_counts](#publicfirefox_download_counts)
-         * [public.fx_attribution](#publicfx_attribution)
-         * [public.fx_product_tmp](#publicfx_product_tmp)
-         * [public.locations](#publiclocations)
-         * [public.nagios_log_data](#publicnagios_log_data)
-         * [public.open_data_day](#publicopen_data_day)
-         * [public.opt_dates](#publicopt_dates)
-         * [public.product_channels](#publicproduct_channels)
-         * [public.products](#publicproducts)
-         * [public.raw_scvp_okr](#publicraw_scvp_okr)
-         * [public.releases](#publicreleases)
          * [public.search_cohort](#publicsearch_cohort)
          * [public.search_cohort_churn](#publicsearch_cohort_churn)
          * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
          * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
-         * [public.user_locales](#publicuser_locales)
+         * [public.country_names](#publiccountry_names)
+         * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
+         * [public.firefox_download_counts](#publicfirefox_download_counts)
+         * [public.nagios_log_data](#publicnagios_log_data)
+         * [public.product_channels](#publicproduct_channels)
+         * [public.products](#publicproducts)
+         * [public.opt_dates](#publicopt_dates)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
-         * [public.ut_monthly_rollups_old](#publicut_monthly_rollups_old)
          * [public.v4_monthly](#publicv4_monthly)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
+         * [public.fx_attribution](#publicfx_attribution)
 
-<!-- Added by: gozer, at: 2018-03-16T13:00-04:00 -->
+<!-- Added by: gozer, at: 2018-03-16T15:00-04:00 -->
 
 <!--te-->
 
@@ -514,7 +513,23 @@ CREATE TABLE IF NOT EXISTS public.snippet_count_fennec
 | Daily      | Hive         | blp_adi_counts.py ?              |
 
 ```sql
-
+CREATE TABLE IF NOT EXISTS public.copy_adi_dimensional_by_date
+(
+    _year_quarter varchar(7),
+    bl_date date,
+    product varchar(20),
+    v_prod_major varchar(7),
+    prod_os varchar(50),
+    v_prod_os varchar(50),
+    channel varchar(100),
+    locale varchar(50),
+    continent_code varchar(2),
+    cntry_code varchar(2),
+    tot_requests_on_date int,
+    distro_name varchar(100),
+    distro_version varchar(100),
+    buildid varchar(20) DEFAULT ''
+);
 ```
 
 ### public.copy_adi_dimensional_by_date_s3
@@ -522,6 +537,49 @@ CREATE TABLE IF NOT EXISTS public.snippet_count_fennec
 | Frequency  | Source       | Script                           |
 |------------|--------------|----------------------------------|
 | Daily      | S3           | get_adi_s3.sh + blp_adi_load.py  |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.copy_adi_dimensional_by_date_s3
+(
+    _year_quarter varchar(7),
+    bl_date date,
+    product varchar(20),
+    v_prod_major varchar(7),
+    prod_os varchar(50),
+    v_prod_os varchar(50),
+    channel varchar(100),
+    locale varchar(50),
+    continent_code varchar(2),
+    cntry_code varchar(2),
+    tot_requests_on_date int,
+    distro_name varchar(100),
+    distro_version varchar(100),
+    buildid varchar(20) DEFAULT ''
+);
+```
+
+### public.ffos_dimensional_by_date
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Hive         | etl_ffxos_isp.py                 |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.ffos_dimensional_by_date
+(
+    _year_quarter varchar(7),
+    date varchar(10),
+    product varchar(20),
+    v_prod_major varchar(7),
+    prod_os varchar(50),
+    v_prod_os varchar(50),
+    continent_code varchar(2),
+    cntry_code varchar(2),
+    isp_name varchar(100),
+    device_type varchar(100),
+    tot_request_on_date int
+);
+```
 
 ## Broken Tables
 
@@ -967,15 +1025,160 @@ CREATE TABLE IF NOT EXISTS public.fx_adjust_mobile
 );
 ```
 
+### public.a_downloads_locale_location_channel
+
+| Frequency  | Source       | Script              | Last Updated |
+|------------|--------------|---------------------|--------------|
+| Unknown    | Unknown      | Unknown             | 2014-11-12   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.a_downloads_locale_location_channel
+(
+    dates_Year int,
+    dates_Month int,
+    dates_Day_of_month int,
+    dates_Date varchar(10),
+    download_products_Name varchar(20),
+    download_products_Major varchar(7),
+    download_products_Version varchar(30),
+    request_types_Type varchar(10),
+    download_types_Type varchar(10),
+    request_result_Result varchar(10),
+    locales_Code varchar(15),
+    locations_Continent_name varchar(13),
+    locations_Country_name varchar(50),
+    download_products_rebuild_Name varchar(20),
+    download_products_rebuild_Channel varchar(20),
+    download_requests_by_day_Total_Requests int,
+    download_requests_by_day_fact_count int
+);
+```
+
+### public.locations
+
+| Frequency  | Source       | Script              | Last Updated |
+|------------|--------------|---------------------|--------------|
+| Unknown    | Unknown      | Unknown             | 2014-11-12   |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.locations
+(
+    location_id int NOT NULL,
+    continent_code varchar(2),
+    continent_name varchar(13),
+    country_code varchar(2),
+    country_name varchar(50),
+    region_code varchar(2),
+    region_name varchar(50),
+    city_name varchar(50),
+    latitude float,
+    longitude float,
+    geohash varchar(6),
+    insert_date date,
+    CONSTRAINT locations_pk PRIMARY KEY (location_id) DISABLED
+);
+```
+
+### public.releases
+
+| Frequency  | Source       | Script              | Last Updated |
+|------------|--------------|---------------------|--------------|
+| Unknown    | Unknown      | Unknown             | 2015-01-13   |
+
+
+```sql
+CREATE TABLE IF NOT EXISTS public.releases
+(
+    is_released boolean,
+    version_int int,
+    version varchar(7),
+    channel varchar(10),
+    merge_date date,
+    release_date date,
+    product varchar(10)
+);
+```
+
+### public.user_locales
+
+| Frequency  | Source       | Script              | Last Updated |
+|------------|--------------|---------------------|--------------|
+| Unknown    | Unknown      | Unknown             | Unknown      |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.user_locales
+(
+    raw_locale varchar(255),
+    normalized_locale varchar(255)
+);
+```
+
+### public.open_data_day
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | 2017-07-02      |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.open_data_day
+(
+    ts timestamp,
+    first_name varchar(50),
+    last_name varchar(50),
+    email varchar(100),
+    locale char(5)
+);
+```
+
+### public.engagement_ratio
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | 2017-03-20      |
+
+```sql
+
+CREATE TABLE IF NOT EXISTS public.engagement_ratio
+(
+    day date,
+    dau int,
+    mau int,
+    generated_on date
+);
+```
+
+### public.fx_product_tmp
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | 2017-04-01      |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.fx_product_tmp
+(
+    geo varchar(10),
+    channel varchar(10),
+    os varchar(35),
+    v4_date date,
+    actives int,
+    hours float,
+    inactives int,
+    new_records int,
+    five_of_seven int,
+    total_records int,
+    crashes int,
+    v4_default int,
+    google int,
+    bing int,
+    yahoo int,
+    other int,
+    dau int,
+    adi int
+);
+```
+
+
 ## Empty Tables
-
-### public.mysql_database
-
-### public.mysql_host_metrics
-
-### public.mysql_status_counters
-
-### public.mysql_system
 
 ### public.sfmc_bounces
 
@@ -987,40 +1190,56 @@ CREATE TABLE IF NOT EXISTS public.fx_adjust_mobile
 
 ### public.sfmc_opens
 
+### public.mysql_database
+
+### public.mysql_host_metrics
+
+### public.mysql_status_counters
+
+### public.mysql_system
+
+### public.raw_scvp_okr
+
 ## Unknown Tables
 
-### public.adi_by_region
-### public.adi_firefox_by_date_version_country_locale_channel
-### public.a_downloads_locale_location_channel
-### public.churn_cohort
-### public.cohort_churn
-### public.copy_adi_dimensional_by_date
-### public.copy_adi_dimensional_by_date_s3
-### public.copy_cohort_churn
-### public.country_names
-### public.engagement_ratio
 ### public.f_bugs_snapshot_v2
 ### public.f_bugs_status_changes
 ### public.f_bugs_status_resolution
-### public.ffos_dimensional_by_date
-### public.fhr_rollups_monthly_base
-### public.firefox_download_counts
-### public.fx_attribution
-### public.fx_product_tmp
-### public.locations
-### public.nagios_log_data
-### public.open_data_day
-### public.opt_dates
-### public.product_channels
-### public.products
-### public.raw_scvp_okr
-### public.releases
+
+### public.copy_adi_dimensional_by_date
+### public.copy_adi_dimensional_by_date_s3
+
+### public.adi_by_region
+### public.adi_firefox_by_date_version_country_locale_channel
+
+### public.churn_cohort
+### public.cohort_churn
+### public.copy_cohort_churn
 ### public.search_cohort
 ### public.search_cohort_churn
 ### public.search_cohort_churn_tmp
 ### public.tmp_search_cohort_churn
-### public.user_locales
+
+
+### public.country_names
+
+
+### public.fhr_rollups_monthly_base
+### public.firefox_download_counts
+
+
+
+### public.nagios_log_data
+
+
+### public.product_channels
+### public.products
+
+### public.opt_dates
+
+
 ### public.ut_monthly_rollups
-### public.ut_monthly_rollups_old
 ### public.v4_monthly
 ### public.v4_submissionwise_v5
+
+### public.fx_attribution

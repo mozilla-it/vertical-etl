@@ -54,7 +54,7 @@ def parse_data(results):
 def push_to_vertica():
     tmp_file = config['tmp_file']
     try:
-        insert_to_db = "/opt/vertica/bin/vsql -c \"copy " + config['v_table'] + " from LOCAL '" + tmp_file + "' delimiter ',' rejected data '" +tmp_file+"_rejected.txt' exceptions '"+tmp_file+"_exceptions.txt';\" -U " + config['v_username'] + " -h " + config['v_hostname']+ " -w \"" + config['v_password'] + "`""
+        insert_to_db = "/opt/vertica/bin/vsql -c \"copy " + config['v_table'] + " from LOCAL '" + tmp_file + "' delimiter ',' rejected data '" +tmp_file+"_rejected.txt' exceptions '"+tmp_file+"_exceptions.txt';\" -U " + config['v_username'] + " -h " + config['v_hostname']+ " -w \"" + config['v_password'] + "\""
         os.system(insert_to_db)
     except:
         print(sys.exc_info()[0],file=sys.stdout)

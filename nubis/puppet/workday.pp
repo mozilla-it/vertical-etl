@@ -2,6 +2,19 @@ file { '/opt/workday':
   ensure => directory,
 }
 
+file { '/var/lib/etl/workday':
+  ensure  => directory,
+  owner   => 'etl',
+  group   => 'etl',
+  mode    => '0755',
+
+  require => [
+    User['etl'],
+    Group['etl'],
+    File['/var/lib/etl'],
+  ]
+}
+
 file { "/opt/workday/fetch":
   ensure => present,
   owner  => root,

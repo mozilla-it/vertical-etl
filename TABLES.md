@@ -27,6 +27,7 @@
          * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date)
          * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3)
          * [public.ffos_dimensional_by_date](#publicffos_dimensional_by_date)
+         * [public.nagios_log_data](#publicnagios_log_data)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -93,12 +94,11 @@
          * [public.search_cohort_churn](#publicsearch_cohort_churn)
          * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
          * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
-         * [public.nagios_log_data](#publicnagios_log_data)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
          * [public.v4_monthly](#publicv4_monthly)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-19T11:11-04:00 -->
+<!-- Added by: gozer, at: 2018-03-19T11:19-04:00 -->
 
 <!--te-->
 
@@ -578,6 +578,26 @@ CREATE TABLE IF NOT EXISTS public.ffos_dimensional_by_date
     isp_name varchar(100),
     device_type varchar(100),
     tot_request_on_date int
+);
+```
+
+### public.nagios_log_data
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Logs         | nagios-logs-to-vertica.py        |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.nagios_log_data
+(
+    event_occurred_at timestamp,
+    incident_type varchar(64),
+    host varchar(256),
+    service varchar(256),
+    status varchar(32),
+    notify_by varchar(256),
+    description varchar(2048),
+    filename varchar(255) DEFAULT ''
 );
 ```
 
@@ -1355,6 +1375,17 @@ CREATE TABLE IF NOT EXISTS public.fhr_rollups_monthly_base
 |------------|--------------|---------------------|---------------------|
 | Unknown    | Unknown      | Unknown             | Unknown             |
 
+```sql
+CREATE TABLE IF NOT EXISTS public.fx_attribution
+(
+    profiles_count int,
+    source varchar(250),
+    medium varchar(250),
+    campaign varchar(250),
+    content varchar(250)
+);
+```
+
 ### public.f_bugs_snapshot_v2
 ### public.f_bugs_status_changes
 ### public.f_bugs_status_resolution
@@ -1373,7 +1404,7 @@ CREATE TABLE IF NOT EXISTS public.fhr_rollups_monthly_base
 ### public.search_cohort_churn_tmp
 ### public.tmp_search_cohort_churn
 
-### public.nagios_log_data
+
 
 ### public.ut_monthly_rollups
 ### public.v4_monthly

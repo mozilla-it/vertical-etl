@@ -60,6 +60,12 @@
          * [public.open_data_day](#publicopen_data_day)
          * [public.engagement_ratio](#publicengagement_ratio)
          * [public.fx_product_tmp](#publicfx_product_tmp)
+         * [public.country_names](#publiccountry_names)
+         * [public.opt_dates](#publicopt_dates)
+         * [public.products](#publicproducts)
+         * [public.product_channels](#publicproduct_channels)
+         * [public.firefox_download_counts](#publicfirefox_download_counts)
+         * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
       * [Empty Tables](#empty-tables)
          * [public.sfmc_bounces](#publicsfmc_bounces)
          * [public.sfmc_clicks](#publicsfmc_clicks)
@@ -72,6 +78,7 @@
          * [public.mysql_system](#publicmysql_system)
          * [public.raw_scvp_okr](#publicraw_scvp_okr)
       * [Unknown Tables](#unknown-tables)
+         * [public.fx_attribution](#publicfx_attribution)
          * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
          * [public.f_bugs_status_changes](#publicf_bugs_status_changes)
          * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
@@ -86,19 +93,12 @@
          * [public.search_cohort_churn](#publicsearch_cohort_churn)
          * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
          * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
-         * [public.country_names](#publiccountry_names)
-         * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
-         * [public.firefox_download_counts](#publicfirefox_download_counts)
          * [public.nagios_log_data](#publicnagios_log_data)
-         * [public.product_channels](#publicproduct_channels)
-         * [public.products](#publicproducts)
-         * [public.opt_dates](#publicopt_dates)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
          * [public.v4_monthly](#publicv4_monthly)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
-         * [public.fx_attribution](#publicfx_attribution)
 
-<!-- Added by: gozer, at: 2018-03-16T15:00-04:00 -->
+<!-- Added by: gozer, at: 2018-03-19T11:11-04:00 -->
 
 <!--te-->
 
@@ -1177,6 +1177,153 @@ CREATE TABLE IF NOT EXISTS public.fx_product_tmp
 );
 ```
 
+### public.country_names
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | Unknown         |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.country_names
+(
+    code varchar(10),
+    country varchar(100)
+);
+```
+
+### public.opt_dates
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | Unknown         |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.opt_dates
+(
+    date_id int NOT NULL,
+    year int,
+    month int,
+    day_of_year int,
+    day_of_month int,
+    day_of_week int,
+    week_of_year int,
+    day_of_week_desc varchar(10),
+    day_of_week_short_desc varchar(3),
+    month_desc varchar(10),
+    month_short_desc varchar(3),
+    quarter int,
+    is_weekday varchar(1),
+    date date,
+    CONSTRAINT C_PRIMARY PRIMARY KEY (date_id) DISABLED
+);
+```
+
+### public.products
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | Unknown         |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.products
+(
+    product_id int NOT NULL,
+    product_guid varchar(36) NOT NULL,
+    product_name varchar(20) NOT NULL,
+    product_version varchar(30) NOT NULL,
+    product_version_major int,
+    product_version_minor int,
+    product_version_minor_suffix varchar(15),
+    product_version_sub_a int,
+    product_version_sub_a_suffix varchar(15),
+    product_version_sub_b int,
+    product_version_sub_b_suffix varchar(15),
+    formatted_version_major varchar(7),
+    CONSTRAINT products_pk PRIMARY KEY (product_id) DISABLED
+);
+```
+
+### public.product_channels
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | Unknown         |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.product_channels
+(
+    product_channel_id int NOT NULL,
+    product_channel varchar(100),
+    partner varchar(50),
+    CONSTRAINT product_channels_1 PRIMARY KEY (product_channel_id) DISABLED
+);
+```
+
+
+### public.firefox_download_counts
+
+| Frequency  | Source       | Script              | Last Updated    |
+|------------|--------------|---------------------|-----------------|
+| Unknown    | Unknown      | Unknown             | 2015-09-21      |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.product_channels
+(
+    product_channel_id int NOT NULL,
+    product_channel varchar(100),
+    partner varchar(50),
+    CONSTRAINT product_channels_1 PRIMARY KEY (product_channel_id) DISABLED
+);
+```
+
+### public.fhr_rollups_monthly_base
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2015-10-29 (approx) |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.fhr_rollups_monthly_base
+(
+    vendor varchar(50),
+    name varchar(50),
+    channel varchar(50),
+    os varchar(50),
+    osdetail varchar(50),
+    distribution varchar(50),
+    locale varchar(50),
+    geo varchar(50),
+    version varchar(50),
+    isstdprofile varchar(50),
+    stdchannel varchar(50),
+    stdos varchar(50),
+    distribtype varchar(50),
+    snapshot varchar(50),
+    granularity varchar(50),
+    timeStart varchar(50),
+    timeEnd varchar(50),
+    tTotalProfiles int,
+    tExistingProfiles int,
+    tNewProfiles int,
+    tActiveProfiles int,
+    tInActiveProfiles int,
+    tActiveDays int,
+    tTotalSeconds int,
+    tActiveSeconds int,
+    tNumSessions int,
+    tCrashes int,
+    tTotalSearch int,
+    tGoogleSearch int,
+    tYahooSearch int,
+    tBingSearch int,
+    tOfficialSearch int,
+    tIsDefault int,
+    tIsActiveProfileDefault int,
+    t5outOf7 int,
+    tChurned int,
+    tHasUP int
+);
+```
 
 ## Empty Tables
 
@@ -1202,6 +1349,12 @@ CREATE TABLE IF NOT EXISTS public.fx_product_tmp
 
 ## Unknown Tables
 
+### public.fx_attribution
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | Unknown             |
+
 ### public.f_bugs_snapshot_v2
 ### public.f_bugs_status_changes
 ### public.f_bugs_status_resolution
@@ -1220,26 +1373,8 @@ CREATE TABLE IF NOT EXISTS public.fx_product_tmp
 ### public.search_cohort_churn_tmp
 ### public.tmp_search_cohort_churn
 
-
-### public.country_names
-
-
-### public.fhr_rollups_monthly_base
-### public.firefox_download_counts
-
-
-
 ### public.nagios_log_data
-
-
-### public.product_channels
-### public.products
-
-### public.opt_dates
-
 
 ### public.ut_monthly_rollups
 ### public.v4_monthly
 ### public.v4_submissionwise_v5
-
-### public.fx_attribution

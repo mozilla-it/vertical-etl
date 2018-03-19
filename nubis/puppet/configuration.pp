@@ -1,4 +1,4 @@
 include nubis_configuration
-nubis::configuration{ $project_name:
+nubis::configuration{ split($project_name, '-')[1]:
   format  => 'sh',
 }

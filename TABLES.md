@@ -536,7 +536,7 @@ CREATE TABLE IF NOT EXISTS public.copy_adi_dimensional_by_date
 
 | Frequency  | Source       | Script                           |
 |------------|--------------|----------------------------------|
-| Daily      | S3           | get_adi_s3.sh + blp_adi_load.py  |
+| Daily      | S3           | /opt/adi/{fetch,load}            |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.copy_adi_dimensional_by_date_s3
@@ -1403,8 +1403,6 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 ### public.search_cohort_churn
 ### public.search_cohort_churn_tmp
 ### public.tmp_search_cohort_churn
-
-
 
 ### public.ut_monthly_rollups
 ### public.v4_monthly

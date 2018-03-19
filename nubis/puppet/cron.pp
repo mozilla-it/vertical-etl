@@ -44,6 +44,14 @@ file { '/var/data-collectors':
   ]
 }
 
+# Cleanup old log files
+cron::daily { "${project_name}-cleanup":
+  hour    => '0',
+  minute  => fqdn_rand(60),
+  user    => 'etl',
+  command => "nubis-cron ${project_name}-cleanup \"find /var/lib/etl/*/* -mtime +30 -print0 | xargs -0 -r rm -rfv\"",
+}
+
 # Adjust
 
 cron::daily { "${project_name}-adjust_daily_active_users":

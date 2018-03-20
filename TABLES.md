@@ -68,6 +68,12 @@
          * [public.firefox_download_counts](#publicfirefox_download_counts)
          * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
          * [public.v4_monthly](#publicv4_monthly)
+         * [public.copy_cohort_churn](#publiccopy_cohort_churn)
+         * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
+         * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
+         * [public.cohort_churn](#publiccohort_churn)
+         * [public.search_cohort](#publicsearch_cohort)
+         * [public.search_cohort_churn](#publicsearch_cohort_churn)
       * [Empty Tables](#empty-tables)
          * [public.sfmc_bounces](#publicsfmc_bounces)
          * [public.sfmc_clicks](#publicsfmc_clicks)
@@ -87,16 +93,10 @@
          * [public.adi_by_region](#publicadi_by_region)
          * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
          * [public.churn_cohort](#publicchurn_cohort)
-         * [public.cohort_churn](#publiccohort_churn)
-         * [public.copy_cohort_churn](#publiccopy_cohort_churn)
-         * [public.search_cohort](#publicsearch_cohort)
-         * [public.search_cohort_churn](#publicsearch_cohort_churn)
-         * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
-         * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-20T12:39-04:00 -->
+<!-- Added by: gozer, at: 2018-03-20T14:06-04:00 -->
 
 <!--te-->
 
@@ -1372,6 +1372,190 @@ CREATE TABLE public.v4_monthly
 
 ```
 
+### public.copy_cohort_churn
+
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-04-23          |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.copy_cohort_churn
+(
+    channel varchar(50),
+    geo varchar(3),
+    is_funnelcake varchar(3),
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    current_week int,
+    is_active varchar(3),
+    source varchar(250),
+    medium varchar(250),
+    campaign varchar(250),
+    content varchar(250),
+    distribution_id varchar(250),
+    default_search_engine varchar(250),
+    locale varchar(10),
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float
+);
+```
+
+### public.tmp_search_cohort_churn
+
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-08-06          |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.tmp_search_cohort_churn
+(
+    channel varchar(50),
+    geo varchar(3),
+    is_funnelcake varchar(3),
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    current_week int,
+    is_active varchar(3),
+    source varchar(250),
+    medium varchar(250),
+    campaign varchar(250),
+    content varchar(250),
+    distribution_id varchar(250),
+    default_search_engine varchar(250),
+    locale varchar(10),
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float,
+    week_start date
+);
+```
+
+### public.search_cohort_churn_tmp
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-03-12          |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.search_cohort_churn_tmp
+(
+    channel varchar(50),
+    geo varchar(3),
+    is_funnelcake varchar(3),
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    current_week int,
+    source varchar(250),
+    medium varchar(250),
+    campaign varchar(250),
+    content varchar(250),
+    distribution_id varchar(250),
+    default_search_engine varchar(250),
+    locale varchar(10),
+    is_active varchar(3),
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float,
+    week_start date
+);
+```
+
+### public.cohort_churn
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-04-23          |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.cohort_churn
+(
+    channel varchar(50),
+    geo varchar(3),
+    is_funnelcake varchar(3),
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    current_week int,
+    is_active varchar(3),
+    source varchar(250),
+    medium varchar(250),
+    campaign varchar(250),
+    content varchar(250),
+    distribution_id varchar(250),
+    default_search_engine varchar(250),
+    locale varchar(10),
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float
+);
+```
+
+### public.search_cohort
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-03-26          |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.search_cohort
+(
+    channel varchar(50),
+    geo char(2),
+    is_funnelcake boolean,
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    current_week int,
+    is_active boolean,
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float
+);
+```
+
+### public.search_cohort_churn
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-08-06          |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.search_cohort_churn
+(
+    channel varchar(50),
+    geo varchar(3),
+    is_funnelcake varchar(3),
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    current_week int,
+    is_active varchar(3),
+    source varchar(250),
+    medium varchar(250),
+    campaign varchar(250),
+    content varchar(250),
+    distribution_id varchar(250),
+    default_search_engine varchar(250),
+    locale varchar(10),
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float,
+    week_start date
+);
+```
+
 ## Empty Tables
 
 ### public.sfmc_bounces
@@ -1421,12 +1605,6 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 ### public.adi_firefox_by_date_version_country_locale_channel
 
 ### public.churn_cohort
-### public.cohort_churn
-### public.copy_cohort_churn
-### public.search_cohort
-### public.search_cohort_churn
-### public.search_cohort_churn_tmp
-### public.tmp_search_cohort_churn
 
 ### public.ut_monthly_rollups
 ### public.v4_submissionwise_v5

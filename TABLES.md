@@ -28,6 +28,8 @@
          * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3)
          * [public.ffos_dimensional_by_date](#publicffos_dimensional_by_date)
          * [public.nagios_log_data](#publicnagios_log_data)
+         * [public.adi_by_region](#publicadi_by_region)
+         * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -90,13 +92,11 @@
          * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
          * [public.f_bugs_status_changes](#publicf_bugs_status_changes)
          * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
-         * [public.adi_by_region](#publicadi_by_region)
-         * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
          * [public.churn_cohort](#publicchurn_cohort)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-20T14:06-04:00 -->
+<!-- Added by: gozer, at: 2018-03-20T14:18-04:00 -->
 
 <!--te-->
 
@@ -596,6 +596,44 @@ CREATE TABLE IF NOT EXISTS public.nagios_log_data
     notify_by varchar(256),
     description varchar(2048),
     filename varchar(255) DEFAULT ''
+);
+```
+
+### public.adi_by_region
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Hive         | monthly_reports_amo.py           |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adi_by_region
+(
+    yr char(4) NOT NULL,
+    mnth char(2) NOT NULL,
+    region varchar(50) NOT NULL,
+    country_code char(2) NOT NULL,
+    domain varchar(50) NOT NULL,
+    tot_requests int,
+    product varchar(20) NOT NULL,
+    CONSTRAINT C_PRIMARY PRIMARY KEY (yr, mnth, region, country_code, domain, product) DISABLED
+);
+```
+### public.adi_firefox_by_date_version_country_locale_channel
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Vertica      | etl_adi_aggr.py                  |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.adi_firefox_by_date_version_country_locale_channel
+(
+    ping_date date NOT NULL,
+    version varchar(20) NOT NULL DEFAULT '',
+    country varchar(80) NOT NULL DEFAULT '',
+    locale varchar(50) NOT NULL DEFAULT '',
+    release_channel varchar(100) NOT NULL DEFAULT '',
+    ADI int,
+    CONSTRAINT C_PRIMARY PRIMARY KEY (ping_date, country, locale, version, release_channel) DISABLED
 );
 ```
 
@@ -1600,9 +1638,6 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 ### public.f_bugs_snapshot_v2
 ### public.f_bugs_status_changes
 ### public.f_bugs_status_resolution
-
-### public.adi_by_region
-### public.adi_firefox_by_date_version_country_locale_channel
 
 ### public.churn_cohort
 

@@ -67,6 +67,7 @@
          * [public.product_channels](#publicproduct_channels)
          * [public.firefox_download_counts](#publicfirefox_download_counts)
          * [public.fhr_rollups_monthly_base](#publicfhr_rollups_monthly_base)
+         * [public.v4_monthly](#publicv4_monthly)
       * [Empty Tables](#empty-tables)
          * [public.sfmc_bounces](#publicsfmc_bounces)
          * [public.sfmc_clicks](#publicsfmc_clicks)
@@ -83,8 +84,6 @@
          * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
          * [public.f_bugs_status_changes](#publicf_bugs_status_changes)
          * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
-         * [public.copy_adi_dimensional_by_date](#publiccopy_adi_dimensional_by_date-1)
-         * [public.copy_adi_dimensional_by_date_s3](#publiccopy_adi_dimensional_by_date_s3-1)
          * [public.adi_by_region](#publicadi_by_region)
          * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
          * [public.churn_cohort](#publicchurn_cohort)
@@ -95,10 +94,9 @@
          * [public.search_cohort_churn_tmp](#publicsearch_cohort_churn_tmp)
          * [public.tmp_search_cohort_churn](#publictmp_search_cohort_churn)
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
-         * [public.v4_monthly](#publicv4_monthly)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-19T11:19-04:00 -->
+<!-- Added by: gozer, at: 2018-03-20T12:39-04:00 -->
 
 <!--te-->
 
@@ -1345,6 +1343,35 @@ CREATE TABLE IF NOT EXISTS public.fhr_rollups_monthly_base
 );
 ```
 
+### public.v4_monthly
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2017-04-01          |
+
+```sql
+CREATE TABLE public.v4_monthly
+(
+    geo varchar(10),
+    channel varchar(10),
+    os varchar(35),
+    v4_date date,
+    actives int,
+    hours float,
+    inactives int,
+    new_records int,
+    five_of_seven int,
+    total_records int,
+    crashes int,
+    v4_default int,
+    google int,
+    bing int,
+    yahoo int,
+    other int
+);
+
+```
+
 ## Empty Tables
 
 ### public.sfmc_bounces
@@ -1390,9 +1417,6 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 ### public.f_bugs_status_changes
 ### public.f_bugs_status_resolution
 
-### public.copy_adi_dimensional_by_date
-### public.copy_adi_dimensional_by_date_s3
-
 ### public.adi_by_region
 ### public.adi_firefox_by_date_version_country_locale_channel
 
@@ -1405,5 +1429,4 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 ### public.tmp_search_cohort_churn
 
 ### public.ut_monthly_rollups
-### public.v4_monthly
 ### public.v4_submissionwise_v5

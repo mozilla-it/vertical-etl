@@ -15,7 +15,7 @@ declare ADI_Folder ADI_Bucket ADI_AccessKey ADI_SecretKey
 PROCESS_DATE=$(date --date="1 day ago" +%Y-%m-%d) # YYYY-MM-DD
 
 APP_DIR=/var/lib/etl/adi # log directory to put files
-FOLDER=${ADI_Folder:blpadi}
+FOLDER=${ADI_Folder:-blpadi}
 
 export AWS_ACCESS_KEY_ID=${ADI_AccessKey:?}
 export AWS_SECRET_ACCESS_KEY=${ADI_SecretKey:?}

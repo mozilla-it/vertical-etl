@@ -1,6 +1,7 @@
 # ETL Jobs
 
 ## Table of Contents
+
 <!--ts-->
    * [ETL Jobs](#etl-jobs)
       * [Table of Contents](#table-of-contents)
@@ -96,7 +97,7 @@
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-20T14:18-04:00 -->
+<!-- Added by: gozer, at: 2018-03-21T08:54-04:00 -->
 
 <!--te-->
 
@@ -618,6 +619,7 @@ CREATE TABLE IF NOT EXISTS public.adi_by_region
     CONSTRAINT C_PRIMARY PRIMARY KEY (yr, mnth, region, country_code, domain, product) DISABLED
 );
 ```
+
 ### public.adi_firefox_by_date_version_country_locale_channel
 
 | Frequency  | Source       | Script                           |
@@ -738,9 +740,9 @@ CREATE TABLE IF NOT EXISTS public.adjust_android_daily_active_users
 
 ### public.adjust_fennec_retention_by_os
 
-| Frequency  | Source       | Script                              | Broken Since |
-|------------|--------------|-------------------------------------|--------------|
-| Daily      | Adjust       | load_adjust_fennec_retention_by_os  | 2017-07-25   |
+| Frequency  | Source   | Script                              | Broken Since |
+|------------|----------|-------------------------------------|--------------|
+| Daily      | Adjust   | load_adjust_fennec_retention_by_os  | 2017-07-25   |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.adjust_fennec_retention_by_os
@@ -847,9 +849,37 @@ CREATE TABLE IF NOT EXISTS public.vertica_backups
 | Unknown    | Unknown      | Unknown             | 2017-03-01   |
 
 ```sql
-
+CREATE TABLE IF NOT EXISTS public.brain_juicer
+(
+    month_year date,
+    country varchar(80),
+    sample_size int,
+    brand varchar(50),
+    uba_as_io float,
+    uba_as_browser float,
+    mozilla_bpi float,
+    non_profit_cc float,
+    opinionated_cc float,
+    innovative_cc float,
+    inclusive_cc float,
+    firefox_bpi float,
+    independent float,
+    trustworty float,
+    non_profit float,
+    empowering float,
+    aware_health_of_internet float,
+    aware_online_priv_sec float,
+    aware_open_innovation float,
+    aware_decentralization float,
+    aware_web_literacy float,
+    aware_digital_inclusion float,
+    care_online_priv_sec float,
+    care_open_innovation float,
+    care_decentralization float,
+    care_web_literacy float,
+    care_inclusion float
+);
 ```
-
 
 ### public.mysql_host
 
@@ -1141,7 +1171,6 @@ CREATE TABLE IF NOT EXISTS public.locations
 |------------|--------------|---------------------|--------------|
 | Unknown    | Unknown      | Unknown             | 2015-01-13   |
 
-
 ```sql
 CREATE TABLE IF NOT EXISTS public.releases
 (
@@ -1315,7 +1344,6 @@ CREATE TABLE IF NOT EXISTS public.product_channels
 );
 ```
 
-
 ### public.firefox_download_counts
 
 | Frequency  | Source       | Script              | Last Updated    |
@@ -1412,7 +1440,6 @@ CREATE TABLE public.v4_monthly
 
 ### public.copy_cohort_churn
 
-
 | Frequency  | Source       | Script              | Last Updated        |
 |------------|--------------|---------------------|---------------------|
 | Unknown    | Unknown      | Unknown             | 2017-04-23          |
@@ -1443,7 +1470,6 @@ CREATE TABLE IF NOT EXISTS public.copy_cohort_churn
 ```
 
 ### public.tmp_search_cohort_churn
-
 
 | Frequency  | Source       | Script              | Last Updated        |
 |------------|--------------|---------------------|---------------------|
@@ -1636,10 +1662,13 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 ```
 
 ### public.f_bugs_snapshot_v2
+
 ### public.f_bugs_status_changes
+
 ### public.f_bugs_status_resolution
 
 ### public.churn_cohort
 
 ### public.ut_monthly_rollups
+
 ### public.v4_submissionwise_v5

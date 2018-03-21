@@ -1,0 +1,8 @@
+/var/log/nubis-cron/*.log {
+    missingok
+    notifempty
+    compress
+    rotate 5
+    size 5M
+    weekly
+}

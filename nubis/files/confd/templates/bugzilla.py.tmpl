@@ -8,7 +8,7 @@ config = {
     'offset_file' : 'es_offset',
     'delay': 5,
     'offset' : '0',
-    'size' : '{{ getv "/config/Bugzilla/ElasticSearchBatchSize" 20000 }}',
+    'size' : '{{ getv "/config/Bugzilla/ElasticSearchBatchSize" "20000" }}',
     'v_table' :'''f_bugs_snapshot_v2 (bug_id,bug_severity,bug_status,bug_version_num,assigned_to,component,created_by,
                  _created_ts  FILLER int,created_ts as TO_TIMESTAMP(_created_ts/1000),modified_by,_modified_ts FILLER int,
                  modified_ts as TO_TIMESTAMP(_modified_ts/1000),op_sys,priority,product,qa_contact,reported_by,reporter,

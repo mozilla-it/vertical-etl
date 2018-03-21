@@ -14,7 +14,7 @@ cron::monthly { "${project_name}-search-monthly":
 }
 
 file { '/opt/etl/search':
-  ensure => directory,
+  ensure  => directory,
   owner   => 'etl',
   group   => 'etl',
   require => [

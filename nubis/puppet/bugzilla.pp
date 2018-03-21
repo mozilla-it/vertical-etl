@@ -6,7 +6,7 @@ cron::daily { "${project_name}-fetch-bugzilla-es":
 }
 
 file { '/opt/etl/bugzilla':
-  ensure => directory,
+  ensure  => directory,
   require => [
     File['/opt/etl'],
   ]

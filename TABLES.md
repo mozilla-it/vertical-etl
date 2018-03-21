@@ -97,7 +97,7 @@
          * [public.ut_monthly_rollups](#publicut_monthly_rollups)
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-21T08:54-04:00 -->
+<!-- Added by: gozer, at: 2018-03-21T12:46-04:00 -->
 
 <!--te-->
 
@@ -1671,4 +1671,43 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 
 ### public.ut_monthly_rollups
 
+| Frequency  | Source | Script                                            |
+|------------|--------|---------------------------------------------------|
+| Monthly    | S3     | load_search-monthly.py + search-rollup-monthly.sh |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.ut_monthly_rollups
+(
+    month date,
+    search_provider varchar(255),
+    search_count int,
+    country varchar(255),
+    locale varchar(255),
+    distribution_id varchar(255),
+    default_provider varchar(255),
+    profiles_matching int,
+    processed date
+);
+```
+
 ### public.v4_submissionwise_v5
+
+| Frequency  | Source       | Script                                        |
+|------------|--------------|-----------------------------------------------|
+| Daily      | S3           | load_search-daily.py + search-rollup-daily.sh |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.v4_submissionwise_v5
+(
+    submission_date date,
+    search_provider varchar(255),
+    search_count int,
+    country varchar(255),
+    locale varchar(255),
+    distribution_id varchar(255),
+    default_provider varchar(255),
+    profiles_matching int,
+    profile_share float,
+    intermediate_source varchar(255)
+);
+```

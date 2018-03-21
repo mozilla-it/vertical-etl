@@ -16,6 +16,10 @@ file { '/var/lib/etl':
   ensure => 'directory',
 }
 
+file { '/opt/etl':
+  ensure => directory,
+}
+
 # Temporary holding location for salesforce
 
 file { '/var/salesforce-fetcher':

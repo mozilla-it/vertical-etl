@@ -78,7 +78,7 @@ def convert_value(val):
 def push_to_vertica():
     merge_file = config['merge_file_uniq']
     try:
-        insert_to_db = "/opt/vertica/bin/vsql -c \"copy " + config['v_table'] + " from LOCAL '" + merge_file + "' delimiter ',' rejected data '" +merge_file+"_rejected.txt' exceptions '"+merge_file+"_exceptions.txt';\" -U " + config['v_username'] + " -h " + config['v_hostname']+ " -w " + config['v_password']
+        insert_to_db = "/opt/vertica/bin/vsql -c \"copy " + config['v_table'] + " from LOCAL '" + merge_file + "' delimiter ',' rejected data '" +merge_file+"_rejected.txt' exceptions '"+merge_file+"_exceptions.txt';\" -U " + config['v_username'] + " -h " + config['v_hostname']+ " -w \"" + config['v_password'] + "\""
         os.system(insert_to_db)
     except:
         print(sys.exc_info()[0],file=sys.stdout)
@@ -145,7 +145,7 @@ def init_config():
     if date != None:
         config['yesterday'] = date
     config['merge_file'] = "bugs_snapshot_"+config['yesterday']
-    config['tmp_dir'] = "tmp_data_"+config['yesterday']
+    config['tmp_dir'] = "/var/lib/etl/bugzilla/"+config['yesterday']
     mkdir_p(config['tmp_dir'])
     config['offset_file'] = 'es_offset_'+config['yesterday']
     offset_file = open(config['offset_file'],'w')
@@ -198,4 +198,4 @@ if __name__ == "__main__":
     merge_files()
     remove_dups()
     push_to_vertica()
-    #cleanup()
+    cleanup()

@@ -35,3 +35,25 @@ file { '/opt/etl/bugzilla/fetch':
   ],
   source  => 'puppet:///nubis/files/bugzilla/fetch.py',
 }
+
+file { '/opt/etl/bugzilla/f_bug_status_resolution':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/bugzilla'],
+  ],
+  source  => 'puppet:///nubis/files/bugzilla/f_bug_status_resolution.py',
+}
+
+file { '/opt/etl/bugzilla/run':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/bugzilla'],
+  ],
+  source  => 'puppet:///nubis/files/bugzilla/run.sh',
+}

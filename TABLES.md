@@ -31,6 +31,10 @@
          * [public.nagios_log_data](#publicnagios_log_data)
          * [public.adi_by_region](#publicadi_by_region)
          * [public.adi_firefox_by_date_version_country_locale_channel](#publicadi_firefox_by_date_version_country_locale_channel)
+         * [public.ut_monthly_rollups](#publicut_monthly_rollups)
+         * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
+         * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
+         * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -77,6 +81,7 @@
          * [public.cohort_churn](#publiccohort_churn)
          * [public.search_cohort](#publicsearch_cohort)
          * [public.search_cohort_churn](#publicsearch_cohort_churn)
+         * [public.f_bugs_status_changes](#publicf_bugs_status_changes)
       * [Empty Tables](#empty-tables)
          * [public.sfmc_bounces](#publicsfmc_bounces)
          * [public.sfmc_clicks](#publicsfmc_clicks)
@@ -90,14 +95,9 @@
          * [public.raw_scvp_okr](#publicraw_scvp_okr)
       * [Unknown Tables](#unknown-tables)
          * [public.fx_attribution](#publicfx_attribution)
-         * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
-         * [public.f_bugs_status_changes](#publicf_bugs_status_changes)
-         * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
          * [public.churn_cohort](#publicchurn_cohort)
-         * [public.ut_monthly_rollups](#publicut_monthly_rollups)
-         * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
 
-<!-- Added by: gozer, at: 2018-03-21T12:46-04:00 -->
+<!-- Added by: gozer, at: 2018-03-21T14:24-04:00 -->
 
 <!--te-->
 
@@ -637,6 +637,109 @@ CREATE TABLE IF NOT EXISTS public.adi_firefox_by_date_version_country_locale_cha
     ADI int,
     CONSTRAINT C_PRIMARY PRIMARY KEY (ping_date, country, locale, version, release_channel) DISABLED
 );
+```
+
+
+### public.ut_monthly_rollups
+
+| Frequency  | Source | Script                                            |
+|------------|--------|---------------------------------------------------|
+| Monthly    | S3     | load_search-monthly.py + search-rollup-monthly.sh |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.ut_monthly_rollups
+(
+    month date,
+    search_provider varchar(255),
+    search_count int,
+    country varchar(255),
+    locale varchar(255),
+    distribution_id varchar(255),
+    default_provider varchar(255),
+    profiles_matching int,
+    processed date
+);
+```
+
+### public.v4_submissionwise_v5
+
+| Frequency  | Source       | Script                                        |
+|------------|--------------|-----------------------------------------------|
+| Daily      | S3           | load_search-daily.py + search-rollup-daily.sh |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.v4_submissionwise_v5
+(
+    submission_date date,
+    search_provider varchar(255),
+    search_count int,
+    country varchar(255),
+    locale varchar(255),
+    distribution_id varchar(255),
+    default_provider varchar(255),
+    profiles_matching int,
+    profile_share float,
+    intermediate_source varchar(255)
+);
+```
+
+### public.f_bugs_snapshot_v2
+
+| Frequency  | Source       | Script               |
+|------------|--------------|----------------------|
+| Daily      | Bugzilla ES  | fetch_es_bugzilla.py |
+
+```sql
+CREATE TABLE IF NOT EXISTS public.f_bugs_snapshot_v2
+(
+    id  IDENTITY ,
+    es_id varchar(255),
+    bug_id varchar(255),
+    bug_severity varchar(255),
+    bug_status varchar(255),
+    bug_version_num varchar(255),
+    assigned_to varchar(255),
+    component varchar(255),
+    created_by varchar(255),
+    created_ts timestamp,
+    modified_by varchar(255),
+    modified_ts timestamp,
+    op_sys varchar(255),
+    priority varchar(255),
+    product varchar(255),
+    qa_contact varchar(255),
+    reported_by varchar(255),
+    reporter varchar(255),
+    version varchar(255),
+    expires_on varchar(255),
+    cf_due_date varchar(255),
+    target_milestone varchar(255),
+    short_desc varchar(1024),
+    bug_status_resolution varchar(1024),
+    keywords varchar(1024),
+    snapshot_date date
+);
+```
+
+### public.f_bugs_status_resolution
+
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Bugzilla ES  | bug_status_resolution_vertica.py |
+
+```sql
+CREATE TABLE public.f_bugs_status_resolution
+(
+    bug_id varchar(255),
+    bug_severity varchar(55),
+    short_desc varchar(1024),
+    bug_status varchar(255),
+    bug_status_previous varchar(255),
+    status_update varchar(255),
+    status_change_update date,
+    curr_snapshot_date date
+);
+
 ```
 
 ## Broken Tables
@@ -1620,6 +1723,43 @@ CREATE TABLE IF NOT EXISTS public.search_cohort_churn
 );
 ```
 
+### public.f_bugs_status_changes
+
+| Frequency  | Source       | Script              | Last Updated        |
+|------------|--------------|---------------------|---------------------|
+| Unknown    | Unknown      | Unknown             | 2013-10-20          |
+
+```sql
+CREATE TABLE public.f_bugs_status_changes
+(
+    bug_id varchar(255),
+    bug_severity varchar(255),
+    bug_status_current varchar(255),
+    bug_status_previous varchar(255),
+    bug_version_num varchar(255),
+    assigned_to varchar(255),
+    component varchar(255),
+    created_by varchar(255),
+    created_ts timestamp,
+    modified_by varchar(255),
+    modified_ts timestamp,
+    op_sys varchar(255),
+    priority varchar(255),
+    product varchar(255),
+    qa_contact varchar(255),
+    reported_by varchar(255),
+    reporter varchar(255),
+    version varchar(255),
+    expires_on varchar(255),
+    cf_due_date varchar(255),
+    target_milestone varchar(255),
+    keywords varchar(1024),
+    snapshot_date date,
+    load_date date,
+    load_source varchar(100)
+);
+```
+
 ## Empty Tables
 
 ### public.sfmc_bounces
@@ -1661,53 +1801,4 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
 );
 ```
 
-### public.f_bugs_snapshot_v2
-
-### public.f_bugs_status_changes
-
-### public.f_bugs_status_resolution
-
 ### public.churn_cohort
-
-### public.ut_monthly_rollups
-
-| Frequency  | Source | Script                                            |
-|------------|--------|---------------------------------------------------|
-| Monthly    | S3     | load_search-monthly.py + search-rollup-monthly.sh |
-
-```sql
-CREATE TABLE IF NOT EXISTS public.ut_monthly_rollups
-(
-    month date,
-    search_provider varchar(255),
-    search_count int,
-    country varchar(255),
-    locale varchar(255),
-    distribution_id varchar(255),
-    default_provider varchar(255),
-    profiles_matching int,
-    processed date
-);
-```
-
-### public.v4_submissionwise_v5
-
-| Frequency  | Source       | Script                                        |
-|------------|--------------|-----------------------------------------------|
-| Daily      | S3           | load_search-daily.py + search-rollup-daily.sh |
-
-```sql
-CREATE TABLE IF NOT EXISTS public.v4_submissionwise_v5
-(
-    submission_date date,
-    search_provider varchar(255),
-    search_count int,
-    country varchar(255),
-    locale varchar(255),
-    distribution_id varchar(255),
-    default_provider varchar(255),
-    profiles_matching int,
-    profile_share float,
-    intermediate_source varchar(255)
-);
-```

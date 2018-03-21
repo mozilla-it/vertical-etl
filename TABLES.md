@@ -2,6 +2,8 @@
 
 ## Table of Contents
 
+<!-- markdownlint-disable MD006 MD007 MD032 -->
+
 <!--ts-->
    * [ETL Jobs](#etl-jobs)
       * [Table of Contents](#table-of-contents)
@@ -97,9 +99,11 @@
          * [public.fx_attribution](#publicfx_attribution)
          * [public.churn_cohort](#publicchurn_cohort)
 
-<!-- Added by: gozer, at: 2018-03-21T14:24-04:00 -->
+<!-- Added by: gozer, at: 2018-03-21T15:09-04:00 -->
 
 <!--te-->
+
+<!-- markdownlint-enable MD006 MD007 MD032 -->
 
 ## Current Tables
 
@@ -638,7 +642,6 @@ CREATE TABLE IF NOT EXISTS public.adi_firefox_by_date_version_country_locale_cha
     CONSTRAINT C_PRIMARY PRIMARY KEY (ping_date, country, locale, version, release_channel) DISABLED
 );
 ```
-
 
 ### public.ut_monthly_rollups
 

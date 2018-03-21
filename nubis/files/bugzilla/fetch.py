@@ -50,9 +50,7 @@ def remove_dups():
     uniq_file = config['merge_file']+'_uniq'
     try:
         config['merge_file_uniq'] = uniq_file
-        #os_remove_dups = 'sort '+config['merge_file']+' | uniq > '+config['merge_file_uniq']
         os_remove_dups = "awk '!x[$1,$4]++' FS=\",\" "+ config['merge_file']+" > " + config['merge_file_uniq']
-        #print(os_remove_dups,file=sys.stdout)
         os.system(os_remove_dups)
     except:
         print(sys.exc_info()[0],file=sys.stdout)
@@ -70,6 +68,12 @@ def commit_offset(offset_file,offset):
 
 
 def convert_value(val):
+    # Need to escape for CSV format
+    # literral '\' => '\\'
+    # litteral ',' => '\,'
+    if type(val) in (str, unicode):
+        val=val.replace('\\','\\\\').replace(',','\\,')
+
     if type(val) == unicode:
         return val.encode('utf-8')
     else:
@@ -128,7 +132,6 @@ def fetch_es_data(query):
     results = json.loads(r.text)
     return results
 
-
 def mkdir_p(path):
     try:
         os.makedirs(path)
@@ -144,18 +147,18 @@ def init_config():
         date = sys.argv[1]
     if date != None:
         config['yesterday'] = date
-    config['merge_file'] = "bugs_snapshot_"+config['yesterday']
+
     config['tmp_dir'] = "/var/lib/etl/bugzilla/"+config['yesterday']
     mkdir_p(config['tmp_dir'])
-    config['offset_file'] = 'es_offset_'+config['yesterday']
+
+    config['merge_file'] = config['tmp_dir'] + '/snapshot'
+    config['offset_file'] = config['tmp_dir'] + '/es_offset'
     offset_file = open(config['offset_file'],'w')
     print("0",file=offset_file)
 
 def cleanup():
     import shutil
     try:
-        os.remove(config['merge_file'])
-        os.remove(config['merge_file_uniq'])
         shutil.rmtree(config['tmp_dir'])
     except OSError as exc:
         raise
@@ -163,7 +166,6 @@ def cleanup():
 
 def total_count_query():
     yesterday = config['yesterday']+" 23:59:59.999"
-    #yesterday = config['yesterday']+"T23:59:59.999Z"
     pattern = '%Y-%m-%d %H:%M:%S.%f'
     epoch_ts = str(int(time.mktime(time.strptime(yesterday,pattern))) * 1000)
     offset = "0"
@@ -173,13 +175,11 @@ def total_count_query():
      "fields": ["assigned_to","bug_id","bug_severity","bug_status","bug_version_num","component",
      "created_by","created_ts","modified_by","modified_ts","op_sys","priority","product","qa_contact","reported_by","reporter",
      "version","expires_on","keywords","cf_due_date","target_milestone","short_desc","resolution"]}"""    
-    #epoch_ts = yesterday
     return query
 
 
 def construct_query(offset,limit):
     yesterday = config['yesterday']+" 23:59:59.999"
-    #yesterday = config['yesterday']+"T23:59:59.999Z"
     pattern = '%Y-%m-%d %H:%M:%S.%f'
     epoch_ts = str(int(time.mktime(time.strptime(yesterday,pattern))) * 1000)
     to = str(int(offset)+int(limit))

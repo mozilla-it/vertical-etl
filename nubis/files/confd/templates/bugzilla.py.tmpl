@@ -1,0 +1,16 @@
+from datetime import datetime,timedelta
+config = {
+    'es_host': '{{ getv "/config/Bugzilla/ElasticSearchHost" }}',
+    'yesterday' : (datetime.now() - timedelta(1)).strftime("%Y-%m-%d"),
+    'v_username' : 'dbadmin',
+    'v_password' : '',
+    'v_hostname' : '{{ getv "/config/Vertica/Host" }}',
+    'offset_file' : 'es_offset',
+    'delay': 5,
+    'offset' : '0',
+    'size' : '{{ getv "/config/Bugzilla/ElasticSearchBatchSize" 20000 }}',
+    'v_table' :'''f_bugs_snapshot_v2 (bug_id,bug_severity,bug_status,bug_version_num,assigned_to,component,created_by,
+                 _created_ts  FILLER int,created_ts as TO_TIMESTAMP(_created_ts/1000),modified_by,_modified_ts FILLER int,
+                 modified_ts as TO_TIMESTAMP(_modified_ts/1000),op_sys,priority,product,qa_contact,reported_by,reporter,
+                 version,expires_on,cf_due_date,target_milestone,keywords,short_desc,bug_status_resolution,snapshot_date)''',
+}

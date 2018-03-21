@@ -80,7 +80,7 @@ aws s3 cp "$ROLLUP" "$LOCAL_FILES_DIR/"
 
 for ROLLUP_FILE in $LOCAL_FILES_DIR/*.csv
 do
-        echo "(scrubbing) $LOCAL_FILES_DIR/$ROLLUP_FILE"
+        echo "(scrubbing) $ROLLUP_FILE"
         # replace field ending ',' character with '|' character
         sed -i 's/,/|/g' "$ROLLUP_FILE"
         # remove CTRL-M from end of line

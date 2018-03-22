@@ -9,7 +9,17 @@ python::pyvenv { "${virtualenv_path}/salesforce-fetcher" :
   require => [
     File[$virtualenv_path],
   ],
-}# Install Mozilla's salesforce-fetcher
+}
+
+python::pyvenv { "${virtualenv_path}/vertica-csv-loader" :
+  ensure  => present,
+  version => '3.4',
+  require => [
+    File[$virtualenv_path],
+  ],
+}
+
+# Install Mozilla's salesforce-fetcher
 python::pip { 'salesforce-fetcher':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/salesforce-fetcher",

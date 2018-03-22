@@ -43,4 +43,4 @@ XFER_FILE_DIR=/var/lib/etl/search/$SCOPE/processed-$FETCH_DATE.csv.gz
 
 set -e
 
-/opt/etl/search/load-$SCOPE -f $XFER_FILE_DIR -d $FETCH_DATE
+"/opt/etl/search/load-$SCOPE" -f "$XFER_FILE_DIR"

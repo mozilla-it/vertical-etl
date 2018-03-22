@@ -53,14 +53,6 @@ file { '/usr/local/bin/vertica-csv-loader':
   ],
 }
 
-python::pyvenv { "${virtualenv_path}/vertica-csv-loader" :
-  ensure  => present,
-  version => '3.4',
-  require => [
-    File[$virtualenv_path],
-  ],
-}
-
 file { '/opt/etl/salesforce':
   ensure  => directory,
   require => [

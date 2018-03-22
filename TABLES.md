@@ -50,6 +50,7 @@
          * [public.adjust_ios_monthly](#publicadjust_ios_monthly)
          * [public.adjust_klar_monthly](#publicadjust_klar_monthly)
          * [public.vertica_backups](#publicvertica_backups)
+         * [public.churn_cohort](#publicchurn_cohort)
       * [Unused Tables](#unused-tables)
          * [public.brain_juicer](#publicbrain_juicer)
          * [public.mysql_host](#publicmysql_host)
@@ -97,9 +98,8 @@
          * [public.raw_scvp_okr](#publicraw_scvp_okr)
       * [Unknown Tables](#unknown-tables)
          * [public.fx_attribution](#publicfx_attribution)
-         * [public.churn_cohort](#publicchurn_cohort)
 
-<!-- Added by: gozer, at: 2018-03-21T15:09-04:00 -->
+<!-- Added by: gozer, at: 2018-03-22T10:40-04:00 -->
 
 <!--te-->
 
@@ -943,6 +943,30 @@ CREATE TABLE IF NOT EXISTS public.vertica_backups
     node varchar(50),
     status varchar(15),
     snapshotDate date
+);
+```
+
+### public.churn_cohort
+
+| Frequency  | Source | Script                                               | Broken Since |
+|------------|--------|------------------------------------------------------|--------------|
+| Weekly     | S3     | search-cohort-churn.sh + load_search_cohort-churn.sh | 2018-02-18   |
+
+```sql
+CREATE TABLE public.churn_cohort
+(
+    channel varchar(50),
+    country char(2),
+    is_funnelcake boolean,
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    week_since_acquisition int,
+    is_active boolean,
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float
 );
 ```
 
@@ -1803,5 +1827,3 @@ CREATE TABLE IF NOT EXISTS public.fx_attribution
     content varchar(250)
 );
 ```
-
-### public.churn_cohort

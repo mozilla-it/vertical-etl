@@ -56,7 +56,29 @@ file { '/opt/etl/search/load':
   require => [
     File['/opt/etl/search'],
   ],
-  source  => 'puppet:///nubis/files/search/load.py',
+  source  => 'puppet:///nubis/files/search/load.sh',
+}
+
+file { '/opt/etl/search/load-daily':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/search'],
+  ],
+  source  => 'puppet:///nubis/files/search/load-daily.py',
+}
+
+file { '/opt/etl/search/load-monthly':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/search'],
+  ],
+  source  => 'puppet:///nubis/files/search/load-monthly.py',
 }
 
 file { '/opt/etl/search/run':

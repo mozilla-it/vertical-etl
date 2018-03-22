@@ -90,7 +90,7 @@ file { '/opt/etl/salesforce/load':
   require => [
     File['/opt/etl/salesforce'],
   ],
-  source  => 'puppet:///nubis/files/salesforce/load.py',
+  source  => 'puppet:///nubis/files/salesforce/load.sh',
 }
 
 file { '/opt/etl/salesforce/load.yml':

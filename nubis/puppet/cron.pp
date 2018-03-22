@@ -65,7 +65,7 @@ file { "/usr/local/bin/run-${project_name}-redash":
   owner  => root,
   group  => root,
   mode   => '0755',
-  source => 'puppet:///nubis/files/redash/run.sh',
+  source => 'puppet:///nubis/files/data-collector/run.sh',
 }
 
 cron::daily { "${project_name}-redash-ut_desktop_daily_active_users":

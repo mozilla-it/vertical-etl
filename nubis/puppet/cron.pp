@@ -20,20 +20,6 @@ file { '/opt/etl':
   ensure => directory,
 }
 
-# Temporary holding location for salesforce
-
-file { '/var/salesforce-fetcher':
-  ensure  => directory,
-  owner   => 'etl',
-  group   => 'etl',
-  mode    => '0755',
-
-  require => [
-    User['etl'],
-    Group['etl'],
-  ]
-}
-
 # Temporary holding location for data-collectors
 
 file { '/var/data-collectors':
@@ -70,21 +56,6 @@ cron::daily { "${project_name}-adjust_retention":
   minute  => '5',
   user    => 'etl',
   command => "nubis-cron ${project_name}-adjust_retention /usr/local/bin/data-collectors adjust --job retention --table adjust_retention",
-}
-
-# Salesforce
-
-file { "/usr/local/bin/run-${project_name}-salesforce":
-  ensure => present,
-  owner  => root,
-  group  => root,
-  mode   => '0755',
-  source => 'puppet:///nubis/files/run-salesforce',
-}
-
-cron::daily { "${project_name}-salesforce":
-  user    => 'etl',
-  command => "nubis-cron ${project_name}-salesforce /usr/local/bin/run-${project_name}-salesforce",
 }
 
 # Redash

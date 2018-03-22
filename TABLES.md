@@ -389,9 +389,9 @@ CREATE TABLE IF NOT EXISTS public.statcounter_monthly
 
 ### public.mozilla_staff
 
-| Frequency  | Source       | Script                 |
-|------------|--------------|------------------------|
-| Daily      | Workday      | fetch_workday_data.py  |
+| Frequency  | Source       | Script                      |
+|------------|--------------|-----------------------------|
+| Daily      | Workday      | *ETL* /opt/workday/fetch    |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.mozilla_staff
@@ -415,9 +415,9 @@ CREATE TABLE IF NOT EXISTS public.mozilla_staff
 
 ### public.mozilla_staff_plus
 
-| Frequency  | Source       | Script                      |
-|------------|--------------|-----------------------------|
-| Daily      | Workday      | fetch_workday_data_plus.py  |
+| Frequency  | Source       | Script                           |
+|------------|--------------|----------------------------------|
+| Daily      | Workday      | *ETL* /opt/workday/fetch-plus    |
 
 ```sql
 CREATE TABLE public.mozilla_staff_plus
@@ -539,7 +539,7 @@ CREATE TABLE IF NOT EXISTS public.copy_adi_dimensional_by_date
 
 | Frequency  | Source       | Script                           |
 |------------|--------------|----------------------------------|
-| Daily      | S3           | /opt/adi/{fetch,load}            |
+| Daily      | S3           | *ETL* /opt/adi/{fetch,load}      |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.copy_adi_dimensional_by_date_s3
@@ -647,7 +647,7 @@ CREATE TABLE IF NOT EXISTS public.adi_firefox_by_date_version_country_locale_cha
 
 | Frequency  | Source | Script                                            |
 |------------|--------|---------------------------------------------------|
-| Monthly    | S3     | load_search-monthly.py + search-rollup-monthly.sh |
+| Monthly    | S3     | *ETL* search                                      |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.ut_monthly_rollups
@@ -668,7 +668,7 @@ CREATE TABLE IF NOT EXISTS public.ut_monthly_rollups
 
 | Frequency  | Source       | Script                                        |
 |------------|--------------|-----------------------------------------------|
-| Daily      | S3           | load_search-daily.py + search-rollup-daily.sh |
+| Daily      | S3           | *ETL* search                                  |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.v4_submissionwise_v5
@@ -690,7 +690,7 @@ CREATE TABLE IF NOT EXISTS public.v4_submissionwise_v5
 
 | Frequency  | Source       | Script               |
 |------------|--------------|----------------------|
-| Daily      | Bugzilla ES  | fetch_es_bugzilla.py |
+| Daily      | Bugzilla ES  | *ETL* bugzilla       |
 
 ```sql
 CREATE TABLE IF NOT EXISTS public.f_bugs_snapshot_v2
@@ -728,7 +728,7 @@ CREATE TABLE IF NOT EXISTS public.f_bugs_snapshot_v2
 
 | Frequency  | Source       | Script                           |
 |------------|--------------|----------------------------------|
-| Daily      | Bugzilla ES  | bug_status_resolution_vertica.py |
+| Daily      | Bugzilla ES  | *ETL* bugzilla                   |
 
 ```sql
 CREATE TABLE public.f_bugs_status_resolution
@@ -743,6 +743,30 @@ CREATE TABLE public.f_bugs_status_resolution
     curr_snapshot_date date
 );
 
+```
+
+### public.churn_cohort
+
+| Frequency  | Source | Script       | Broken Since |
+|------------|--------|--------------|--------------|
+| Weekly     | S3     | *ETL* churn  | 2018-02-18   |
+
+```sql
+CREATE TABLE public.churn_cohort
+(
+    channel varchar(50),
+    country char(2),
+    is_funnelcake boolean,
+    acquisition_period date,
+    start_version varchar(10),
+    sync_usage varchar(10),
+    current_version varchar(10),
+    week_since_acquisition int,
+    is_active boolean,
+    n_profiles int,
+    usage_hours float,
+    sum_squared_usage_hours float
+);
 ```
 
 ## Broken Tables
@@ -943,30 +967,6 @@ CREATE TABLE IF NOT EXISTS public.vertica_backups
     node varchar(50),
     status varchar(15),
     snapshotDate date
-);
-```
-
-### public.churn_cohort
-
-| Frequency  | Source | Script                                               | Broken Since |
-|------------|--------|------------------------------------------------------|--------------|
-| Weekly     | S3     | search-cohort-churn.sh + load_search_cohort-churn.sh | 2018-02-18   |
-
-```sql
-CREATE TABLE public.churn_cohort
-(
-    channel varchar(50),
-    country char(2),
-    is_funnelcake boolean,
-    acquisition_period date,
-    start_version varchar(10),
-    sync_usage varchar(10),
-    current_version varchar(10),
-    week_since_acquisition int,
-    is_active boolean,
-    n_profiles int,
-    usage_hours float,
-    sum_squared_usage_hours float
 );
 ```
 

@@ -2,9 +2,6 @@
 
 export PATH=/usr/local/bin:$PATH
 
-# Cleanup
-find /var/salesforce-fetcher/ -name output.csv -mtime +1 -exec rm {} \;
-
 # Import from salesforce
 /opt/etl/salesforce/fetch
 

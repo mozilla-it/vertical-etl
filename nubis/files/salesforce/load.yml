@@ -1,0 +1,11 @@
+file_spec:
+  delimiter: ","
+  quoted: True
+  skip_header: True
+
+tables:
+  sf_donations: "/var/lib/etl/salesforce/contact_donor_count/{date}/output.csv"
+  sf_foundation_signups: "/var/lib/etl/salesforce/foundation_signups/{date}/output.csv"
+  sf_donation_count: "/var/lib/etl/salesforce/donation_record_count/{date}/output.csv"
+  sf_copyright_petition: "/var/lib/etl/salesforce/petition_signups/{date}/output.csv"
+  sf_contacts: "/var/lib/etl/salesforce/contacts/{date}/output.csv"

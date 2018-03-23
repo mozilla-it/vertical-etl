@@ -1,6 +1,6 @@
 [template]
 src = "salesforce-fetcher.tmpl"
-dest = "/etc/salesforce-fetcher/settings.yml"
+dest = "/opt/etl/salesforce/fetch.yml"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

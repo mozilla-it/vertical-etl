@@ -2,15 +2,18 @@ cron::daily { "${project_name}-adi":
   hour    => '14',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => "nubis-cron ${project_name}-adi /opt/adi/run",
+  command => "nubis-cron ${project_name}-adi /opt/etl/adi/run",
 }
 
 package { 'pyodbc':
   ensure => present
 }
 
-file { '/opt/adi':
+file { '/opt/etl/adi':
   ensure => directory,
+  require => [
+    File['/opt/etl'],
+  ]
 }
 
 file { '/var/lib/etl/adi':
@@ -26,35 +29,35 @@ file { '/var/lib/etl/adi':
   ]
 }
 
-file { '/opt/adi/fetch':
+file { '/opt/etl/adi/fetch':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/adi'],
+    File['/opt/etl/adi'],
   ],
   source  => 'puppet:///nubis/files/adi/fetch.sh',
 }
 
-file { '/opt/adi/load':
+file { '/opt/etl/adi/load':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/adi'],
+    File['/opt/etl/adi'],
   ],
   source  => 'puppet:///nubis/files/adi/load.py',
 }
 
-file { '/opt/adi/run':
+file { '/opt/etl/adi/run':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/adi'],
+    File['/opt/etl/adi'],
   ],
   source  => 'puppet:///nubis/files/adi/run.sh',
 }

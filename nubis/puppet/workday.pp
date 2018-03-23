@@ -2,18 +2,21 @@ cron::daily { "${project_name}-workday":
   hour    => '1',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => "nubis-cron ${project_name}-workday /opt/workday/fetch",
+  command => "nubis-cron ${project_name}-workday /opt/etl/workday/fetch",
 }
 
 cron::daily { "${project_name}-workday-plus":
   hour    => '5',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => "nubis-cron ${project_name}-workday-plus /opt/workday/fetch-plus",
+  command => "nubis-cron ${project_name}-workday-plus /opt/etl/workday/fetch-plus",
 }
 
-file { '/opt/workday':
+file { '/opt/etl/workday':
   ensure => directory,
+  require => [
+    File['/opt/etl'],
+  ]  
 }
 
 file { '/var/lib/etl/workday':
@@ -29,24 +32,24 @@ file { '/var/lib/etl/workday':
   ]
 }
 
-file { '/opt/workday/fetch':
+file { '/opt/etl/workday/fetch':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/workday'],
+    File['/opt/etl/workday'],
   ],
   source  => 'puppet:///nubis/files/workday/fetch_workday_data.py',
 }
 
-file { '/opt/workday/fetch-plus':
+file { '/opt/etl/workday/fetch-plus':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/workday'],
+    File['/opt/etl/workday'],
   ],
   source  => 'puppet:///nubis/files/workday/fetch_workday_data_plus.py',
 }

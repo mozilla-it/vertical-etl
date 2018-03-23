@@ -1,6 +1,6 @@
 [template]
 src = "workday.py.tmpl"
-dest = "/opt/workday/config.py"
+dest = "/opt/etl/workday/config.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

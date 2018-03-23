@@ -1,3 +1,7 @@
 #!/bin/bash -l
 
-/opt/adi/fetch && /opt/adi/load
+set -e
+
+/opt/etl/adi/fetch
+
+/opt/etl/adi/load

@@ -14,7 +14,4 @@ module "worker" {
   root_storage_size = "32"
   instance_type     = "t2.small"
 
-  data_storage_size = "32"
-  data_storage_type = "gp2"
-
 }

@@ -1,5 +1,5 @@
 module "worker" {
-  source            = "github.com/nubisproject/nubis-terraform//worker?ref=v2.1.0"
+  source            = "github.com/gozer/nubis-terraform//worker?ref=issue%2F167%2Fmore-disks"
   region            = "${var.region}"
   environment       = "${var.environment}"
   account           = "${var.account}"
@@ -14,6 +14,7 @@ module "worker" {
   root_storage_size = "32"
   instance_type     = "t2.small"
 
-  security_group        = "${data.consul_keys.vertical.var.client_security_group_id}"
-  security_group_custom = true
+  data_storage_size = "32"
+  data_storage_type = "gp2"
+
 }

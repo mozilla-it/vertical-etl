@@ -1,5 +1,5 @@
 module "worker" {
-  source            = "github.com/gozer/nubis-terraform//worker?ref=issue%2F167%2Fmore-disks"
+  source            = "github.com/nubisproject/nubis-terraform//worker?ref=develop"
   region            = "${var.region}"
   environment       = "${var.environment}"
   account           = "${var.account}"

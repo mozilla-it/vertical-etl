@@ -1,11 +1,24 @@
-from datetime import datetime,timedelta
 config = {
-    'today' : (datetime.now()).strftime("%Y-%m-%d"),
+    'w_username' : '{{ getv "/config/Workday/Username" }}',
+    'w_password' : '{{ getv "/config/Workday/Password" }}',
     'v_username' : 'dbadmin',
     'v_password' : '',
     'v_hostname' : '{{ getv "/config/Vertica/Host" }}',
-    'w_username' : '{{ getv "/config/Workday/Username" }}',
-    'w_password' : '{{ getv "/config/Workday/Password" }}',
-    'v_table' :'''mozilla_staff (employee_id,first_name,last_name,email_address,supervisory_organization,cost_center,
-    functional_group,manager_id,manager_lastname,manager_firstname,is_manager,hire_date,location,snapshot_date)'''
+    'v_table' :'mozilla_staff',
+    'v_today_field' : 'snapshot_date',
+    'v_fields'   : [
+        'employee_id',
+        'first_name',
+        'last_name',
+        'email_address',
+        'supervisory_organization',
+        'cost_center',
+        'functional_group',
+        'manager_id',
+        'manager_lastname',
+        'manager_firstname',
+        'is_manager',
+        'hire_date',
+        'location',
+    ],
 }

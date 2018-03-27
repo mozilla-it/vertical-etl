@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Fetch extended data from Workday into Vertica"""
+
 import json
 import sys
 import pyodbc
@@ -37,7 +39,7 @@ def fetch_seating():
         print(sys.exc_info()[0])
         raise
 
-def get_users():
+def fetch_users():
     try:
         auth = HTTPBasicAuth(config['w_users_username'], config['w_users_password'])
         data = requests.get(workday.USERS_URL, auth=auth)
@@ -59,7 +61,7 @@ def parse_data(results):
     print("Writing to %s" % config['tmp_file'])
     output_file = open(config['tmp_file'], "w")
     seating = fetch_seating()
-    users_addtl = get_users()
+    users_addtl = fetch_users()
     employees = results['Report_Entry']
     for emp in employees:
         try:

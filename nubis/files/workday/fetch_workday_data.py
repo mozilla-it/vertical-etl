@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Fetch simple data from Workday into Vertica"""
+
 import json
 import sys
 import pyodbc

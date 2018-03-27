@@ -13,10 +13,10 @@ cron::daily { "${project_name}-workday-plus":
 }
 
 file { '/opt/etl/workday':
-  ensure => directory,
+  ensure  => directory,
   require => [
     File['/opt/etl'],
-  ]  
+  ]
 }
 
 file { '/var/lib/etl/workday':

@@ -13,5 +13,4 @@ module "worker" {
 
   root_storage_size = "32"
   instance_type     = "t2.small"
-
 }

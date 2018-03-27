@@ -10,7 +10,7 @@ package { 'pyodbc':
 }
 
 file { '/opt/etl/adi':
-  ensure => directory,
+  ensure  => directory,
   require => [
     File['/opt/etl'],
   ]

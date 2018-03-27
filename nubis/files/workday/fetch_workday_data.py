@@ -14,31 +14,19 @@ from requests.auth import HTTPBasicAuth
 
 from config import config
 
+import util
+
+WORKDAY_WORKERS_URL='https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla/sstorey/IT_Data_Warehouse_Worker_Sync_Full_File?format=json'
+
 def fetch_data():
     try:
         auth = HTTPBasicAuth(config['w_username'], config['w_password'])
-        data = requests.get(
-            'https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla/sstorey/IT_Data_Warehouse_Worker_Sync_Full_File?format=json',
-            auth=auth)
+        data = requests.get(WORKDAY_WORKERS_URL, auth=auth)
         results = json.loads(data.text)
         parse_data(results)
     except BaseException:
         print(sys.exc_info()[0], file=sys.stdout)
         raise
-
-
-def convert_value(val):
-    # Need to escape for CSV format
-    # literral '\' => '\\'
-    # litteral ',' => '\,'
-    if isinstance(val, (str, unicode)):
-        val = val.replace('\\', '\\\\').replace(',', '\\,')
-
-    if isinstance(val, unicode):
-        return val.encode('utf-8')
-    else:
-        return str(val).encode('utf-8')
-
 
 def parse_data(results):
     print("Writing to %s" % config['tmp_file'])
@@ -68,11 +56,10 @@ def parse_data(results):
             line.append(emp['Location']) if 'Location' in emp else line.append('')
             line.append(config['today'])
 
-            print(','.join(map(convert_value, line)), file=output_file)
+            print(','.join(map(util.convert_value, line)), file=output_file)
         except BaseException:
             print(sys.exc_info()[0], file=sys.stdout)
             raise
-
 
 def push_to_vertica():
     tmp_file = config['tmp_file']
@@ -105,7 +92,7 @@ def push_to_vertica():
 
         sql = "insert into last_updated (name, updated_at, updated_by) values (?, now(), ?)"
 
-        last_updated_count = cursor.execute(sql, 'mozilla_staff', __file__).rowcount
+        last_updated_count = cursor.execute(sql, config['v_table'] , __file__).rowcount
 
         print("Deleted: %d, Loaded: %d, Last_updated: %d" % (delete_count, copy_count, last_updated_count))
 
@@ -114,41 +101,25 @@ def push_to_vertica():
         print(sys.exc_info()[0], file=sys.stdout)
         raise
 
-
-def mkdir_p(path):
-    try:
-        os.makedirs(path)
-    except OSError as exc:
-        if exc.errno == errno.EEXIST and os.path.isdir(path):
-            pass
-        else:
-            raise
-
-
 def init_config():
     try:
         if len(sys.argv) == 2:
             config['today'] = sys.argv[1]
         else:
             config['today'] = str(date.today())
-        config['tmp_dir'] = "/var/lib/etl/workday"
-        mkdir_p(config['tmp_dir'])
-        config['tmp_file'] = config['tmp_dir'] + \
-            "/workday_data_" + config['today']
+
+	if not 'base_dir' in config:
+	    config['base_dir'] = '/tmp'
+
+        config['tmp_dir'] = config['base_dir'] + "/" + config['today']
+        util.mkdir_p(config['tmp_dir'])
+        config['tmp_file'] = config['tmp_dir'] + "/" + config['v_table']
     except BaseException:
         print(sys.exc_info()[0], file=sys.stdout)
         raise
-
-
-def cleanup():
-    try:
-        os.remove(config['tmp_file'])
-    except OSError as exc:
-        raise
-
 
 if __name__ == "__main__":
     init_config()
     fetch_data()
     push_to_vertica()
-    cleanup()
+    util.cleanup(config['tmp_dir'])

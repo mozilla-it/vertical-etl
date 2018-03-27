@@ -32,6 +32,17 @@ file { '/var/lib/etl/workday':
   ]
 }
 
+file { '/opt/etl/workday/util.py':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0644',
+  require => [
+    File['/opt/etl/workday'],
+  ],
+  source  => 'puppet:///nubis/files/workday/util.py',
+}
+
 file { '/opt/etl/workday/fetch':
   ensure  => present,
   owner   => root,

@@ -8,7 +8,7 @@ from optparse import OptionParser
 
 import pyodbc
 
-cnxn = pyodbc.connect("DSN=vertica")
+cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 cursor = cnxn.cursor()
 
 parser = OptionParser()
@@ -29,14 +29,15 @@ if options.log_file is None:
     print("Loading %s" % options.log_file)
 
 copy_sql = """
-        COPY churn_cohort(channel, country, is_funnelcake, acquisition_period, start_version, sync_usage, current_version, week_since_acquisition, is_active, n_profiles, usage_hours, sum_squared_usage_hours)from local '%s' GZIP DELIMITER ',' SKIP 1 DIRECT;
+        COPY churn_cohort(channel, country, is_funnelcake, acquisition_period, start_version, sync_usage, current_version, week_since_acquisition, is_active, n_profiles, usage_hours, sum_squared_usage_hours)from local '%s' GZIP DELIMITER ',' SKIP 1 DIRECT NO COMMIT;
 """ % (options.log_file)
 
 cursor.execute(copy_sql)
 
 last_updated_sql = """
-        insert into last_updated values ('churn_cohort', now(), 'Cron-Loader');
+        insert into last_updated values (?, now(), ?);
 """
 
-cursor.execute(last_updated_sql)
+cursor.execute(last_updated_sql, 'churn_cohort',__file__)
+
 cnxn.commit()

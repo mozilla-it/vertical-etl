@@ -108,7 +108,7 @@ def main(start_date, end_date):
 
     # update last_updated with result
     logger.debug('inserting completed load in last_updated for monitoring')
-    last_updated_sql = ("insert into last_updated values ('copy_adi_dimensional_by_date_s3', now(), 'Cron-Loader');")
+    last_updated_sql = ("insert into last_updated values ('copy_adi_dimensional_by_date_s3', now(), '%s');" % __file__)
     query_vertica(last_updated_sql)
     
     # All worked, commit it all

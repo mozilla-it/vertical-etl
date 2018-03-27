@@ -129,7 +129,7 @@ def init_config():
             config['today'] = date
         config['tmp_dir'] = "/var/lib/etl/workday"
         mkdir_p(config['tmp_dir'])
-        config['tmp_file'] = config['tmp_dir']+"/workday_data_"+config['today']
+        config['tmp_file'] = config['tmp_dir']+"/workday_data_plus_"+config['today']
     except:
         print(sys.exec_info()[0],file=sys.stdout)
         raise

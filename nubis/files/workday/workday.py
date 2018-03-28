@@ -8,6 +8,7 @@ import errno
 import shutil
 from datetime import date
 import pyodbc
+import __main__ as main_script
 
 BASE_URL = 'https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla'
 
@@ -55,7 +56,7 @@ def push_to_vertica(config):
 
         sql = "insert into last_updated (name, updated_at, updated_by) values (?, now(), ?)"
 
-        last_updated_count = cursor.execute(sql, config['v_table'], __file__).rowcount
+        last_updated_count = cursor.execute(sql, config['v_table'], main_script.__file__).rowcount
 
         print("Deleted: %d, Loaded: %d, Last_updated: %d" %
               (delete_count, copy_count, last_updated_count))

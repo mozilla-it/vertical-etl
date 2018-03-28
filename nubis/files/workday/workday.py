@@ -6,14 +6,64 @@ import os
 import sys
 import errno
 import shutil
-
 from datetime import date
+import pyodbc
 
 BASE_URL = 'https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla'
 
 WORKERS_URL = BASE_URL + '/sstorey/IT_Data_Warehouse_Worker_Sync_Full_File?format=json'
 SEATING_URL = BASE_URL + '/ISU_RAAS/WPR_Worker_Space_Number?format=json'
 USERS_URL = BASE_URL + '/ISU_RAAS/Mozilla_BusContUsers?format=json'
+
+def push_to_vertica(config):
+    """Load the CSV data into Vertica for the current day, deleting what was there before"""
+    tmp_file = config['tmp_file']
+
+    try:
+        cnxn = pyodbc.connect("DSN=%s" % config['v_dsn'], autocommit=False)
+        cursor = cnxn.cursor()
+    except BaseException:
+        print(sys.exc_info()[0], file=sys.stdout)
+        raise
+
+    try:
+        sql = """DELETE FROM {table_name}
+	         WHERE {today_field} = ?
+              """
+        sql = sql.format(table_name=config['v_table'],
+                         today_field=config['v_today_field'],
+                        )
+
+        delete_count = cursor.execute(sql, config['today']).rowcount
+
+        sql = """COPY {table_name} ({table_fields})
+	         FROM LOCAL '{local_path}'
+		 DELIMITER '{delimiter}'
+		 EXCEPTIONS '{exceptions}'
+		 REJECTED DATA '{rejected}'
+		 NO COMMIT
+             """
+        sql = sql.format(table_name=config['v_table'],
+                         table_fields=",".join(config['v_fields'] + [config['v_today_field']]),
+                         local_path=tmp_file,
+                         delimiter=',',
+                         exceptions=tmp_file + '_exceptions.txt',
+                         rejected=tmp_file + '_rejected.txt',
+                        )
+
+        copy_count = cursor.execute(sql).rowcount
+
+        sql = "insert into last_updated (name, updated_at, updated_by) values (?, now(), ?)"
+
+        last_updated_count = cursor.execute(sql, config['v_table'], __file__).rowcount
+
+        print("Deleted: %d, Loaded: %d, Last_updated: %d" %
+              (delete_count, copy_count, last_updated_count))
+
+        cursor.commit()
+    except BaseException:
+        print(sys.exc_info()[0], file=sys.stdout)
+        raise
 
 def init_config(config):
     """Validate our config and set default values if necessary"""

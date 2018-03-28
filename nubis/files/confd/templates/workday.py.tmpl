@@ -2,6 +2,7 @@ CONFIG = {
     'base_dir'   : '/var/lib/etl/workday',
     'w_username' : '{{ getv "/config/Workday/Username" }}',
     'w_password' : '{{ getv "/config/Workday/Password" }}',
+    'v_dsn'      : 'vertica',
     'v_username' : 'dbadmin',
     'v_password' : '',
     'v_hostname' : '{{ getv "/config/Vertica/Host" }}',

@@ -1,3 +1,5 @@
+"""Utility module for all common Workday operations"""
+
 from __future__ import print_function
 
 import os
@@ -41,8 +43,8 @@ def convert_value(val):
 
     if isinstance(val, unicode):
         return val.encode('utf-8')
-    else:
-        return str(val).encode('utf-8')
+
+    return str(val).encode('utf-8')
 
 def mkdir_p(path):
     """Recusrive directory making"""
@@ -58,5 +60,5 @@ def cleanup(tmp_dir):
     """Cleanup after ourselves"""
     try:
         shutil.rmtree(tmp_dir)
-    except OSError as exc:
+    except:
         raise

@@ -6,14 +6,17 @@ from __future__ import print_function
 
 import json
 import sys
+import os
+import importlib
 import pyodbc
 import requests
 
 from requests.auth import HTTPBasicAuth
-
-from config import CONFIG
-
 import workday
+
+SCRIPT_NAME = os.path.basename(__file__)
+CONFIG_PKG = importlib.import_module(SCRIPT_NAME + '_config')
+CONFIG = CONFIG_PKG.CONFIG
 
 def fetch_data():
     """Retrieve workers dump from WorkDay"""
@@ -102,8 +105,8 @@ def push_to_vertica():
 
         last_updated_count = cursor.execute(sql, CONFIG['v_table'], __file__).rowcount
 
-        print("Deleted: %d, Loaded: %d, Last_updated: %d" % (delete_count, copy_count, last_updated_count))
-
+        print("Deleted: %d, Loaded: %d, Last_updated: %d" %
+              (delete_count, copy_count, last_updated_count))
         cursor.commit()
     except BaseException:
         print(sys.exc_info()[0], file=sys.stdout)

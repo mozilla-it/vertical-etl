@@ -9,7 +9,7 @@ cron::daily { "${project_name}-workday-plus":
   hour    => '5',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => "nubis-cron ${project_name}-workday-plus /opt/etl/workday/fetch-plus",
+  command => "nubis-cron ${project_name}-workday-plus /opt/etl/workday/fetch_plus",
 }
 
 file { '/opt/etl/workday':
@@ -54,7 +54,7 @@ file { '/opt/etl/workday/fetch':
   source  => 'puppet:///nubis/files/workday/fetch_workday_data.py',
 }
 
-file { '/opt/etl/workday/fetch-plus':
+file { '/opt/etl/workday/fetch_plus':
   ensure  => present,
   owner   => root,
   group   => root,

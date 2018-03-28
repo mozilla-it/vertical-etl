@@ -417,7 +417,7 @@ CREATE TABLE IF NOT EXISTS public.mozilla_staff
 
 | Frequency  | Source       | Script                           |
 |------------|--------------|----------------------------------|
-| Daily      | Workday      | *ETL* /opt/workday/fetch-plus    |
+| Daily      | Workday      | *ETL* /opt/workday/fetch_plus    |
 
 ```sql
 CREATE TABLE public.mozilla_staff_plus

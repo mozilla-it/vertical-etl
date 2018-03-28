@@ -1,6 +1,6 @@
 [template]
 src = "workday-plus.py.tmpl"
-dest = "/opt/etl/workday/config_plus.py"
+dest = "/opt/etl/workday/fetch_plus_config.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

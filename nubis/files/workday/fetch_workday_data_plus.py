@@ -2,6 +2,8 @@
 
 """Fetch extended data from Workday into Vertica"""
 
+from __future__ import print_function
+
 import json
 import sys
 import pyodbc
@@ -9,14 +11,14 @@ import requests
 
 from requests.auth import HTTPBasicAuth
 
-from config_plus import config
+from config_plus import CONFIG
 
 import workday
 
 def fetch_data():
     """Retrieve workers dump from WorkDay"""
     try:
-        auth = HTTPBasicAuth(config['w_username'], config['w_password'])
+        auth = HTTPBasicAuth(CONFIG['w_username'], CONFIG['w_password'])
         data = requests.get(workday.WORKERS_URL, auth=auth)
         results = json.loads(data.text)
         parse_data(results)
@@ -25,8 +27,9 @@ def fetch_data():
         raise
 
 def fetch_seating():
+    """Retrieve seating chart dump from WorkDay"""
     try:
-        auth = HTTPBasicAuth(config['w_seating_username'], config['w_seating_password'])
+        auth = HTTPBasicAuth(CONFIG['w_seating_username'], CONFIG['w_seating_password'])
         data = requests.get(workday.SEATING_URL, auth=auth)
         results = json.loads(data.text)
         wd_seating_chart = {}
@@ -40,8 +43,9 @@ def fetch_seating():
         raise
 
 def fetch_users():
+    """Retrieve extended workers dump from WorkDay"""
     try:
-        auth = HTTPBasicAuth(config['w_users_username'], config['w_users_password'])
+        auth = HTTPBasicAuth(CONFIG['w_users_username'], CONFIG['w_users_password'])
         data = requests.get(workday.USERS_URL, auth=auth)
         results = json.loads(data.text)
         wd_users = {}
@@ -58,8 +62,9 @@ def fetch_users():
         raise
 
 def parse_data(results):
-    print("Writing to %s" % config['tmp_file'])
-    output_file = open(config['tmp_file'], "w")
+    """Parse and format data for CSV import"""
+    print("Writing to %s" % CONFIG['tmp_file'])
+    output_file = open(CONFIG['tmp_file'], "w")
     seating = fetch_seating()
     users_addtl = fetch_users()
     employees = results['Report_Entry']
@@ -101,7 +106,7 @@ def parse_data(results):
             line.append(home_country)
             line.append(home_postal)
             line.append(seat)
-            line.append(config['today'])
+            line.append(CONFIG['today'])
 
             print(','.join(map(workday.convert_value, line)), file=output_file)
         except BaseException:
@@ -109,7 +114,8 @@ def parse_data(results):
             raise
 
 def push_to_vertica():
-    tmp_file = config['tmp_file']
+    """Load the CSV data into Vertica for the current day, deleting what was there before"""
+    tmp_file = CONFIG['tmp_file']
 
     try:
         cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
@@ -119,16 +125,24 @@ def push_to_vertica():
         raise
 
     try:
-        sql = "DELETE FROM {table_name} WHERE {today_field} = ?"
-        sql = sql.format(table_name=config['v_table'],
-                         today_field=config['v_today_field'],
+        sql = """DELETE FROM {table_name}
+	         WHERE {today_field} = ?
+              """
+        sql = sql.format(table_name=CONFIG['v_table'],
+                         today_field=CONFIG['v_today_field'],
                         )
 
-        delete_count = cursor.execute(sql, config['today']).rowcount
+        delete_count = cursor.execute(sql, CONFIG['today']).rowcount
 
-        sql = "COPY {table_name} ({table_fields}) FROM LOCAL '{local_path}' DELIMITER '{delimiter}' EXCEPTIONS '{exceptions}' REJECTED DATA '{rejected}' NO COMMIT"
-        sql = sql.format(table_name=config['v_table'],
-                         table_fields=",".join(config['v_fields'] + [config['v_today_field']]),
+        sql = """COPY {table_name} ({table_fields})
+	         FROM LOCAL '{local_path}'
+		 DELIMITER '{delimiter}'
+		 EXCEPTIONS '{exceptions}'
+		 REJECTED DATA '{rejected}'
+		 NO COMMIT
+             """
+        sql = sql.format(table_name=CONFIG['v_table'],
+                         table_fields=",".join(CONFIG['v_fields'] + [CONFIG['v_today_field']]),
                          local_path=tmp_file,
                          delimiter=',',
                          exceptions=tmp_file + '_exceptions.txt',
@@ -139,7 +153,7 @@ def push_to_vertica():
 
         sql = "insert into last_updated (name, updated_at, updated_by) values (?, now(), ?)"
 
-        last_updated_count = cursor.execute(sql, config['v_table'], __file__).rowcount
+        last_updated_count = cursor.execute(sql, CONFIG['v_table'], __file__).rowcount
 
         print("Deleted: %d, Loaded: %d, Last_updated: %d" % (delete_count, copy_count, last_updated_count))
 
@@ -149,7 +163,7 @@ def push_to_vertica():
         raise
 
 if __name__ == "__main__":
-    workday.init_config(config)
+    workday.init_config(CONFIG)
     fetch_data()
     push_to_vertica()
-    workday.cleanup(config['tmp_dir'])
+    workday.cleanup(CONFIG['tmp_dir'])

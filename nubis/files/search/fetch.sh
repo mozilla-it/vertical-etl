@@ -78,7 +78,7 @@ echo "(downloading) $ROLLUP"
 echo "(executing) aws s3 cp $ROLLUP $LOCAL_FILES_DIR/"
 aws s3 cp "$ROLLUP" "$LOCAL_FILES_DIR/"
 
-for ROLLUP_FILE in $LOCAL_FILES_DIR/*.csv
+for ROLLUP_FILE in "$LOCAL_FILES_DIR"/*.csv
 do
         echo "(scrubbing) $ROLLUP_FILE"
         # replace field ending ',' character with '|' character

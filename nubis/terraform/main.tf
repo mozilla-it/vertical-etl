@@ -14,3 +14,13 @@ module "worker" {
   root_storage_size = "32"
   instance_type     = "t2.small"
 }
+
+module "archive" {
+  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.1.0"
+  region       = "${var.region}"
+  environment  = "${var.environment}"
+  account      = "${var.account}"
+  service_name = "${var.service_name}"
+  purpose      = "archive"
+  role         = "${module.worker.role}"
+}

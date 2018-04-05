@@ -1,0 +1,10 @@
+#!/bin/bash -l
+
+CLEANUP_DAYS='{{ getv "/config/CleanupDays" "30" }}'
+SNAPSHOT_BUCKET='s3://{{ getv "/config/S3/Bucket/Archive" }}'
+
+# First, snapshot to S3
+aws s3 sync /var/lib/etl/ "$SNAPSHOT_BUCKET/"
+
+# First cleanup files older than CLEANUP_DAYS days
+find /var/lib/etl/*/* -mtime "+$CLEANUP_DAYS" -print0 | xargs -0 -r rm -rfv

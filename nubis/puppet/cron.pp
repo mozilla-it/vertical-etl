@@ -34,12 +34,12 @@ file { '/var/data-collectors':
   ]
 }
 
-# Cleanup old log files
-cron::daily { "${project_name}-cleanup":
-  hour    => '0',
+# Cleanup and archive data files
+cron::daily { "${project_name}-snapshot":
+  hour    => '6',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => "nubis-cron ${project_name}-cleanup \"find /var/lib/etl/*/* -mtime +30 -print0 | xargs -0 -r rm -rfv\"",
+  command => "nubis-cron ${project_name}-snapshot /usr/local/bin/nubis-etl-snapshot save",
 }
 
 # Adjust

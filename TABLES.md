@@ -37,6 +37,7 @@
          * [public.v4_submissionwise_v5](#publicv4_submissionwise_v5)
          * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
          * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
+         * [public.churn_cohort](#publicchurn_cohort)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -50,7 +51,6 @@
          * [public.adjust_ios_monthly](#publicadjust_ios_monthly)
          * [public.adjust_klar_monthly](#publicadjust_klar_monthly)
          * [public.vertica_backups](#publicvertica_backups)
-         * [public.churn_cohort](#publicchurn_cohort)
       * [Unused Tables](#unused-tables)
          * [public.brain_juicer](#publicbrain_juicer)
          * [public.mysql_host](#publicmysql_host)
@@ -99,7 +99,7 @@
       * [Unknown Tables](#unknown-tables)
          * [public.fx_attribution](#publicfx_attribution)
 
-<!-- Added by: gozer, at: 2018-03-22T10:40-04:00 -->
+<!-- Added by: gozer, at: 2018-04-05T09:12-04:00 -->
 
 <!--te-->
 

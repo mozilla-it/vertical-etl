@@ -15,19 +15,19 @@ from collections import namedtuple
 import urlparse
 import pyodbc
 
+
 logger = logging.getLogger(__name__)
 
 cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 
 def transform(fn_in, fn_out):
-    print 'fileout: ' + fn_out
+    logger.debug("fileout: " + fn_out)
     lines = []
     fileout = open(fn_out,'w')
     for line in open(fn_in):
         parts = line.split('\t')
         parts[7] = 'Pocket'
         lines.append('\t'.join(parts))
-    #print '\n'.join(lines)
     fileout.write('\n'.join(lines))
     fileout.close()    
 
@@ -84,7 +84,7 @@ def main():
 
     # load tab-delimited data into vertica
     logger.debug('removing existing data')
-    query_vertica("TRUNCATE TABLE pocket_mobile_daily_active_users; COMMIT;")
+    query_vertica("TRUNCATE TABLE " + vertica_table_name + ";")
 
     logger.debug('loading data into Vertica')
     field_order = ['activity_date','platform','dau','wau_rolling_7','mau_rolling_30','mau_rolling_31','mau_rolling_28','app']
@@ -92,7 +92,7 @@ def main():
 
     # update last_updated with result
     logger.debug('inserting completed load in last_updated for monitoring')
-    last_updated_sql = ("insert into last_updated values ('pocket_mobile_daily_active_users', now(), 'Cron-Loader'); COMMIT;")
+    last_updated_sql = ("insert into last_updated values ('" + vertica_table_name + "', now(), 'Cron-Loader');")
     query_vertica(last_updated_sql)
 
     # All worked, commit it all
@@ -105,10 +105,7 @@ if __name__ == '__main__':
     logging.basicConfig(format = '%(asctime)s %(name)s:%(levelname)s: %(message)s',
                       level = logging.DEBUG)
 
-    logger.debug('starting ETL')
-
     main()
-    logger.debug('ETL successfully completed')
 
   except:
     logging.basicConfig(format = '%(asctime)s %(name)s:%(levelname)s: %(message)s',

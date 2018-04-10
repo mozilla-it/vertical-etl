@@ -5,10 +5,6 @@ cron::daily { "${project_name}-adi":
   command => "nubis-cron ${project_name}-adi /opt/etl/adi/run",
 }
 
-package { 'pyodbc':
-  ensure => present
-}
-
 file { '/opt/etl/adi':
   ensure  => directory,
   require => [

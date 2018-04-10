@@ -5,10 +5,6 @@ cron::daily { "${project_name}-pocket":
   command => "nubis-cron ${project_name}-pocket /opt/etl/pocket/run",
 }
 
-package { 'pyodbc':
-  ensure => present
-}
-
 file { '/opt/etl/pocket':
   ensure  => directory,
   require => [

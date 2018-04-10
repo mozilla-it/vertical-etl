@@ -33,7 +33,7 @@ file { '/opt/etl/pocket/fetch':
   require => [
     File['/opt/etl/pocket'],
   ],
-  source  => 'puppet:///nubis/files/pocket/fetch',
+  source  => 'puppet:///nubis/files/pocket/fetch.sh',
 }
 
 file { '/opt/etl/pocket/load':
@@ -44,7 +44,7 @@ file { '/opt/etl/pocket/load':
   require => [
     File['/opt/etl/pocket'],
   ],
-  source  => 'puppet:///nubis/files/pocket/load',
+  source  => 'puppet:///nubis/files/pocket/load.py',
 }
 
 file { '/opt/etl/pocket/run':

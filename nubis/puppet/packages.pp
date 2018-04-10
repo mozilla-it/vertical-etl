@@ -11,6 +11,11 @@ package { 'vsql':
   ],
 }
 
+
+package { 'pyodbc':
+  ensure => present
+}
+
 # Fix missing error XML file
 file { '/opt/vertica/lib64/en-US':
   ensure  => 'link',

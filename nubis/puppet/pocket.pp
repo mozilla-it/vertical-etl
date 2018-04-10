@@ -55,5 +55,5 @@ file { '/opt/etl/pocket/run':
   require => [
     File['/opt/etl/pocket'],
   ],
-  source  => 'puppet:///nubis/files/pocket/run',
+  source  => 'puppet:///nubis/files/pocket/run.sh',
 }

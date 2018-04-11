@@ -37,7 +37,13 @@ if [ "$SCOPE" == "monthly" ]; then
                 PREV_DATE=$(date --date="${PRE_DATE} 1 month ago" +%Y-%m-01)
                 FETCH_DATE=$PREV_DATE
         fi
+else
+        if [ "$DEFINED_DATE" != "true" ]; then
+                FETCH_DATE=$(date --date="${FETCH_DATE} 1 day ago" +%Y-%m-%d)
+        fi
 fi
+
+echo "[${FETCH_DATE}]"
 
 XFER_FILE_DIR=/var/lib/etl/search/$SCOPE/processed-$FETCH_DATE.csv.gz
 

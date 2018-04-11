@@ -1,6 +1,0 @@
-forge "https://forgeapi.puppetlabs.com"
-
-# XXX Upcoming bugfix in Nubis v2.1.0+
-mod 'nubis/nubis_configuration',
-    :git => 'https://github.com/nubisproject/nubis-puppet-configuration.git',
-    :ref => 'v1.3.4'

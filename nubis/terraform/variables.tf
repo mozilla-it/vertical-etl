@@ -4,6 +4,10 @@ variable "region" {
   default = "us-west-2"
 }
 
+variable "region_second" {
+  default = "us-east-1"
+}
+
 variable "arena" {
   default = "core"
 }

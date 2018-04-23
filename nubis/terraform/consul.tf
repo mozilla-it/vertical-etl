@@ -48,4 +48,9 @@ resource "consul_keys" "config" {
     value  = "${module.archive.name}"
     delete = true
   }
+  key {
+    path   = "${module.consul.config_prefix}/S3/Bucket/BackupRawData"
+    value  = "${module.backup_rawdata.name}"
+    delete = true
+  }
 }

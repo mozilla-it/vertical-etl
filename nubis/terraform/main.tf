@@ -25,9 +25,9 @@ module "archive" {
   role         = "${module.worker.role}"
 }
 
-# Use gozer's fork until issue/186/backup-no-info lands
+#XXX: region fix will be released after Nubis v2.2.0
 module "backups" {
-  source       = "github.com/gozer/nubis-terraform//bucket?ref=issue%2F186%2Fbackup-no-info"
+  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=3fb2ebe3023e18df01667e1c9b43503c0f09bf3c"
   region       = "${var.backup_region}"
   environment  = "${var.environment}"
   account      = "${var.account}"

@@ -21,7 +21,7 @@ if options.process_date is None:
     print("Defaulting to date %s" % options.process_date)
 
 if options.log_file is None:
-    candidates = glob.glob("/var/lib/etl/churn/%s/churn-*-*.by_activity.csv.gz" % options.process_date)
+    candidates = glob.glob("/var/lib/etl/churn/latest/work/churn-*-*.by_activity.csv.gz")
     if len(candidates) != 1:
         print("Only one file should match our search %s" % candidates)
         sys.exit(1)

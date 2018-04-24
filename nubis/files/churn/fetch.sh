@@ -38,13 +38,15 @@ MODIFIED_DATE=$(date --date="${CURRENT_DATE} 1 days ago" +%Y-%m-%d)
 # Using the MODIFIED_DATE we need to get the object name to retrieve
 OBJECT=$(aws s3 ls "$BUCKET/" | grep "^$MODIFIED_DATE" | awk '{print $4}')
 
+echo $BUCKET/$OBJECT
+
 # Create XFER_FILE_DIR
 if [ ! -d "$XFER_FILE_DIR" ]; then
         mkdir -p "$XFER_FILE_DIR"
 fi
 
 # Pull down latest file
-aws s3 cp "$BUCKET/$OBJECT" "$LOCAL_FILES_DIR"
+aws s3 sync "$BUCKET" "$LOCAL_FILES_DIR"
 
 mv "$LOCAL_FILES_DIR/$OBJECT" "$XFER_FILE_DIR/"
 

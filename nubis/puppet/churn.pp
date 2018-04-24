@@ -1,6 +1,6 @@
 cron::weekly { "${project_name}-churn":
-  weekday => '2',
-  hour    => '1',
+  weekday => '3',
+  hour    => '21',
   minute  => fqdn_rand(60),
   user    => 'etl',
   command => "nubis-cron ${project_name}-churn /opt/etl/churn/run",
@@ -35,6 +35,17 @@ file { '/opt/etl/churn/fetch':
     File['/opt/etl/churn'],
   ],
   source  => 'puppet:///nubis/files/churn/fetch.sh',
+}
+
+file { '/opt/etl/churn/call_load':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/churn'],
+  ],
+  source  => 'puppet:///nubis/files/churn/call_load.sh',
 }
 
 file { '/opt/etl/churn/load':

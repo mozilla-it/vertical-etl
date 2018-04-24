@@ -11,5 +11,5 @@ for file in $XFER_FILE_DIR/*.csv.gz
 do
 	echo $file
 	# pass file to python script to load
-	python ~/load -f $file -d $FETCH_DATE
+	/opt/etl/churn/load -f $file -d $FETCH_DATE
 done

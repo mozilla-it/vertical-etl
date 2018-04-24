@@ -25,8 +25,9 @@ module "archive" {
   role         = "${module.worker.role}"
 }
 
+# Use gozer's fork until issue/186/backup-no-info lands
 module "backups" {
-  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.2.0"
+  source       = "github.com/gozer/nubis-terraform//bucket?ref=issue%2F186%2Fbackup-no-info"
   region       = "${var.backup_region}"
   environment  = "${var.environment}"
   account      = "${var.account}"

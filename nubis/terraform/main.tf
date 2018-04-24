@@ -25,13 +25,12 @@ module "archive" {
   role         = "${module.worker.role}"
 }
 
-module "backup_rawdata" {
+module "backups" {
   source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.2.0"
-  region       = "${var.region_second}"
+  region       = "${var.backup_region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
   service_name = "${var.service_name}"
-  purpose      = "backup_rawdata"
-  role_cnt     = "${length(data.aws_availability_zones.available.names)}"
+  purpose      = "backups"
   role         = "${module.worker.role}"
 }

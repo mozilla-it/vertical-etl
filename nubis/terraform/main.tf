@@ -28,12 +28,12 @@ module "archive" {
 #XXX: region fix will be released after Nubis v2.2.0 (3fb2ebe3023e18df01667e1c9b43503c0f09bf3c)
 #XXX: SSE feature will be released after Nubis v2.2.0 (5dac0e038eaccfdab48063e2e0124328453e28bb)
 module "backups" {
-  source       = "github.com/gozer/nubis-terraform//bucket?ref=5dac0e038eaccfdab48063e2e0124328453e28bb"
-  region       = "${var.backup_region}"
-  environment  = "${var.environment}"
-  account      = "${var.account}"
-  service_name = "${var.service_name}"
-  purpose      = "backups"
-  role         = "${module.worker.role}"
+  source                    = "github.com/gozer/nubis-terraform//bucket?ref=5dac0e038eaccfdab48063e2e0124328453e28bb"
+  region                    = "${var.backup_region}"
+  environment               = "${var.environment}"
+  account                   = "${var.account}"
+  service_name              = "${var.service_name}"
+  purpose                   = "backups"
+  role                      = "${module.worker.role}"
   storage_encrypted_at_rest = true
 }

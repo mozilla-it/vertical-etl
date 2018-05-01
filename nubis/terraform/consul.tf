@@ -62,7 +62,7 @@ resource "consul_keys" "config" {
   }
 
   key {
-    path   = "${module.consul.config_prefix}/Users/Nagios/AccesKey"
+    path   = "${module.consul.config_prefix}/Users/Nagios/AccessKey"
     value  = "${aws_iam_access_key.nagios.id}"
     delete = true
   }

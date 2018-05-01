@@ -56,6 +56,12 @@ resource "consul_keys" "config" {
   }
 
   key {
+    path   = "${module.consul.config_prefix}/S3/Bucket/Nagios"
+    value  = "${module.nagios.name}"
+    delete = true
+  }
+
+  key {
     path   = "${module.consul.config_prefix}/S3/Bucket/BackupsRegion"
     value  = "${var.backup_region}"
     delete = true

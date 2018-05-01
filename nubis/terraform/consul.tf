@@ -62,6 +62,18 @@ resource "consul_keys" "config" {
   }
 
   key {
+    path   = "${module.consul.config_prefix}/Users/Nagios/AccesKey"
+    value  = "${aws_iam_access_key.nagios.id}"
+    delete = true
+  }
+
+  key {
+    path   = "${module.consul.config_prefix}/Users/Nagios/SecretKey"
+    value  = "${aws_iam_access_key.nagios.secret}"
+    delete = true
+  }
+
+  key {
     path   = "${module.consul.config_prefix}/S3/Bucket/BackupsRegion"
     value  = "${var.backup_region}"
     delete = true

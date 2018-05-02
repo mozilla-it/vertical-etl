@@ -7,6 +7,19 @@ file { '/opt/etl/vertica-table-dump':
   ]
 }
 
+file { '/var/lib/etl/vertica-table-dump':
+  ensure  => directory,
+  owner   => 'etl',
+  group   => 'etl',
+  mode    => '0755',
+
+  require => [
+    User['etl'],
+    Group['etl'],
+    File['/var/lib/etl'],
+  ]
+}
+
 file { '/opt/etl/vertica-table-dump/run':
   ensure  => present,
   owner   => root,

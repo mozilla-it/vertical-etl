@@ -2,7 +2,7 @@
 
 export PATH=/usr/local/bin:/opt/vertica/bin:$PATH
 
-TMPDIR=/tmp/s3_dumps/
+TMPDIR=/var/lib/etl/vertica-table-dump
 
 NUBIS_ENVIRONMENT=$(nubis-metadata NUBIS_ENVIRONMENT)
 NUBIS_PROJECT=$(nubis-metadata NUBIS_PROJECT)
@@ -11,20 +11,30 @@ KV_PREFIX="$NUBIS_PROJECT-$NUBIS_ENVIRONMENT/$NUBIS_ENVIRONMENT/config"
 
 BACKUP_BUCKET_NAME=$(consul kv get "$KV_PREFIX/S3/Bucket/Backups")
 DBADMIN_PASSWORD=$(consul kv get "vertical-stage/stage/config/AdminPassword")
+VERTICA_HOST="${NUBIS_ENVIRONMENT}.vertical.service.consul"
 
-if [ "$BACKUP_BUCKET_NAME" == "" ]; then
+if [ -z "$BACKUP_BUCKET_NAME" ]; then
   echo "Need to set Backup Bucket name key in consul://$KV_PREFIX/S3/Bucket/Backups"
   exit 1
 fi
 
-mkdir -p $TMPDIR
+TIMESTAMP=$(date +%Y%m%d)
+DUMP_DIR="$TMPDIR/$TIMESTAMP"
 
-for table in `vsql -U dbadmin -w $DBADMIN_PASSWORD -h stage.vertical.service.consul -c "select table_name from all_tables where schema_name='public';" -t`;
+cleanup () {
+ rm -rfv "$DUMP_DIR" 2>/dev/null
+}
+trap cleanup EXIT
+
+mkdir -p "$DUMP_DIR"
+
+# Dump tables
+for table in $(vsql -U dbadmin -w "$DBADMIN_PASSWORD" -h "$VERTICA_HOST" -c "select table_name from all_tables where schema_name='public';" -t | sort);
 do
-  TIMESTAMP=`date +%Y%m%d%H%M`;
-  OUTFILE=${table}_dump_${TIMESTAMP}.sql.gz
-  vsql -U dbadmin -w $DBADMIN_PASSWORD -h stage.vertical.service.consul -At -c "select * from $table" | gzip > ${TMPDIR}${OUTFILE}
-  aws s3 cp ${TMPDIR}${OUTFILE} s3://${BACKUP_BUCKET_NAME}/${OUTFILE} --quiet
-  rm ${TMPDIR}${OUTFILE}
+  OUTFILE="${table}.sql.gz"
+  vsql -U dbadmin -w "$DBADMIN_PASSWORD" -h "$VERTICA_HOST" -At -c "select * from $table" | gzip > "${DUMP_DIR}/${OUTFILE}"
 done
+
+# Sync to S3
+aws s3 sync --quiet "$DUMP_DIR/" "s3://${BACKUP_BUCKET_NAME}/$TIMESTAMP/"
 

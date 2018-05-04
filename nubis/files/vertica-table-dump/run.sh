@@ -10,7 +10,7 @@ NUBIS_PROJECT=$(nubis-metadata NUBIS_PROJECT)
 KV_PREFIX="$NUBIS_PROJECT-$NUBIS_ENVIRONMENT/$NUBIS_ENVIRONMENT/config"
 
 BACKUP_BUCKET_NAME=$(consul kv get "$KV_PREFIX/S3/Bucket/Backups")
-DBADMIN_PASSWORD=$(consul kv get "vertical-stage/stage/config/AdminPassword")
+DBADMIN_PASSWORD=$(consul kv get "vertical-${NUBIS_ENVIRONMENT}/${NUBIS_ENVIRONMENT}/config/AdminPassword")
 VERTICA_HOST="${NUBIS_ENVIRONMENT}.vertical.service.consul"
 
 if [ -z "$BACKUP_BUCKET_NAME" ]; then

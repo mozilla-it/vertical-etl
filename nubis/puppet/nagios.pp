@@ -5,10 +5,6 @@ cron::daily { "${project_name}-nagios":
   command => "nubis-cron ${project_name}-nagios /opt/etl/nagios/run",
 }
 
-package { 'pyodbc':
-  ensure => present
-}
-
 file { '/opt/etl/nagios':
   ensure  => directory,
   require => [

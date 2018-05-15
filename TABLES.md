@@ -38,6 +38,7 @@
          * [public.f_bugs_snapshot_v2](#publicf_bugs_snapshot_v2)
          * [public.f_bugs_status_resolution](#publicf_bugs_status_resolution)
          * [public.churn_cohort](#publicchurn_cohort)
+         * [public.pocket_mobile_daily_active_users](#publicpocket_mobile_daily_active_users)
       * [Broken Tables](#broken-tables)
          * [public.statcounter](#publicstatcounter)
          * [public.fx_market_share](#publicfx_market_share)
@@ -766,6 +767,26 @@ CREATE TABLE public.churn_cohort
     n_profiles int,
     usage_hours float,
     sum_squared_usage_hours float
+);
+```
+
+### public.pocket_mobile_daily_active_users
+
+| Frequency  | Source | Script                    | Broken Since |
+|------------|--------|---------------------------|--------------|
+| Daily      | S3     | *ETL* pocket_dau_s3_load  | 2018-04-05   |
+
+```sql
+CREATE TABLE public.pocket_mobile_daily_active_users
+(
+    activity_date date,
+    platform varchar(255),
+    dau int,
+    wau_rolling_7 int,
+    mau_rolling_30 int,
+    mau_rolling_31 int,
+    mau_rolling_28 int,
+    app varchar(6)
 );
 ```
 

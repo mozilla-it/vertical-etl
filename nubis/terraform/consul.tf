@@ -1,6 +1,6 @@
 # Discover Consul settings from another deplyoment
 module "consul_vertical" {
-  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.1.0"
+  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.2.0"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -34,7 +34,7 @@ provider "consul" {
 }
 
 module "consul" {
-  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.1.0"
+  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.2.0"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -46,6 +46,36 @@ resource "consul_keys" "config" {
   key {
     path   = "${module.consul.config_prefix}/S3/Bucket/Archive"
     value  = "${module.archive.name}"
+    delete = true
+  }
+
+  key {
+    path   = "${module.consul.config_prefix}/S3/Bucket/Backups"
+    value  = "${module.backups.name}"
+    delete = true
+  }
+
+  key {
+    path   = "${module.consul.config_prefix}/S3/Bucket/Nagios"
+    value  = "${module.nagios.name}"
+    delete = true
+  }
+
+  key {
+    path   = "${module.consul.config_prefix}/Users/Nagios/AccessKey"
+    value  = "${aws_iam_access_key.nagios.id}"
+    delete = true
+  }
+
+  key {
+    path   = "${module.consul.config_prefix}/Users/Nagios/SecretKey"
+    value  = "${aws_iam_access_key.nagios.secret}"
+    delete = true
+  }
+
+  key {
+    path   = "${module.consul.config_prefix}/S3/Bucket/BackupsRegion"
+    value  = "${var.backup_region}"
     delete = true
   }
 }

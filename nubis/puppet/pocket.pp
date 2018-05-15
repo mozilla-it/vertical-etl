@@ -1,18 +1,18 @@
-cron::daily { "${project_name}-adi":
-  hour    => '14',
+cron::daily { "${project_name}-pocket":
+  hour    => '10',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => "nubis-cron ${project_name}-adi /opt/etl/adi/run",
+  command => "nubis-cron ${project_name}-pocket /opt/etl/pocket/run",
 }
 
-file { '/opt/etl/adi':
+file { '/opt/etl/pocket':
   ensure  => directory,
   require => [
     File['/opt/etl'],
   ]
 }
 
-file { '/var/lib/etl/adi':
+file { '/var/lib/etl/pocket':
   ensure  => directory,
   owner   => 'etl',
   group   => 'etl',
@@ -25,35 +25,35 @@ file { '/var/lib/etl/adi':
   ]
 }
 
-file { '/opt/etl/adi/fetch':
+file { '/opt/etl/pocket/fetch':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/etl/adi'],
+    File['/opt/etl/pocket'],
   ],
-  source  => 'puppet:///nubis/files/adi/fetch.sh',
+  source  => 'puppet:///nubis/files/pocket/fetch.sh',
 }
 
-file { '/opt/etl/adi/load':
+file { '/opt/etl/pocket/load':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/etl/adi'],
+    File['/opt/etl/pocket'],
   ],
-  source  => 'puppet:///nubis/files/adi/load.py',
+  source  => 'puppet:///nubis/files/pocket/load.py',
 }
 
-file { '/opt/etl/adi/run':
+file { '/opt/etl/pocket/run':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/etl/adi'],
+    File['/opt/etl/pocket'],
   ],
-  source  => 'puppet:///nubis/files/adi/run.sh',
+  source  => 'puppet:///nubis/files/pocket/run.sh',
 }

@@ -4,6 +4,10 @@ variable "region" {
   default = "us-west-2"
 }
 
+variable "backup_region" {
+  default = "us-east-1"
+}
+
 variable "arena" {
   default = "core"
 }

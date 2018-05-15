@@ -3,4 +3,4 @@
 set -e
 
 /opt/etl/churn/fetch "$@"
-/opt/etl/churn/load "$@"
+/opt/etl/churn/call_load "$@"

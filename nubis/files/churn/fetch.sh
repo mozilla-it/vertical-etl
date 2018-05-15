@@ -44,7 +44,7 @@ if [ ! -d "$XFER_FILE_DIR" ]; then
 fi
 
 # Pull down latest file
-aws s3 cp "$BUCKET/$OBJECT" "$LOCAL_FILES_DIR"
+aws s3 sync "$BUCKET" "$LOCAL_FILES_DIR"
 
 mv "$LOCAL_FILES_DIR/$OBJECT" "$XFER_FILE_DIR/"
 

@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-CLEANUP_DAYS='{{ getv "/config/CleanupDays" "30" }}'
+CLEANUP_DAYS='{{ getv "/config/CleanupDays" "7" }}'
 SNAPSHOT_BUCKET='s3://{{ getv "/config/S3/Bucket/Archive" }}'
 
 # First, snapshot to S3

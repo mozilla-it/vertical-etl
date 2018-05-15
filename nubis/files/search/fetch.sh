@@ -52,7 +52,6 @@ if [ ! -d "$LOCAL_FILES_DIR" ]; then
 fi
 
 # Begin
-echo "[${PRE_DATE}]"
 
 FETCH_DATE=$PRE_DATE
 
@@ -64,7 +63,13 @@ if [ "$SCOPE" == "monthly" ]; then
                 PREV_DATE=$(date --date="${PRE_DATE} 1 month ago" +%Y-%m-01)
                 FETCH_DATE=$PREV_DATE
         fi
+else
+        if [ "$DEFINED_DATE" != "true" ]; then
+                FETCH_DATE=$(date --date="${FETCH_DATE} 1 day ago" +%Y-%m-%d)
+        fi
 fi
+
+echo "[${FETCH_DATE}]"
 
 # Create XFER_FILE_DIR
 if [ ! -d "$XFER_FILE_DIR" ]; then

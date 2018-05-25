@@ -40,4 +40,8 @@ python::requirements { 'fx-sentiment':
     Vcsrepo['/opt/etl/fx-sentiment'],
     Python::Pyvenv["${virtualenv_path}/fx-sentiment"],
   ],
+}->
+exec { 'install NTLK data':
+  command => "${virtualenv_path}/fx-sentiment/bin/python -m nltk.downloader -d /usr/local/share/nltk_data all",
+  logoutput => true,
 }

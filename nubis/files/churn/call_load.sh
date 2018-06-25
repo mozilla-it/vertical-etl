@@ -2,7 +2,7 @@
 
 FETCH_DATE=$(date +%Y-%m-%d) # default is to process for current date
 
-XFER_FILE_DIR=/var/lib/etl/chur/latest/work
+XFER_FILE_DIR=/var/lib/etl/churn/latest/work
 set -e
 
 for file in "$XFER_FILE_DIR"/*.csv.gz

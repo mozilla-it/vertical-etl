@@ -45,3 +45,15 @@ python::requirements { 'fx-sentiment':
   command   => "${virtualenv_path}/fx-sentiment/bin/python -m nltk.downloader -d /usr/local/share/nltk_data all",
   logoutput => true,
 }
+
+file { '/opt/etl/fx-sentiment/run':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/fx-sentiment'],
+  ],
+  source  => 'puppet:///nubis/files/fx-sentiment/run.sh',
+}
+

@@ -46,6 +46,13 @@ python::requirements { 'fx-sentiment':
   logoutput => true,
 }
 
+file { '/opt/etl/fx-sentiment':
+  ensure  => directory,
+  require => [
+    File['/opt/etl'],
+  ]
+}
+
 file { '/opt/etl/fx-sentiment/run':
   ensure  => present,
   owner   => root,

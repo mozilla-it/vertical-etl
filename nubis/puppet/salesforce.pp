@@ -95,6 +95,17 @@ file { '/opt/etl/salesforce/load':
   source  => 'puppet:///nubis/files/salesforce/load.sh',
 }
 
+file { '/opt/etl/salesforce/sfdc_populate_sf_summary_table.py':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/salesforce'],
+  ],
+  source  => 'puppet:///nubis/files/salesforce/sfdc_populate_sf_summary_table.py',
+}
+
 file { '/opt/etl/salesforce/load.yml':
   ensure  => present,
   owner   => root,

@@ -1,8 +1,9 @@
 #!/bin/env python
 
+import os
 import pyodbc
 
-cnxn = pyodbc.connect("DSN=vertica")
+cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 cursor = cnxn.cursor()
 
 sql = "DELETE FROM sf_summary where date=current_date()"
@@ -39,6 +40,6 @@ sql = "INSERT INTO sf_summary "                                                 
 cursor.execute(sql)
 
 commit_sql = "INSERT INTO last_updated (name, updated_at, updated_by) "  \
-              "VALUES ('sf_summary', now(), 'sfdc_populate_sf_summary_table.py')"
+              "VALUES ('sf_summary', now(), '" + os.path.basename(__file__) + "')"
 cursor.execute(commit_sql)
 cursor.execute("COMMIT")

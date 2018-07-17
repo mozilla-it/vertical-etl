@@ -11,14 +11,6 @@ python::pyvenv { "${virtualenv_path}/sfmc-fetcher" :
   ],
 }
 
-python::pyvenv { "${virtualenv_path}/vertica-csv-loader" :
-  ensure  => present,
-  version => '3.4',
-  require => [
-    File[$virtualenv_path],
-  ],
-}
-
 # Install Mozilla's sfmc-fetcher
 python::pip { 'sfmc-fetcher':
   ensure     => 'present',
@@ -30,26 +22,9 @@ python::pip { 'sfmc-fetcher':
 
 file { '/usr/local/bin/sfmc-fetcher':
   ensure  => link,
-  target  => '/usr/local/virtualenvs/data-integrations/bin/brickftp_poc.py',
+  target  => '${virtualenv_path}/data-integrations/bin/brickftp_poc.py',
   require => [
     Python::Pip['sfmc-fetcher'],
-  ],
-}
-
-# Install Mozilla's vertica-csv-loader
-python::pip { 'vertica-csv-loader':
-  ensure     => 'present',
-  virtualenv => "${virtualenv_path}/vertica-csv-loader",
-  url        => 'git+https://github.com/gozer/vertica-csv-loader@e2ce8f7b41948cb585259d5b4b41b1be1fe6bff4',
-  require    => [
-  ],
-}
-
-file { '/usr/local/bin/vertica-csv-loader':
-  ensure  => link,
-  target  => '/usr/local/virtualenvs/vertica-csv-loader/bin/vertica-csv-loader',
-  require => [
-    Python::Pip['vertica-csv-loader'],
   ],
 }
 

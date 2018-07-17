@@ -23,7 +23,7 @@ python::pyvenv { "${virtualenv_path}/vertica-csv-loader" :
 python::pip { 'sfmc-fetcher':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/data-integrations",
-  #url        => 'git+https://github.com/mozilla-it/data-integrations@f14872bb716f21ca965d8c6f7dbf12cc27147db1',
+  #url        => 'git+https://github.com/mozilla-it/data-integrations@72f92781ee04dc7307a6b8b21cbbd0ed8d80b48f',
   require    => [
   ],
 }

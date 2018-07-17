@@ -15,7 +15,7 @@ python::pyvenv { "${virtualenv_path}/sfmc-fetcher" :
 python::pip { 'sfmc-fetcher':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/data-integrations",
-  #url        => 'git+https://github.com/mozilla-it/data-integrations@72f92781ee04dc7307a6b8b21cbbd0ed8d80b48f',
+  #url        => 'git+https://github.com/mozilla-it/data-integrations@2126a2098c28e3fe447305c2438bd18f4fefa7a1',
   require    => [
   ],
 }

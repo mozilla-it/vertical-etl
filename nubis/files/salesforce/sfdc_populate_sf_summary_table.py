@@ -27,6 +27,12 @@ sql = "INSERT INTO sf_summary "                                                 
       "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_subscriber='t' GROUP BY 4,5"
 cursor.execute(sql)
 
+sql = "INSERT INTO sf_summary "                                                               \
+      "SELECT CURRENT_DATE(),'Developer Subscriber',COUNT(*),mailing_country,email_language " \
+      "FROM sf_contacts_vw "                                                                  \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND dev_subscriber='t' GROUP BY 4,5"
+cursor.execute(sql)
+
 sql = "INSERT INTO sf_summary "                                                             \
       "SELECT CURRENT_DATE(),'Firefox Subscriber',COUNT(*),mailing_country,email_language " \
       "FROM sf_contacts_vw "                                                                \

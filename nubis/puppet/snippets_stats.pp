@@ -4,7 +4,7 @@ cron::daily { "${project_name}-snippets_stats":
 }
 
 python::pyvenv { "${virtualenv_path}/snippets-stats" :
-  ensure  => present
+  ensure  => present,
   version => '3.4',
   require => [
     File[$virtualenv_path],

@@ -12,21 +12,21 @@ python::pyvenv { "${virtualenv_path}/sfmc-fetcher" :
 }
 
 # Install Mozilla's sfmc-fetcher
-python::pip { 'sfmc-fetcher':
-  ensure     => 'present',
-  virtualenv => "${virtualenv_path}/sfmc-fetcher",
-  url        => 'git+https://github.com/mozilla-it/data-integrations@2126a2098c28e3fe447305c2438bd18f4fefa7a1',
-  require    => [
-  ],
-}
+#python::pip { 'sfmc-fetcher':
+#  ensure     => 'present',
+#  virtualenv => "${virtualenv_path}/sfmc-fetcher",
+#  url        => 'git+https://github.com/mozilla-it/data-integrations@2126a2098c28e3fe447305c2438bd18f4fefa7a1',
+#  require    => [
+#  ],
+#}
 
-file { '/usr/local/bin/sfmc-fetcher':
-  ensure  => link,
-  target  => '${virtualenv_path}/sfmc-fetcher/bin/brickftp_poc.py',
-  require => [
-    Python::Pip['sfmc-fetcher'],
-  ],
-}
+#file { '/usr/local/bin/sfmc-fetcher':
+#  ensure  => link,
+#  target  => '${virtualenv_path}/sfmc-fetcher/bin/brickftp_poc.py',
+#  require => [
+#    Python::Pip['sfmc-fetcher'],
+#  ],
+#}
 
 file { '/opt/etl/salesforce_sfmc':
   ensure  => directory,

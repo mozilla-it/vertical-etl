@@ -9,7 +9,11 @@ cursor = cnxn.cursor()
 group_attributes = "mailing_country, email_language, email_format "
 group_by         = "GROUP BY 4,5,6 "
 
-sql = "DELETE FROM sf_summary where date=current_date()"
+#
+# FIXME: Multiple "CURRENT_DATE()" statements could cause a problem if
+#        this gets run around midnight. 
+#
+sql = "DELETE FROM sf_summary WHERE date=CURRENT_DATE()"
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                             + \

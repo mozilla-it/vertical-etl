@@ -1,7 +1,7 @@
 config = {
-  'proxies'            : {"https" : "http://proxy.service.consul:3128"}
-  'snippets_dir'       : '/var/lib/etl/snippets_stats'
-  'geoip_db_loc'       : '/var/lib/etl/geoip_db'
-  's3_snippets_bucket' : '{{ getv "/config/SnippetsStats/S3Bucket" "s3-bucket-not-set" }}'
-  's3_snippets_path'   : '{{ getv "/config/SnippetsStats/S3BucketPath" "s3-bucket-path-not-set" }}'
+  'proxies'            : {"https" : "http://proxy.service.consul:3128"},
+  'snippets_dir'       : '/var/lib/etl/snippets_stats',
+  'geoip_db_loc'       : '/var/lib/etl/geoip_db',
+  's3_snippets_bucket' : '{{ getv "/config/SnippetsStats/S3Bucket" "s3-bucket-not-set" }}',
+  's3_snippets_path'   : '{{ getv "/config/SnippetsStats/S3BucketPath" "s3-bucket-path-not-set" }}',
 }

@@ -3,7 +3,7 @@ cron::daily { "${project_name}-snippets_stats":
   command => "nubis-cron ${project_name}-snippets_stats /opt/etl/snippets_stats/run",
 }
 
-python::pyvenv { "${virtualenv_path}/snippets_stats" :
+python::pyvenv { "${virtualenv_path}/snippets-stats" :
   ensure  => present,
   version => '3.4',
   require => [

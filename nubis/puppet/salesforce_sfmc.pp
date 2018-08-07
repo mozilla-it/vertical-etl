@@ -3,7 +3,7 @@ cron::daily { "${project_name}-salesforce_sfmc":
   command => "nubis-cron ${project_name}-salesforce_sfmc /opt/etl/salesforce_sfmc/run",
 }
 
-python::pyvenv { "${virtualenv_path}/sfmc-fetcher" :
+python::pyvenv { "${virtualenv_path}/data-integrations" :
   ensure  => present,
   version => '3.4',
   require => [
@@ -11,8 +11,8 @@ python::pyvenv { "${virtualenv_path}/sfmc-fetcher" :
   ],
 }
 
-# Install Mozilla's sfmc-fetcher
-python::pip { 'sfmc-fetcher':
+# Install Mozilla's data-integrations
+python::pip { 'data-integrations':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/data-integrations",
   url        => 'git+https://github.com/mozilla-it/data-integrations@714002a4ca8a13e92f3086284f8b699101921bb9',
@@ -24,7 +24,7 @@ file { '/usr/local/bin/sfmc-fetcher':
   ensure  => link,
   target  => '${virtualenv_path}/data-integrations/bin/brickftp_poc.py',
   require => [
-    Python::Pip['sfmc-fetcher'],
+    Python::Pip['data-integrations'],
   ],
 }
 

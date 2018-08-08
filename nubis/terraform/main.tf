@@ -36,7 +36,7 @@ module "nagios" {
 }
 
 module "backups" {
-  source                    = "github.com/gozer/nubis-terraform//bucket?ref=v2.3.0"
+  source                    = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
   region                    = "${var.backup_region}"
   environment               = "${var.environment}"
   account                   = "${var.account}"

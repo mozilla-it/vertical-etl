@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "${var.region}"
-}
-
 resource "aws_iam_user" "nagios" {
   name = "${var.service_name}-${var.environment}-nagios"
   path = "/applicaton/${var.service_name}/"

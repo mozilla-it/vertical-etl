@@ -1,5 +1,5 @@
 module "worker" {
-  source            = "github.com/nubisproject/nubis-terraform//worker?ref=v2.2.0"
+  source            = "github.com/nubisproject/nubis-terraform//worker?ref=v2.3.0"
   region            = "${var.region}"
   environment       = "${var.environment}"
   account           = "${var.account}"
@@ -16,7 +16,7 @@ module "worker" {
 }
 
 module "archive" {
-  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.2.0"
+  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -26,7 +26,7 @@ module "archive" {
 }
 
 module "nagios" {
-  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.2.0"
+  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -35,11 +35,8 @@ module "nagios" {
   role         = "${module.worker.role}"
 }
 
-#XXX: region fix will be released after Nubis v2.2.0 (3fb2ebe3023e18df01667e1c9b43503c0f09bf3c)
-#XXX: SSE feature will be released after Nubis v2.2.0 (9ad6e588cc7db80a53725e6a0ea62a8384383d6d)
-#XXX: Expiration policies will be released after Nubis v2.2.0 (gozer:da652f880800981e123b2f5621ca3d0c50a5a773)
 module "backups" {
-  source                    = "github.com/gozer/nubis-terraform//bucket?ref=da652f880800981e123b2f5621ca3d0c50a5a773"
+  source                    = "github.com/gozer/nubis-terraform//bucket?ref=v2.3.0"
   region                    = "${var.backup_region}"
   environment               = "${var.environment}"
   account                   = "${var.account}"

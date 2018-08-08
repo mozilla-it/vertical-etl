@@ -1,6 +1,6 @@
 [template]
 src = "secrets_workday.tmpl"
-dest = "/usr/local/virtualenvs/data-integrations/secrets_workday.py"
+dest = "/usr/local/virtualenvs/data-integrations/Workday/secrets_workday.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

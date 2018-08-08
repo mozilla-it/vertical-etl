@@ -46,16 +46,18 @@ cron::daily { "${project_name}-redash-mobile_daily_active_users":
   command => "nubis-cron ${project_name}-redash-mobile_daily_active_users /opt/etl/redash/run 14871 mobile_daily_active_users",
 }
 
-cron::daily { "${project_name}-redash-fx_er":
-  hour    => '17',
-  minute  => '36',
-  user    => 'etl',
-  command => "nubis-cron ${project_name}-redash-fx_er /opt/etl/redash/run 1687 fx_desktop_er",
-}
+# redash-fx_er job retired
+#cron::daily { "${project_name}-redash-fx_er":
+#  hour    => '17',
+#  minute  => '36',
+#  user    => 'etl',
+#  command => "nubis-cron ${project_name}-redash-fx_er /opt/etl/redash/run 1687 fx_desktop_er",
+#}
 
-cron::daily { "${project_name}-redash-fx_er_by_top_countries":
-  hour    => '17',
-  minute  => '37',
-  user    => 'etl',
-  command => "nubis-cron ${project_name}-redash-fx_er_by_top_countries /opt/etl/redash/run 1703 fx_desktop_er_by_top_countries",
-}
+# redash-fx_er_by_top_countries job retired
+#cron::daily { "${project_name}-redash-fx_er_by_top_countries":
+#  hour    => '17',
+#  minute  => '37',
+#  user    => 'etl',
+#  command => "nubis-cron ${project_name}-redash-fx_er_by_top_countries /opt/etl/redash/run 1703 fx_desktop_er_by_top_countries",
+#}

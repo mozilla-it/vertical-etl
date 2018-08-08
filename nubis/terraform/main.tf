@@ -2,6 +2,11 @@ provider "aws" {
   region = "${var.region}"
 }
 
+provider "aws" {
+  region = "${var.backup_region}"
+  alias  = "backups"
+}
+
 module "worker" {
   source            = "github.com/nubisproject/nubis-terraform//worker?ref=v2.3.0"
   region            = "${var.region}"
@@ -40,6 +45,10 @@ module "nagios" {
 }
 
 module "backups" {
+  providers = {
+    aws = "aws.backups"
+  }
+
   source                    = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
   region                    = "${var.backup_region}"
   environment               = "${var.environment}"

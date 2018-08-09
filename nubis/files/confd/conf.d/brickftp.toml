@@ -1,0 +1,13 @@
+[template]
+src = "secrets_brickftp.tmpl"
+dest = "/usr/local/virtualenvs/data-integrations/BrickFTP/secrets_brickftp.py"
+prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
+
+uid = 0
+gid = 0
+mode = "0644"
+
+keys = [
+    "/config/*",
+    "/config"
+]

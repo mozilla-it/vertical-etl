@@ -12,7 +12,7 @@ import __main__ as main_script
 
 BASE_URL = 'https://services1.myworkday.com/ccx/service/customreport2/vhr_mozilla'
 
-WORKERS_URL = BASE_URL + '/sstorey/IT_Data_Warehouse_Worker_Sync_Full_File?format=json'
+WORKERS_URL = BASE_URL + '/ISU_RAAS/IT_Data_Warehouse_Worker_Sync_Full_File?format=json'
 SEATING_URL = BASE_URL + '/ISU_RAAS/WPR_Worker_Space_Number?format=json'
 USERS_URL = BASE_URL + '/ISU_RAAS/Mozilla_BusContUsers?format=json'
 

@@ -70,6 +70,17 @@ file { '/opt/etl/salesforce_sfmc/load':
   source  => 'puppet:///nubis/files/salesforce_sfmc/load.sh',
 }
 
+file { '/opt/etl/salesforce_sfmc/populate_sfmc_send_jobs_unique_table.py':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/salesforce_sfmc'],
+  ],
+  source  => 'puppet:///nubis/files/salesforce_sfmc/populate_sfmc_send_jobs_unique_table.py',
+}
+
 file { '/opt/etl/salesforce_sfmc/load.yml':
   ensure  => present,
   owner   => root,

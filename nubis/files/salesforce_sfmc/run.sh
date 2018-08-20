@@ -7,3 +7,6 @@ export PATH=/usr/local/bin:$PATH
 
 # Load into Vertica
 /opt/etl/salesforce_sfmc/load
+
+# Populate the unique jobs table
+/opt/etl/salesforce_sfmc/populate_sfmc_send_jobs_unique_table.py

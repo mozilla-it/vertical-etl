@@ -6,43 +6,69 @@ import pyodbc
 cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 cursor = cnxn.cursor()
 
-sql = "DELETE FROM sf_summary where date=current_date()"
+group_attributes = "mailing_country, email_language, email_format "
+group_by         = "GROUP BY 4,5,6 "
+
+#
+# FIXME: Multiple "CURRENT_DATE()" statements could cause a problem if
+#        this gets run around midnight. 
+#
+sql = "DELETE FROM sf_summary WHERE date=CURRENT_DATE()"
 cursor.execute(sql)
 
-sql = "INSERT INTO sf_summary "                                                          \
-      "SELECT CURRENT_DATE(),'Unique Contacts',COUNT(*),mailing_country,email_language " \
-      "FROM sf_contacts_vw GROUP BY 4,5"
+sql = "INSERT INTO sf_summary "                             + \
+      "SELECT CURRENT_DATE(),'Unique Contacts', COUNT(*), " + \
+      group_attributes                                      + \
+      " FROM sf_contacts_vw "                               + \
+      group_by
 cursor.execute(sql)
 
-sql = "INSERT INTO sf_summary "                                                   \
-      "SELECT CURRENT_DATE(),'Opted In',COUNT(*),mailing_country,email_language " \
-      "FROM sf_contacts_vw "                                                      \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND subscriber='t' "         \
-      "GROUP BY 4,5"
+sql = "INSERT INTO sf_summary "                                           + \
+      "SELECT CURRENT_DATE(),'Opted In', COUNT(*), "                      + \
+      group_attributes                                                    + \
+      " FROM sf_contacts_vw "                                             + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND subscriber='t' " + \
+      group_by
 cursor.execute(sql)
 
-sql = "INSERT INTO sf_summary "                                                             \
-      "SELECT CURRENT_DATE(),'Mozilla Subscriber',COUNT(*),mailing_country,email_language " \
-      "FROM sf_contacts_vw "                                                                \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_subscriber='t' GROUP BY 4,5"
+sql = "INSERT INTO sf_summary "                                         + \
+      "SELECT CURRENT_DATE(),'Opted Out', COUNT(*), "                   + \
+      group_attributes                                                  + \
+      " FROM sf_contacts_vw "                                           + \
+      "WHERE double_opt_in='f' OR email_opt_out='t' OR subscriber='f' " + \
+      group_by
 cursor.execute(sql)
 
-sql = "INSERT INTO sf_summary "                                                               \
-      "SELECT CURRENT_DATE(),'Developer Subscriber',COUNT(*),mailing_country,email_language " \
-      "FROM sf_contacts_vw "                                                                  \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND dev_subscriber='t' GROUP BY 4,5"
+sql = "INSERT INTO sf_summary "                                               + \
+      "SELECT CURRENT_DATE(),'Mozilla Subscriber', COUNT(*), "                + \
+      group_attributes                                                        + \
+      " FROM sf_contacts_vw "                                                 + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_subscriber='t' " + \
+      group_by
 cursor.execute(sql)
 
-sql = "INSERT INTO sf_summary "                                                             \
-      "SELECT CURRENT_DATE(),'Firefox Subscriber',COUNT(*),mailing_country,email_language " \
-      "FROM sf_contacts_vw "                                                                \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND fx_subscriber='t' GROUP BY 4,5"
+sql = "INSERT INTO sf_summary "                                               + \
+      "SELECT CURRENT_DATE(),'Developer Subscriber', COUNT(*), "              + \
+      group_attributes                                                        + \
+      " FROM sf_contacts_vw "                                                 + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND dev_subscriber='t' " + \
+      group_by
 cursor.execute(sql)
 
-sql = "INSERT INTO sf_summary "                                                           \
-      "SELECT CURRENT_DATE(),'Other Subscriber',COUNT(*),mailing_country,email_language " \
-      "FROM sf_contacts_vw "                                                              \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND other_subscriber='t' GROUP BY 4,5"
+sql = "INSERT INTO sf_summary "                                              + \
+      "SELECT CURRENT_DATE(),'Firefox Subscriber', COUNT(*), "               + \
+      group_attributes                                                       + \
+      " FROM sf_contacts_vw "                                                + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND fx_subscriber='t' " + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT CURRENT_DATE(),'Other Subscriber', "                              + \
+      group_attributes                                                          + \
+      " FROM sf_contacts_vw "                                                   + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND other_subscriber='t' " + \
+      group_by
 cursor.execute(sql)
 
 commit_sql = "INSERT INTO last_updated (name, updated_at, updated_by) "  \

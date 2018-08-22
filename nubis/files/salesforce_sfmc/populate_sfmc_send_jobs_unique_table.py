@@ -23,13 +23,16 @@ WHEN REGEXP_LIKE(email_name, '[_ ]ZH(TW)?([_ -]|$)') THEN 'ZH'
 ELSE 'EN'
 END AS lang,
 CASE
-WHEN REGEXP_LIKE(email_name, '^mofo', 'i') THEN 'Mozilla'
-WHEN REGEXP_LIKE(email_name, '_mofo_', 'i') THEN 'Mozilla'
+WHEN REGEXP_LIKE(email_name, '^mofo',      'i') THEN 'Mozilla'
+WHEN REGEXP_LIKE(email_name, '_mofo_',     'i') THEN 'Mozilla'
 WHEN REGEXP_LIKE(email_name, 'foundation', 'i') THEN 'Mozilla'
-WHEN REGEXP_LIKE(email_name, '_(AVO|FUND)_') THEN 'Mozilla'
-WHEN REGEXP_LIKE(email_name, '_FF_', 'i') THEN 'Firefox'
-WHEN REGEXP_LIKE(email_name, 'firefox', 'i') THEN 'Firefox'
-WHEN REGEXP_LIKE(email_name, '_DEV_', 'i') THEN 'Developer'
+WHEN REGEXP_LIKE(email_name, '_(AVO|FUND)_'   ) THEN 'Mozilla'
+WHEN REGEXP_LIKE(email_name, '_FF_',       'i') THEN 'Firefox'
+WHEN REGEXP_LIKE(email_name, 'firefox',    'i') THEN 'Firefox'
+WHEN REGEXP_LIKE(email_name, 'fx',         'i') THEN 'Firefox'
+WHEN REGEXP_LIKE(email_name, '_DEV_',      'i') THEN 'Developer'
+WHEN REGEXP_LIKE(email_name, '^About_Mozilla' ) THEN 'Other'
+WHEN email_name='MoCo_GLOBAL_MOZ_2017_GEN_MITI_HTML_WELCOME_ALL_EN_EML' THEN 'Other'
 ELSE 'UNKNOWN'
 END AS list
 FROM sfmc_send_jobs group by send_id,email_name) AS ssj

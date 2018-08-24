@@ -67,7 +67,7 @@ def read_meta(input_file):
 
 def main(start_date, end_date):
     input_file = '/var/lib/etl/adi/' + start_date.strftime('%Y-%m-%d') + '/output'
-    vertica_table_name = 'copy_adi_dimensional_by_date_s3'
+    vertica_table_name = 'copy_adi_dimensional_by_date'
 
     # process/transform/aggregate input data
     logger.debug('transforming data')

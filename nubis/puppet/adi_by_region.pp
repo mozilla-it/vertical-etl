@@ -1,5 +1,5 @@
-cron::daily { "${project_name}-adi_by_region":
-  monthday => '2',
+cron::monthly { "${project_name}-adi_by_region":
+  datey => '2',
   hour    => '1',
   minute  => fqdn_rand(60),
   user    => 'etl',

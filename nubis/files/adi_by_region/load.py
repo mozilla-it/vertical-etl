@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""S3 to Vertica ETL : BLP ADI Counts
+"""S3 to Vertica ETL : ADI by region
 """
 
 import sys
@@ -13,13 +13,14 @@ from datetime import date, timedelta, datetime
 from collections import namedtuple
 import urlparse
 import pyodbc
+import csv
 
 logger = logging.getLogger(__name__)
 
 cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 
 DELETE_QUERY_TMPL = """
-DELETE FROM {table_name} WHERE (bl_date >= '{start_date}') AND (bl_date <= '{end_date}');
+DELETE FROM {table_name} WHERE (yr = {year}) AND (mnth = {month});
 """
 
 def load_into_vertica(input_file, tbl_name, delimiter = '\x01', field_order = []):
@@ -65,52 +66,51 @@ def read_meta(input_file):
 
   return {'row_count' : row_count}
 
-def main(start_date, end_date):
-    input_file = '/var/lib/etl/adi/' + start_date.strftime('%Y-%m-%d') + '/output'
-    vertica_table_name = 'copy_adi_dimensional_by_date'
+def main(curr_dt):
+    yr = curr_dt.strftime('%Y')
+    mnth = curr_dt.strftime('%m')
+    input_file_init = '/var/lib/etl/adi_by_region/year=' + yr + '/month=' + mnth + '/output'
+    input_file = '/var/lib/etl/adi_by_region/year=' + yr + '/month=' + mnth + '/output_noquotes'
+    # remove double quotes from field values
+    reader = csv.reader(open(input_file_init, "rb"), skipinitialspace=True)
+    with open(input_file,'wb') as myfile:
+      wrtr = csv.writer(myfile, quoting=csv.QUOTE_NONE)
+      wrtr.writerows(reader)
 
-    # process/transform/aggregate input data
-    logger.debug('transforming data')
+    vertica_table_name = 'adi_by_region'
+
+    # get input file row count
+    logger.debug('read input file')
     meta = read_meta(input_file)
 
     # load data into vertica
     logger.debug('removing existing data')
-    query_vertica(DELETE_QUERY_TMPL.format(
-      table_name = vertica_table_name,
-      start_date = start_date.strftime("%Y-%m-%d"),
-      end_date = end_date.strftime("%Y-%m-%d")))
+    query_vertica(DELETE_QUERY_TMPL.format( table_name = vertica_table_name, year = yr, month = mnth ))
+    logger.debug(DELETE_QUERY_TMPL.format( table_name = vertica_table_name, year = yr, month = mnth ))
 
     logger.debug('loading data into Vertica')
-    field_order = ['tot_requests_on_date', '_year_quarter', 'bl_date',
-                   'product', 'v_prod_major', 'prod_os', 'v_prod_os',
-                   'channel', 'locale','continent_code', 'cntry_code',
-                   'distro_name', 'distro_version', 'buildid']
-    load_into_vertica(input_file,
-                           vertica_table_name,
-                           field_order = field_order)
-
+    field_order = ['tot_requests', 'yr', 'mnth', 'region', 'country_code', 'domain', 'product']
+    load_into_vertica(input_file, vertica_table_name, delimiter=',', field_order = field_order)
 
     # verify
     logger.debug('verifying that data was loaded successfully')
-    sql_tmpl = ("SELECT count(1) as c FROM {tbl_name} WHERE bl_date >= '{start_date}'"
-                " AND bl_date <= '{end_date}';")
+    sql_tmpl = ("SELECT count(1) as c FROM {tbl_name} WHERE yr = {year} AND mnth = {month};")
 
-    sql = sql_tmpl.format(tbl_name = vertica_table_name,
-                          start_date = start_date.strftime("%Y-%m-%d"),
-                          end_date = end_date.strftime("%Y-%m-%d"))
+    sql = sql_tmpl.format(tbl_name = vertica_table_name, year = yr, month = mnth)
+    logger.debug(sql)
 
     cnt = sum(map(int, (i[0] for i in query_vertica(sql))))
 
     if cnt != meta['row_count']:
-      logger.error('count from vertica %d does not match count from transform %d',
+      logger.error('count from vertica %d does not match count from meta %d',
                    cnt, meta['row_count'])
       raise IOError, 'verification failed'
 
     # update last_updated with result
     logger.debug('inserting completed load in last_updated for monitoring')
-    last_updated_sql = ("insert into last_updated values ('copy_adi_dimensional_by_date', now(), '%s');" % __file__)
+    last_updated_sql = ("insert into last_updated values ('adi_by_region', now(), '%s');" % __file__)
     query_vertica(last_updated_sql)
-    
+
     # All worked, commit it all
     logger.debug('final transaction commit')
     cnxn.commit()
@@ -121,19 +121,15 @@ if __name__ == '__main__':
     logging.basicConfig(format = '%(asctime)s %(name)s:%(levelname)s: %(message)s',
                       level = logging.DEBUG)
 
-    if (len(sys.argv) == 3):
-      start_date = datetime.strptime(sys.argv[1], '%Y-%m-%d')
-      end_date = datetime.strptime(sys.argv[2], '%Y-%m-%d')
+    if (len(sys.argv) == 2):
+      curr_dt = datetime.strptime(sys.argv[1], '%Y-%m-%d')
     else:
-      now = date.today() - timedelta(days = 1)  # always get data for previous day
-      start_date = now
-      end_date = now
+      curr_dt = date.today()  # always get data for current year and month
 
-    logger.debug('starting ETL start_date %s end_date %s',
-                 start_date.strftime('%Y-%m-%d'),
-                 end_date.strftime('%Y-%m-%d'))
+    logger.debug('starting ETL current date %s',
+                 curr_dt.strftime('%Y-%m-%d'))
 
-    main(start_date, end_date)
+    main(curr_dt)
     logger.debug('ETL successfully completed')
 
   except:

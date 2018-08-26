@@ -5,7 +5,7 @@ cron::daily { "${project_name}-xmatters":
 
 file { '/usr/local/bin/xmatters_sync':
   ensure  => link,
-  target  => '${virtualenv_path}/data-integrations/bin/xmatters_poc.py',
+  target  => "${virtualenv_path}/data-integrations/bin/xmatters_poc.py",
   require => [
     Python::Pip['data-integrations'],
   ],

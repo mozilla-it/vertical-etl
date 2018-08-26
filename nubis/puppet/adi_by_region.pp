@@ -1,5 +1,5 @@
 cron::monthly { "${project_name}-adi_by_region":
-  date   => '2',
+  date    => '2',
   hour    => '1',
   minute  => fqdn_rand(60),
   user    => 'etl',

@@ -22,7 +22,7 @@ python::pip { 'data-integrations':
 
 file { '/usr/local/bin/sfmc-fetcher':
   ensure  => link,
-  target  => '${virtualenv_path}/data-integrations/bin/brickftp_poc.py',
+  target  => "${virtualenv_path}/data-integrations/bin/brickftp_poc.py",
   require => [
     Python::Pip['data-integrations'],
   ],

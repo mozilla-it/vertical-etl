@@ -22,7 +22,7 @@ python::pip { 'snippets-stats':
 
 file { '/usr/local/bin/snippets-stats':
   ensure  => link,
-  target  => '${virtualenv_path}/snippets-stats/snippets.py',
+  target  => "${virtualenv_path}/snippets-stats/snippets.py",
   require => [
     Python::Pip['snippets-stats'],
   ],
@@ -30,7 +30,7 @@ file { '/usr/local/bin/snippets-stats':
 
 file { '/usr/local/bin/get_geoip_db':
   ensure  => link,
-  target  => '${virtualenv_path}/snippets-stats/get_geoip_db.py',
+  target  => "${virtualenv_path}/snippets-stats/get_geoip_db.py",
   require => [
     Python::Pip['snippets-stats'],
   ],
@@ -38,7 +38,7 @@ file { '/usr/local/bin/get_geoip_db':
 
 file { '/usr/local/bin/get_snippets_logs':
   ensure  => link,
-  target  => '${virtualenv_path}/snippets-stats/get_snippets_logs.py',
+  target  => "${virtualenv_path}/snippets-stats/get_snippets_logs.py",
   require => [
     Python::Pip['snippets-stats'],
   ],

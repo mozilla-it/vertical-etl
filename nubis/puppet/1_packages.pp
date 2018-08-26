@@ -13,7 +13,11 @@ package { 'vsql':
 
 
 package { 'pyodbc':
-  ensure => present
+  ensure => present,
+}
+
+package { 'GeoIP-data':
+  ensure => present,
 }
 
 # Fix missing error XML file

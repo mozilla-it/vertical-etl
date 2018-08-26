@@ -64,7 +64,7 @@ sql = "INSERT INTO sf_summary "                                              + \
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                                 + \
-      "SELECT CURRENT_DATE(),'Other Subscriber', "                              + \
+      "SELECT CURRENT_DATE(),'Other Subscriber', COUNT(*), "                    + \
       group_attributes                                                          + \
       " FROM sf_contacts_vw "                                                   + \
       "WHERE double_opt_in='t' AND email_opt_out='f' AND other_subscriber='t' " + \

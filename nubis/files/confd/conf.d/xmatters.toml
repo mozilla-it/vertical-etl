@@ -1,6 +1,6 @@
 [template]
 src = "secrets_xmatters.tmpl"
-dest = "/usr/local/virtualenvs/data-integrations/XMatters/secrets_xmatters.py"
+dest = "/usr/local/virtualenvs/data-integrations/lib64/python3.4/site-packages/XMatters/secrets_xmatters.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

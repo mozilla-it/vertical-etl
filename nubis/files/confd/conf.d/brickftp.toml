@@ -1,6 +1,6 @@
 [template]
 src = "secrets_brickftp.tmpl"
-dest = "/usr/local/virtualenvs/data-integrations/BrickFTP/secrets_brickftp.py"
+dest = "/usr/local/virtualenvs/data-integrations/lib64/python3.4/site-packages/BrickFTP/secrets_brickftp.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

@@ -20,6 +20,10 @@ package { 'GeoIP-data':
   ensure => present,
 }
 
+package { 'GeoIP-update':
+  ensure => present,
+}
+
 # Fix missing error XML file
 file { '/opt/vertica/lib64/en-US':
   ensure  => 'link',

@@ -26,12 +26,6 @@ def run_command(cmd):
   
   return retcode, stdout, stderr
 
-def run_hive_query(hive_query_file):
-  """Run given Hive query
-  """
-
-  return run_command('hive -f %s' % (hive_query_file))
-
 def load_into_vertica(input_file, tbl_name, delimiter = '\x01', field_order = []):
   cnxn = pyodbc.connect("DSN=vertica")
   cursor = cnxn.cursor()

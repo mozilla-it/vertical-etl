@@ -10,8 +10,8 @@ import logging
 import logging.config
 
 import util
-import config
 
+from datetime import datetime, date
 import pandas as pd
 import numpy as np
 import scipy as sp
@@ -355,7 +355,9 @@ def attributes(tmpl, fo, calc_date):
 def os(tmpl, fo, calc_date):
 
     ds_sql = tmpl.format(aggr_fields='r.country, r.os, r.os_version, r.os_service_pack_major, r.os_service_pack_minor')
+    print "os ds sql query"
     df4 = util.query_vertica_df(ds_sql)
+    print "completed os ds sql query"
 
     # replace nulls with string 'NA'
     df4[['country', 'os', 'os_version', 'os_service_pack_major', 'os_service_pack_minor', 'user_status']] = df4[['country', 'os', 'os_version', 'os_service_pack_major', 'os_service_pack_minor', 'user_status']].fillna(value='NA')
@@ -509,8 +511,7 @@ def e10_enabled_activity_group_locale_customer_age(tmpl, fo, calc_date):
     df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
     # create column of groupby_fields value = country + activity_group + user_status
-    df4['value'] = df4.country.astype(str) + " + " + df4.actidebug2: channel 0: window 997817 sent adjust 50759
-vity_group.astype(str) + " + " + df4.user_status.astype(str)
+    df4['value'] = df4.country.astype(str) + " + " + df4.activity_group.astype(str) + " + " + df4.user_status.astype(str)
     # aggregate on country + activity_group + user_status
     df = get_stats_better(df4, 'country + activity_group + user_status', calc_date)
     df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
@@ -674,6 +675,7 @@ def main(calc_date):
                     vertica_input_table_details + " where default_search_engine='google-nocodes');")
     df2 = util.query_vertica_df(outliers_sql)
     ct = df2['count'][0]
+    print "completed outliers sql query"
     if ct > 0: 
         mu = df2['avg'][0]
         sigma = df2['std'][0]
@@ -689,10 +691,11 @@ def main(calc_date):
         fo = 'aggr_v1_fileout.csv'
         with open(fo, 'a') as f:
 
-            global_country_geo_subdivision1_city_user_status(global_filter_tmpl, f, calc_date)
+            #global_country_geo_subdivision1_city_user_status(global_filter_tmpl, f, calc_date)
             #engine_channel_browser_memory(global_filter_tmpl, f, calc_date)
             #attributes(global_filter_tmpl, f, calc_date)
-            #os(global_filter_tmpl, f, calc_date)
+            print "calling os"
+            os(global_filter_tmpl, f, calc_date)
             #e10_enabled_activity_group_locale_customer_age(global_filter_tmpl, f, calc_date)
             #sync_configured(global_filter_tmpl, f, calc_date)
             #bookmarks_count(global_filter_tmpl, f, calc_date)
@@ -713,7 +716,7 @@ def main(calc_date):
                     line[83] = str(int(float(line[83])))
                     outfile.write("|".join(line))
 
-        util.load_into_vertica('b.txt',vertica_output_table_aggr,delimiter='|',field_order = field_order)
+        #util.load_into_vertica('b.txt',vertica_output_table_aggr,delimiter='|',field_order = field_order)
 
 
 if __name__ == '__main__':
@@ -725,7 +728,7 @@ if __name__ == '__main__':
     if (len(sys.argv) == 2):
       calc_date = datetime.strptime(sys.argv[1], '%Y-%m-%d')
     else:
-      calc_date = datetime.strptime(date.today(), '%Y-%m-%d')
+      calc_date = str(date.today()) #datetime.today().strptime('%Y-%m-%d')
     main(calc_date) #calc_date = '2018-08-13' **** hmmm, should be latest date in vertica table!!!
 
   except:
@@ -734,4 +737,3 @@ if __name__ == '__main__':
     logger.exception("error in running ETL")
 
     sys.exit(1)
-

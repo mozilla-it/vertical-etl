@@ -1,5 +1,5 @@
-cron::daily { "${project_name}-ltv":
-  weekday => 'Wednesday',
+cron::weekly { "${project_name}-ltv":
+  weekday => '3',
   hour    => '1',
   minute  => '30',
   user    => 'etl',

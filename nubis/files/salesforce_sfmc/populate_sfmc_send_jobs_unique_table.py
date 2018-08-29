@@ -42,4 +42,7 @@ WHEN NOT MATCHED THEN INSERT VALUES (ssj.send_id,ssj.email_name,ssj.lang,ssj.lis
 """
 cursor.execute(sql)
 
+commit_sql = "INSERT INTO last_updated (name, updated_at, updated_by) "  \
+              "VALUES ('sfmc_send_jobs_unique', now(), '" + os.path.basename(__file__) + "')"
+cursor.execute(commit_sql)
 cursor.execute("COMMIT")

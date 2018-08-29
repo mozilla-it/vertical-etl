@@ -15,7 +15,7 @@ python::pyvenv { "${virtualenv_path}/snippets-stats" :
 python::pip { 'snippets-stats':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/snippets-stats",
-  url        => 'git+https://github.com/mozilla-it/snippets-stats@87aaa72bda1d659f02516eb35064b8baea18d7f8',
+  url        => 'git+https://github.com/mozilla-it/snippets-stats@3f07bebd933dc47a1f7445c6bcfb5f1a67685dcf',
   require    => [
   ],
 }

@@ -6,7 +6,7 @@ cron::weekly { "${project_name}-ltv":
   command => "nubis-cron ${project_name}-adi /opt/etl/ltv/run",
 }
 
-python::virtualenv { "${virtualenv_path}/ltv" :
+python::pyvenv { "${virtualenv_path}/ltv" :
   ensure  => present,
   version => '2.7',
   require => [
@@ -41,7 +41,7 @@ python::requirements { 'ltv':
   forceupdate  => true,
   virtualenv   => "${virtualenv_path}/ltv",
   require      => [
-    Python::Virtualenv["${virtualenv_path}/ltv"],
+    Python::Pyenv["${virtualenv_path}/ltv"],
     File["/opt/etl/ltv/requirements.txt"],
   ],
 }

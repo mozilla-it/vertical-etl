@@ -42,6 +42,7 @@ python::requirements { 'ltv':
   virtualenv   => "${virtualenv_path}/ltv",
   require      => [
     Python::Pyvenv["${virtualenv_path}/ltv"],
+    File["/opt/etl/ltv/requirements.txt"],
   ],
 }
 
@@ -56,7 +57,7 @@ file { '/opt/etl/ltv/fetch':
   source  => 'puppet:///nubis/files/ltv/fetch.sh',
 }
 
-file { '/opt/etl/ltv/util':
+file { '/opt/etl/ltv/util.py':
   ensure  => present,
   owner   => root,
   group   => root,
@@ -65,6 +66,17 @@ file { '/opt/etl/ltv/util':
     File['/opt/etl/ltv'],
   ],
   source  => 'puppet:///nubis/files/ltv/util.py',
+}
+
+file { '/opt/etl/ltv/requirements.txt':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0644',
+  require => [
+    File['/opt/etl/ltv'],
+  ],
+  source  => 'puppet:///nubis/files/ltv/requirements.txt',
 }
 
 file { '/opt/etl/ltv/load_client_details':

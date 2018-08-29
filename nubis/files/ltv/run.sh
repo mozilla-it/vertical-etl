@@ -1,5 +1,8 @@
 #!/bin/bash -l
 
+# Look at our virtualenv first
+export PATH=/usr/local/virtualenvs/ltv/bin:$PATH
+
 set -e
 
 #/opt/etl/ltv/fetch

@@ -41,7 +41,7 @@ python::requirements { 'ltv':
   forceupdate  => true,
   virtualenv   => "${virtualenv_path}/ltv",
   require      => [
-    Python::Pyvenv["${virtualenv_path}/ltv"],
+    Python::Virtualenv["${virtualenv_path}/ltv"],
     File["/opt/etl/ltv/requirements.txt"],
   ],
 }

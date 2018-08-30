@@ -6,17 +6,17 @@ cron::weekly { "${project_name}-ltv":
   command => "nubis-cron ${project_name}-adi /opt/etl/ltv/run",
 }
 
-python::virtualenv { "${virtualenv_path}/ltv" :
-  ensure  => present,
-  virtualenv => 'virtualenv-3',
-  environment => [
-    'VIRTUALENV_PYTHON=python2.7',
-  ],
-  require => [
-    File[$virtualenv_path],
-  ],
-}
-
+#python::virtualenv { "${virtualenv_path}/ltv" :
+#  ensure  => present,
+#  virtualenv => 'virtualenv-3',
+#  environment => [
+#    'VIRTUALENV_PYTHON=python2.7',
+#  ],
+#  require => [
+#    File[$virtualenv_path],
+#  ],
+#}
+#v
 
 file { '/opt/etl/ltv':
   ensure  => directory,
@@ -39,15 +39,15 @@ file { '/var/lib/etl/ltv':
 }
 
 # Install ltv python libraries 
-python::requirements { 'ltv':
-  requirements => '/opt/etl/ltv/requirements.txt',
-  forceupdate  => true,
-  virtualenv   => "${virtualenv_path}/ltv",
-  require      => [
-    Python::Virtualenv["${virtualenv_path}/ltv"],
-    File["/opt/etl/ltv/requirements.txt"],
-  ],
-}
+#python::requirements { 'ltv':
+#  requirements => '/opt/etl/ltv/requirements.txt',
+#  forceupdate  => true,
+#  virtualenv   => "${virtualenv_path}/ltv",
+#  require      => [
+#    Python::Virtualenv["${virtualenv_path}/ltv"],
+#    File["/opt/etl/ltv/requirements.txt"],
+#  ],
+#}
 
 file { '/opt/etl/ltv/fetch':
   ensure  => present,

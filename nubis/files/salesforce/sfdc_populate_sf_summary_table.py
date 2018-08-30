@@ -71,6 +71,42 @@ sql = "INSERT INTO sf_summary "                                                 
       group_by
 cursor.execute(sql)
 
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT CURRENT_DATE()-1,'Mozilla Unsubscribes', COUNT(*), "              + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Mozilla' "       + \
+      "AND DATE(sf_contact_history_vw.created_date)=CURRENT_DATE() - 1"         + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT CURRENT_DATE()-1,'Firefox Unsubscribes', COUNT(*), "              + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Firefox' "       + \
+      "AND DATE(sf_contact_history_vw.created_date)=CURRENT_DATE() - 1"         + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT CURRENT_DATE()-1,'Other Unsubscribes', COUNT(*), "                + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Other' "         + \
+      "AND DATE(sf_contact_history_vw.created_date)=CURRENT_DATE() - 1"         + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT CURRENT_DATE()-1,'Developer Unsubscribes', COUNT(*), "            + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Developer' "     + \
+      "AND DATE(sf_contact_history_vw.created_date)=CURRENT_DATE() - 1"         + \
+      group_by
+cursor.execute(sql)
+
 commit_sql = "INSERT INTO last_updated (name, updated_at, updated_by) "  \
               "VALUES ('sf_summary', now(), '" + os.path.basename(__file__) + "')"
 cursor.execute(commit_sql)

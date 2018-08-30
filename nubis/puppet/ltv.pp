@@ -6,17 +6,16 @@ cron::weekly { "${project_name}-ltv":
   command => "nubis-cron ${project_name}-adi /opt/etl/ltv/run",
 }
 
-#python::virtualenv { "${virtualenv_path}/ltv" :
-#  ensure  => present,
-#  virtualenv => 'virtualenv-3',
-#  environment => [
-#    'VIRTUALENV_PYTHON=python2.7',
-#  ],
-#  require => [
-#    File[$virtualenv_path],
-#  ],
-#}
-#v
+python::virtualenv { "${virtualenv_path}/ltv" :
+  ensure  => present,
+  virtualenv => 'virtualenv-3',
+  environment => [
+    'VIRTUALENV_PYTHON=python2.7',
+  ],
+  require => [
+    File[$virtualenv_path],
+  ],
+}
 
 file { '/opt/etl/ltv':
   ensure  => directory,

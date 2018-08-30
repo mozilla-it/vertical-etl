@@ -21,7 +21,7 @@ module "worker" {
   nubis_user_groups = "${var.nubis_user_groups}"
 
   root_storage_size = "128"
-  instance_type     = "r5.xlarge"
+  instance_type     = "r4.xlarge"
 }
 
 module "archive" {

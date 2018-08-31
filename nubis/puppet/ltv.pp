@@ -38,15 +38,15 @@ file { '/var/lib/etl/ltv':
 }
 
 # Install ltv python libraries 
-#python::requirements { 'ltv':
-#  requirements => '/opt/etl/ltv/requirements.txt',
-#  forceupdate  => true,
-#  virtualenv   => "${virtualenv_path}/ltv",
-#  require      => [
-#    Python::Virtualenv["${virtualenv_path}/ltv"],
-#    File["/opt/etl/ltv/requirements.txt"],
-#  ],
-#}
+python::requirements { 'ltv':
+  requirements => '/opt/etl/ltv/requirements.txt',
+  forceupdate  => true,
+  virtualenv   => "${virtualenv_path}/ltv",
+  require      => [
+    Python::Virtualenv["${virtualenv_path}/ltv"],
+    File["/opt/etl/ltv/requirements.txt"],
+  ],
+}
 
 file { '/opt/etl/ltv/fetch':
   ensure  => present,

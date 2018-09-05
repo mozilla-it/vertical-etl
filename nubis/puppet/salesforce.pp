@@ -1,6 +1,7 @@
 cron::daily { "${project_name}-salesforce":
   user    => 'etl',
   command => "nubis-cron ${project_name}-salesforce /opt/etl/salesforce/run",
+  hour    => 9,
 }
 
 python::pyvenv { "${virtualenv_path}/salesforce-fetcher" :

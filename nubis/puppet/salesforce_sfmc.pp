@@ -1,6 +1,7 @@
 cron::daily { "${project_name}-salesforce_sfmc":
   user    => 'etl',
   command => "nubis-cron ${project_name}-salesforce_sfmc /opt/etl/salesforce_sfmc/run",
+  hour    => 18,
 }
 
 python::pyvenv { "${virtualenv_path}/data-integrations" :

@@ -24,7 +24,7 @@ python::pyvenv { "${virtualenv_path}/vertica-csv-loader" :
 python::pip { 'salesforce-fetcher':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/salesforce-fetcher",
-  url        => 'git+https://github.com/gozer/salesforce-fetcher@36648b7ca42e015b563787a769bbb904743d0c65',
+  url        => 'git+https://github.com/gozer/salesforce-fetcher@80c05773424c3017f50453503fda42549f994520',
   require    => [
   ],
 }
@@ -41,7 +41,7 @@ file { '/usr/local/bin/salesforce-fetcher':
 python::pip { 'vertica-csv-loader':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/vertica-csv-loader",
-  url        => 'git+https://github.com/gozer/vertica-csv-loader@ecf36143cd72533930dd55f5bfca7dd7ea04bf72',
+  url        => 'git+https://github.com/gozer/vertica-csv-loader@10e263c94a3feeec01039834e86b656efeb0a825',
   require    => [
   ],
 }

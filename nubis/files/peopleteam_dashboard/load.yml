@@ -5,13 +5,13 @@ file_spec:
 
 tables:
   - name: workday_employees
-    path: "/home/etl/people_team/headcount_{date}.csv"
+    path: "/var/lib/etl/peopleteam_dashboard/headcount_{date}.csv"
     truncate: False
     delete_before_insert:
       field: report_effective_date
       value: "{date}"
   - name: workday_hires
-    path: "/home/etl/people_team/hires_{date}.csv"
+    path: "/var/lib/etl/peopleteam_dashboard/hires_{date}.csv"
     truncate: False
     delete_before_insert:
       field: report_effective_date
@@ -47,7 +47,7 @@ tables:
       Report_Effective_Date_trash FILLER VARCHAR(1),
       report_effective_date AS '{date}'
   - name: workday_terminations
-    path: "/home/etl/people_team/terminations_{date}.csv"
+    path: "/var/lib/etl/peopleteam_dashboard/terminations_{date}.csv"
     truncate: False
     delete_before_insert:
       field: report_effective_date
@@ -86,7 +86,7 @@ tables:
       Report_Effective_Date_trash FILLER VARCHAR(1),
       report_effective_date AS '{date}'
   - name: workday_promotions
-    path: "/home/etl/people_team/promotions_{date}.csv"
+    path: "/var/lib/etl/peopleteam_dashboard/promotions_{date}.csv"
     truncate: False
     delete_before_insert:
       field: report_effective_date

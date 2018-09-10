@@ -1,4 +1,4 @@
-cron { "${project_name}-peopleteam-dashboard":
+cron::daily { "${project_name}-peopleteam-dashboard":
   user    => 'etl',
   command => "nubis-cron ${project_name}-peopleteam_dashboard /opt/etl/peopleteam_dashboard/run",
   hour    => 16,

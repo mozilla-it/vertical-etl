@@ -12,15 +12,12 @@ declare ADI_Bucket ADI_AccessKey ADI_SecretKey
 . "/etc/nubis-config/${NUBIS_PROJECT}.sh"
 
 # default is to process for the previous month of data
-PROCESS_DATE=$(date --date="7 day ago" +%Y-%m-%d) # YYYY-MM-DD
 PROCESS_YEAR=$(date --date="7 day ago" +%Y-%m-%d+"%Y")
 PROCESS_MONTH=$(date --date="7 day ago" +%Y-%m-%d +"%m")
 
 FOLDER="adi_by_region/year=$PROCESS_YEAR/month=$PROCESS_MONTH/"
-echo $FOLDER
 
 APP_DIR=/var/lib/etl/$FOLDER # log directory to put files
-echo $APP_DIR
 
 export AWS_ACCESS_KEY_ID=${ADI_AccessKey:?}
 export AWS_SECRET_ACCESS_KEY=${ADI_SecretKey:?}

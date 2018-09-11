@@ -201,8 +201,6 @@ def main():
 
     start = time.clock()
 
-    # pull country revenue?
-
     # pull distinct (hash) client_id from ut_clients_daily with non-zero search history
     distinct_clients_query = ("SELECT distinct client_id from ut_clients_search_history where sap>0 order by client_id;")
     client_hist_query_revenue_var = ("select client_id, submission_date_s3, sap, sap*rev_per_search as Revenue from (select * from (select *, rank() over (partition by client_id, submission_date_s3 order by revdt desc) rankdt from (select hist_country.client_id, hist_country.submission_date_s3, to_char(submission_date_s3,'YYYYMM')::int as submdt, hist_country.sap, rev.yyyymm::int revdt, rev.rev_per_search from ( (select hist.*,deets.country from (select * from ut_clients_search_history where sap>0 and client_id in ( {client_list} )) hist left join (select client_id, country from ut_clients_daily_details) deets on hist.client_id=deets.client_id) hist_country full outer join ut_country_revenue rev on hist_country.country=rev.country_code) ) sap_rev group by client_id, submission_date_s3, sap, submdt, revdt, rev_per_search having revdt <= submdt) ranked where rankdt=1) t;")
@@ -235,19 +233,10 @@ def main():
          df_final.customer_age = df_final.customer_age.astype(int)
          df_final.historical_searches = df_final.historical_searches.astype(int)
          df_final.days_since_last_active = df_final.days_since_last_active.astype(int)
-         #print df_final
-         #df2 = util.query_vertica_df( client_data_query.format( client_list = str(tmp)[1:-1] ) )
-         #df2 = df2.set_index('client_id')
-         #df2.max_profile_age_in_days = df2.max_profile_age_in_days.fillna(0)
-         #df2.max_profile_age_in_days = df2.max_profile_age_in_days.astype(int)
-         #df_final = pd.merge(df_final, df2, left_index=True, right_index=True, how="left")
-         # load dataset to ut_clients_daily_ltv
-         # util.load_into_vertica_df(df_final,vertica_output_table_namei)
-         #df_final['client_id'] = df_final.index
+
          df_final = df_final[['frequency','recency','customer_age','avg_session_value','predicted_searches_14_days','alive_probability','predicted_clv_12_months','historical_searches','historical_clv','total_clv','days_since_last_active','user_status','calc_date']]
-         #print list(df_final)
          df_final.to_csv(f, sep='|', header=False, encoding='utf-8')
-         #print "completed loop"
+
          logger.debug("completed loop")
 
 
@@ -258,6 +247,13 @@ def main():
     print >> outF , 'runtime: %f', elapsed
     outF.close()
 
+    # output the joined file
+    joined_output_fn = "ltv_output_v1_"+ datetime.today().strftime('%Y%m%d') + ".txt"
+    joined_output_sql = "select ltv.*, det.os,det.os_version,det.city,det.geo_subdivision1,det.geo_subdivision2,det.country,det.default_search_engine,det.default_search_engine_data_submission_url,det.default_search_engine_data_load_path,det.default_search_engine_data_origin,det.e10s_enabled,det.channel,det.locale,det.is_default_browser,det.memory_mb,det.os_service_pack_major,det.os_service_pack_minor,det.sample_id,det.profile_creation_date,det.profile_age_in_days,det.active_addons_count_mean,det.sync_configured,det.sync_count_desktop_sum,det.sync_count_mobile_sum,det.places_bookmarks_count_mean ,det.timezone_offset ,det.attribution_site,det.source,det.medium,det.campaign,det.content,det.submission_date_s3,det.max_activity_date,det.activity_group from ut_clients_ltv ltv left join (select * from ut_clients_daily_details) det on ltv.client_id=det.client_id;"
+    df_jof = util.query_vertica_df(joined_output_sql)
+    with open(joined_output_fn, 'w') as jof:
+      df_jof.to_csv(jof, sep='|', header=False, encoding='utf-8', index=False)
+      
     logger.debug('Query vertica complete')
 
 

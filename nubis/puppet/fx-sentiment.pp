@@ -26,7 +26,7 @@ python::requirements { 'fx-sentiment':
   ],
 }
   -> exec { 'install NTLK data':
-  command   => "${virtualenv_path}/fx-sentiment/bin/python -m nltk.downloader -d /usr/local/share/nltk_data averaged_perceptron_tagger",
+  command   => "${virtualenv_path}/fx-sentiment/bin/python -m nltk.downloader -d /usr/local/share/nltk_data averaged_perceptron_tagger wordnet",
   logoutput => true,
 }
 

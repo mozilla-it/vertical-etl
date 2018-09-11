@@ -11,10 +11,10 @@ declare ADI_Bucket ADI_AccessKey ADI_SecretKey
 # shellcheck disable=SC1090
 . "/etc/nubis-config/${NUBIS_PROJECT}.sh"
 
-# default is to process for the previous days data
-PROCESS_DATE=$(date --date="1 day ago" +%Y-%m-%d) # YYYY-MM-DD
-PROCESS_YEAR=$(date +"%Y")
-PROCESS_MONTH=$(date +"%m")
+# default is to process for the previous month of data
+PROCESS_DATE=$(date --date="7 day ago" +%Y-%m-%d) # YYYY-MM-DD
+PROCESS_YEAR=$(date --date="7 day ago" +%Y-%m-%d+"%Y")
+PROCESS_MONTH=$(date --date="7 day ago" +%Y-%m-%d +"%m")
 
 FOLDER="adi_by_region/year=$PROCESS_YEAR/month=$PROCESS_MONTH/"
 echo $FOLDER

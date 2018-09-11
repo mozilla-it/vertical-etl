@@ -4,4 +4,5 @@ set -e
 
 /opt/etl/adi_by_region/fetch
 
-/opt/etl/adi_by_region/load
+# Run for previous month
+/opt/etl/adi_by_region/load $(date --date="7 day ago" +%Y-%m-%d)

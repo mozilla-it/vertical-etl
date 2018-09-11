@@ -7,12 +7,12 @@ cron::weekly { "${project_name}-ltv":
 }
 
 python::virtualenv { "${virtualenv_path}/ltv" :
-  ensure  => present,
-  virtualenv => 'virtualenv-3',
+  ensure      => present,
+  virtualenv  => 'virtualenv-3',
   environment => [
     'VIRTUALENV_PYTHON=python2.7',
   ],
-  require => [
+  require     => [
     File[$virtualenv_path],
   ],
 }
@@ -44,7 +44,7 @@ python::requirements { 'ltv':
   virtualenv   => "${virtualenv_path}/ltv",
   require      => [
     Python::Virtualenv["${virtualenv_path}/ltv"],
-    File["/opt/etl/ltv/requirements.txt"],
+    File['/opt/etl/ltv/requirements.txt'],
   ],
 }
 

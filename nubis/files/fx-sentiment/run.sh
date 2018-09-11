@@ -11,10 +11,9 @@ declare FX_Sentiments_GOOGLE_APPLICATION_CREDENTIALS FX_Sentiments_db_host FX_Se
 
 set -e
 
-echo $FX_Sentiments_GOOGLE_APPLICATION_CREDENTIALS > tmp.txt
-base64 -d tmp.txt > tmp2.txt
+echo $FX_Sentiments_GOOGLE_APPLICATION_CREDENTIALS | base64 -d > ~/.google.fx-sentiment.json
 
-export GOOGLE_APPLICATION_CREDENTIALS=tmp2.txt
+export GOOGLE_APPLICATION_CREDENTIALS=~/.google.fx-sentiment.json
 
 echo $GOOGLE_APPLICATION_CREDENTIALS
 
@@ -22,5 +21,7 @@ export TEST_FX_SENTIMENTS_HOST=$FX_Sentiments_db_host
 
 echo $TEST_FX_SENTIMENTS_HOST
 
-/usr/local/virtualenvs/fx-sentiment/bin/python data_processing.py --u dbadmin --host $FX_Sentiments_db_host -db $FX_Sentiments_db -p $FX_Sentiments_pwd
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR && /usr/local/virtualenvs/fx-sentiment/bin/python data_processing.py --u dbadmin --host $FX_Sentiments_db_host -db $FX_Sentiments_db -p $FX_Sentiments_pwd
 

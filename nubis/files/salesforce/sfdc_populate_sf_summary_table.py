@@ -1,7 +1,17 @@
 #!/bin/env python
 
-import os
+import os, re, sys
+import datetime
 import pyodbc
+
+date = ''
+try:
+  date = sys.argv[1]
+except:
+  pass
+
+if not re.match('\d{4}-\d{2}-\d{2}', date):
+  date = datetime.datetime.now().strftime("%Y-%m-%d")
 
 cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 cursor = cnxn.cursor()
@@ -9,22 +19,22 @@ cursor = cnxn.cursor()
 group_attributes = "mailing_country, email_language, email_format "
 group_by         = "GROUP BY 4,5,6 "
 
+# Not super-comfortable with working on two different dates...
 #
-# FIXME: Multiple "CURRENT_DATE()" statements could cause a problem if
-#        this gets run around midnight. 
-#
-sql = "DELETE FROM sf_summary WHERE date=CURRENT_DATE()"
+sql = "DELETE FROM sf_summary where rollup_name NOT LIKE '%%Unsubscribes' AND date='%s'" % date
+cursor.execute(sql)
+sql = "DELETE FROM sf_summary where rollup_name LIKE '%%Unsubscribes' AND date=DATE('%s')-1" % date
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                             + \
-      "SELECT CURRENT_DATE(),'Unique Contacts', COUNT(*), " + \
+      "SELECT '%s','Unique Contacts', COUNT(*), " % date    + \
       group_attributes                                      + \
       " FROM sf_contacts_vw "                               + \
       group_by
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                           + \
-      "SELECT CURRENT_DATE(),'Opted In', COUNT(*), "                      + \
+      "SELECT '%s','Opted In', COUNT(*), " % date                         + \
       group_attributes                                                    + \
       " FROM sf_contacts_vw "                                             + \
       "WHERE double_opt_in='t' AND email_opt_out='f' AND subscriber='t' " + \
@@ -32,7 +42,7 @@ sql = "INSERT INTO sf_summary "                                           + \
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                         + \
-      "SELECT CURRENT_DATE(),'Opted Out', COUNT(*), "                   + \
+      "SELECT '%s','Opted Out', COUNT(*), " % date                      + \
       group_attributes                                                  + \
       " FROM sf_contacts_vw "                                           + \
       "WHERE double_opt_in='f' OR email_opt_out='t' OR subscriber='f' " + \
@@ -40,7 +50,7 @@ sql = "INSERT INTO sf_summary "                                         + \
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                               + \
-      "SELECT CURRENT_DATE(),'Mozilla Subscriber', COUNT(*), "                + \
+      "SELECT '%s','Mozilla Subscriber', COUNT(*), " % date                   + \
       group_attributes                                                        + \
       " FROM sf_contacts_vw "                                                 + \
       "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_subscriber='t' " + \
@@ -48,7 +58,7 @@ sql = "INSERT INTO sf_summary "                                               + 
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                               + \
-      "SELECT CURRENT_DATE(),'Developer Subscriber', COUNT(*), "              + \
+      "SELECT '%s','Developer Subscriber', COUNT(*), " % date                 + \
       group_attributes                                                        + \
       " FROM sf_contacts_vw "                                                 + \
       "WHERE double_opt_in='t' AND email_opt_out='f' AND dev_subscriber='t' " + \
@@ -56,7 +66,7 @@ sql = "INSERT INTO sf_summary "                                               + 
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                              + \
-      "SELECT CURRENT_DATE(),'Firefox Subscriber', COUNT(*), "               + \
+      "SELECT '%s','Firefox Subscriber', COUNT(*), " % date                  + \
       group_attributes                                                       + \
       " FROM sf_contacts_vw "                                                + \
       "WHERE double_opt_in='t' AND email_opt_out='f' AND fx_subscriber='t' " + \
@@ -64,10 +74,46 @@ sql = "INSERT INTO sf_summary "                                              + \
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                                 + \
-      "SELECT CURRENT_DATE(),'Other Subscriber', COUNT(*), "                    + \
+      "SELECT '%s','Other Subscriber', COUNT(*), " % date                       + \
       group_attributes                                                          + \
       " FROM sf_contacts_vw "                                                   + \
       "WHERE double_opt_in='t' AND email_opt_out='f' AND other_subscriber='t' " + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT DATE('%s')-1,'Mozilla Unsubscribes', COUNT(*), " % date           + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Mozilla' "       + \
+      "AND DATE(sf_contact_history_vw.created_date)=DATE('%s') - 1" % date      + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT DATE('%s')-1,'Firefox Unsubscribes', COUNT(*), " % date           + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Firefox' "       + \
+      "AND DATE(sf_contact_history_vw.created_date)=DATE('%s') - 1" % date      + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT DATE('%s')-1,'Other Unsubscribes', COUNT(*), " % date             + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Other' "         + \
+      "AND DATE(sf_contact_history_vw.created_date)=DATE('%s') - 1" % date      + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT DATE('%s')-1,'Developer Unsubscribes', COUNT(*), " % date         + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Developer' "     + \
+      "AND DATE(sf_contact_history_vw.created_date)=DATE('%s') - 1" % date      + \
       group_by
 cursor.execute(sql)
 

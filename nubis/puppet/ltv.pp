@@ -3,7 +3,7 @@ cron::weekly { "${project_name}-ltv":
   hour    => '1',
   minute  => '30',
   user    => 'etl',
-  command => "nubis-cron ${project_name}-adi /opt/etl/ltv/run",
+  command => "nubis-cron ${project_name}-ltv /opt/etl/ltv/run",
 }
 
 python::virtualenv { "${virtualenv_path}/ltv" :

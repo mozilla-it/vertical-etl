@@ -1,6 +1,7 @@
 cron::daily { "${project_name}-snippets-stats":
   user    => 'etl',
   command => "nubis-cron ${project_name}-snippets-stats /opt/etl/snippets-stats/run",
+  hour    => 8,
 }
 
 python::pyvenv { "${virtualenv_path}/snippets-stats" :
@@ -15,7 +16,7 @@ python::pyvenv { "${virtualenv_path}/snippets-stats" :
 python::pip { 'snippets-stats':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/snippets-stats",
-  url        => 'git+https://github.com/mozilla-it/snippets-stats@6a1c64861be04c23f13ce22d183558669d3fb551',
+  url        => 'git+https://github.com/mozilla-it/snippets-stats@5b467ecab557bb700e52f5e027acd9c9583bef99',
   require    => [
   ],
 }

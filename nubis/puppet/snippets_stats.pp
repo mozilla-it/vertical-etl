@@ -1,6 +1,6 @@
-cron::daily { "${project_name}-snippets_stats":
+cron::daily { "${project_name}-snippets-stats":
   user    => 'etl',
-  command => "nubis-cron ${project_name}-snippets_stats /opt/etl/snippets_stats/run",
+  command => "nubis-cron ${project_name}-snippets-stats /opt/etl/snippets-stats/run",
 }
 
 python::pyvenv { "${virtualenv_path}/snippets-stats" :
@@ -15,7 +15,7 @@ python::pyvenv { "${virtualenv_path}/snippets-stats" :
 python::pip { 'snippets-stats':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/snippets-stats",
-  url        => 'git+https://github.com/mozilla-it/snippets-stats@3f07bebd933dc47a1f7445c6bcfb5f1a67685dcf',
+  url        => 'git+https://github.com/mozilla-it/snippets-stats@6a1c64861be04c23f13ce22d183558669d3fb551',
   require    => [
   ],
 }
@@ -44,14 +44,14 @@ file { '/usr/local/bin/get_snippets_logs':
   ],
 }
 
-file { '/opt/etl/snippets_stats':
+file { '/opt/etl/snippets-stats':
   ensure  => directory,
   require => [
     File['/opt/etl'],
   ]
 }
 
-file { '/var/lib/etl/snippets_stats':
+file { '/var/lib/etl/snippets-stats':
   ensure  => directory,
   owner   => 'etl',
   group   => 'etl',
@@ -64,35 +64,35 @@ file { '/var/lib/etl/snippets_stats':
   ]
 }
 
-file { '/opt/etl/snippets_stats/fetch':
+file { '/opt/etl/snippets-stats/fetch':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/etl/snippets_stats'],
+    File['/opt/etl/snippets-stats'],
   ],
-  source  => 'puppet:///nubis/files/snippets_stats/fetch.sh',
+  source  => 'puppet:///nubis/files/snippets-stats/fetch.sh',
 }
 
-file { '/opt/etl/snippets_stats/load':
+file { '/opt/etl/snippets-stats/load':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/etl/snippets_stats'],
+    File['/opt/etl/snippets-stats'],
   ],
-  source  => 'puppet:///nubis/files/snippets_stats/load.sh',
+  source  => 'puppet:///nubis/files/snippets-stats/load.sh',
 }
 
-file { '/opt/etl/snippets_stats/run':
+file { '/opt/etl/snippets-stats/run':
   ensure  => present,
   owner   => root,
   group   => root,
   mode    => '0755',
   require => [
-    File['/opt/etl/snippets_stats'],
+    File['/opt/etl/snippets-stats'],
   ],
-  source  => 'puppet:///nubis/files/snippets_stats/run.sh',
+  source  => 'puppet:///nubis/files/snippets-stats/run.sh',
 }

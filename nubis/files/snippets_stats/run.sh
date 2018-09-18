@@ -3,7 +3,7 @@
 export PATH=/usr/local/bin:$PATH
 
 # Import from salesforce
-/opt/etl/snippets_stats/fetch
+/opt/etl/snippets-stats/fetch
 
 # Load into Vertica
-/opt/etl/snippets_stats/load
+/opt/etl/snippets-stats/load

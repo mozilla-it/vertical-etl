@@ -1,6 +1,6 @@
 [template]
 src = "snippets-stats.tmpl"
-dest = "/opt/etl/snippets_stats/config.py"
+dest = "/usr/local/virtualenvs/snippets-stats/lib64/python3.4/site-packages/snippets-stats/config.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

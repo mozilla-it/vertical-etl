@@ -5,3 +5,4 @@ numpy==1.14.2
 dill==0.2.7.1
 pyodbc>=3.0.0
 psutil
+unicodecsv

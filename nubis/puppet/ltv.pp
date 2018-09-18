@@ -1,7 +1,7 @@
 cron::weekly { "${project_name}-ltv":
   weekday => '3',
-  hour    => '1',
-  minute  => '30',
+  hour    => '3',
+  minute  => '00',
   user    => 'etl',
   command => "nubis-cron ${project_name}-ltv /opt/etl/ltv/run",
 }

@@ -683,6 +683,7 @@ def write_to_file(file_in):
         field_order = ['calc_date','attribute','value'] + col_names
         print field_order
 
+        vertica_output_table_aggr = 'ut_clients_aggr'
         vertica_fn = 'tmp.out'
         open(vertica_fn, 'w').close()
         # cast count fields to int or Vertica complains
@@ -697,7 +698,7 @@ def write_to_file(file_in):
                     line[83] = str(int(float(line[83])))
                     outfile.write("|".join(line))
 
-        #util.load_into_vertica(vertica_fn,vertica_output_table_aggr,delimiter='|',field_order = field_order)
+        util.load_into_vertica(vertica_fn,vertica_output_table_aggr,delimiter='|',field_order = field_order)
         # add checks? 
         
 
@@ -736,9 +737,7 @@ def main(calc_date):
     # write output file
     fo = "ltv_aggr_v1_"+ datetime.today().strftime('%Y%m%d') + ".txt"
     fo_sql = "select * from ut_clients_aggr where calc_date='"+ calc_date + "';"
-    df_fo = util.query_vertica_df( fo_sql )
-    with open(fo, 'w') as fowriter:
-      df_fo.to_csv(fowriter, sep='|', header=False, encoding='utf-8', index=False)
+    util.query_to_file(fo_sql, fo)
 
 
 if __name__ == '__main__':

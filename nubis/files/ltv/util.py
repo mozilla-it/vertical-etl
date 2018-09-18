@@ -11,6 +11,7 @@ import os.path
 #engine = sqlalchemy.create_engine('vertica+pyodbc://@vertica')
 import pandas
 from pandas import DataFrame
+import unicodecsv as csv
 
 logger = logging.getLogger(__name__)
 
@@ -68,3 +69,16 @@ def query_vertica(query):
 def query_vertica_df(query):
   cnxn = pyodbc.connect("DSN=vertica")
   return pandas.read_sql(query,cnxn)
+
+def query_to_file(query,fn):
+  cnxn = pyodbc.connect("DSN=vertica")
+  cursor = cnxn.cursor()
+  cursor.execute(query)
+
+  with open(fn, 'w') as csvfile:
+     writer = csv.writer(csvfile, delimiter='|', encoding='utf-8')
+     #writer.writerow([x[0] for x in cursor.description])  # column headers
+     # convert data to csv format
+     #for row in cursor.iterate():
+     for row in cursor:
+        writer.writerow(row)

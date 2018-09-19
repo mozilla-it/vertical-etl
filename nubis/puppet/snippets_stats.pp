@@ -16,30 +16,30 @@ python::pyvenv { "${virtualenv_path}/snippets-stats" :
 python::pip { 'snippets-stats':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/snippets-stats",
-  url        => 'git+https://github.com/mozilla-it/snippets-stats@5b467ecab557bb700e52f5e027acd9c9583bef99',
+  url        => 'git+https://github.com/mozilla-it/snippets-stats@e1784c4cc4245673c4956d83f9e8a65c4ba2c242',
   require    => [
   ],
 }
 
 file { '/usr/local/bin/snippets-stats':
   ensure  => link,
-  target  => "${virtualenv_path}/snippets-stats/snippets.py",
+  target  => "${virtualenv_path}/snippets-stats/bin/snippets.py",
   require => [
     Python::Pip['snippets-stats'],
   ],
 }
 
-file { '/usr/local/bin/get_geoip_db':
-  ensure  => link,
-  target  => "${virtualenv_path}/snippets-stats/get_geoip_db.py",
-  require => [
-    Python::Pip['snippets-stats'],
-  ],
-}
+#file { '/usr/local/bin/get_geoip_db':
+#  ensure  => link,
+#  target  => "${virtualenv_path}/snippets-stats/get_geoip_db.py",
+#  require => [
+#    Python::Pip['snippets-stats'],
+#  ],
+#}
 
 file { '/usr/local/bin/get_snippets_logs':
   ensure  => link,
-  target  => "${virtualenv_path}/snippets-stats/get_snippets_logs.py",
+  target  => "${virtualenv_path}/snippets-stats/bin/get_snippets_logs.py",
   require => [
     Python::Pip['snippets-stats'],
   ],

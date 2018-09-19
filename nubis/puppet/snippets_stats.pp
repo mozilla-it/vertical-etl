@@ -97,3 +97,18 @@ file { '/opt/etl/snippets-stats/run':
   ],
   source  => 'puppet:///nubis/files/snippets-stats/run.sh',
 }
+
+yumrepo { 'geoipupdate3':
+  descr    => 'Copr repo for geoipupdate3',
+  baseurl  => 'https://copr-be.cloud.fedoraproject.org/results/gozer/geoipupdate3/epel-7-$basearch/',
+  enabled  => 1,
+  gpgcheck => 1,
+  gpgkey   => 'https://copr-be.cloud.fedoraproject.org/results/gozer/geoipupdate3/pubkey.gpg',
+}
+
+package { 'geoipupdate':
+  ensure  => 'latest',
+  require => [
+    Yumrepo['geoipupdate3'],
+  ]
+}

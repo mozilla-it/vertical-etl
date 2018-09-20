@@ -104,9 +104,12 @@ yumrepo { 'geoipupdate3':
   enabled  => 1,
   gpgcheck => 1,
   gpgkey   => 'https://copr-be.cloud.fedoraproject.org/results/gozer/geoipupdate3/pubkey.gpg',
+  require  => [
+    Yumrepo['epel'],
+  ],
 }
 
-package { 'geoipupdate':
+package { 'geoipupdate3':
   ensure  => 'latest',
   require => [
     Yumrepo['geoipupdate3'],

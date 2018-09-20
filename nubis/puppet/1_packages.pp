@@ -11,7 +11,6 @@ package { 'vsql':
   ],
 }
 
-
 package { 'pyodbc':
   ensure => present,
 }
@@ -47,4 +46,11 @@ package { 'google-cloud-sdk':
   require => [
     Yumrepo['google-cloud-sdk'],
   ]
+}
+
+package { 'epel-release':
+  ensure => latest,
+}
+  -> yumrepo { 'epel':
+  enabled => 1,
 }

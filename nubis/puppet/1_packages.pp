@@ -47,10 +47,3 @@ package { 'google-cloud-sdk':
     Yumrepo['google-cloud-sdk'],
   ]
 }
-
-package { 'epel-release':
-  ensure => latest,
-}
-  -> yumrepo { 'epel':
-  enabled => 1,
-}

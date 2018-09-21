@@ -1,3 +1,5 @@
 UserId {{ getv "/config/GeoIP/UserId" "999999" }}
 LicenseKey {{ getv "/config/GeoIP/LicenseKey" "000000000000" }}
 ProductIds  {{ getv "/config/GeoIP/ProductIds" "GeoIP2-City GeoIP2-Country GeoIP2-Domain GeoIP2-ISP 133 173 121 111" }}
+
+Proxy proxy.service.consul:3128

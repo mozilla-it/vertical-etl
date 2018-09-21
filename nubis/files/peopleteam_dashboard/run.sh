@@ -2,7 +2,7 @@
 
 export PATH=/usr/local/bin:$PATH
 
-# Import from salesforce
+# Import from Workday
 /opt/etl/peopleteam_dashboard/fetch
 
 # Load into Vertica

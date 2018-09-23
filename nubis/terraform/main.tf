@@ -20,7 +20,7 @@ module "worker" {
   nubis_sudo_groups = "${var.nubis_sudo_groups}"
   nubis_user_groups = "${var.nubis_user_groups}"
 
-  root_storage_size = "128"
+  root_storage_size = "175"
   instance_type     = "r4.xlarge"
 }
 

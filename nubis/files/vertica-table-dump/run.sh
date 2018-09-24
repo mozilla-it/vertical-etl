@@ -33,8 +33,8 @@ for table in $(vsql -U dbadmin -w "$DBADMIN_PASSWORD" -h "$VERTICA_HOST" -c "sel
 do
   OUTFILE="${table}.sql.gz"
   vsql -U dbadmin -w "$DBADMIN_PASSWORD" -h "$VERTICA_HOST" -At -c "select * from $table" | gzip > "${DUMP_DIR}/${OUTFILE}"
+  # Sync to S3
+  aws s3 sync --quiet "$DUMP_DIR/${OUTFILE}" "s3://${BACKUP_BUCKET_NAME}/$TIMESTAMP/${OUTFILE}"
+  # Cleanup
+  rm "$OUTFILE"
 done
-
-# Sync to S3
-aws s3 sync --quiet "$DUMP_DIR/" "s3://${BACKUP_BUCKET_NAME}/$TIMESTAMP/"
-

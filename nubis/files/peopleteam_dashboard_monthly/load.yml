@@ -1,0 +1,124 @@
+file_spec:
+  delimiter: ","
+  quoted: False
+  skip_header: True
+
+tables:
+  - name: workday_employees_monthly
+    path: "/var/lib/etl/peopleteam_dashboard_monthly/headcount_{date}.csv"
+    truncate: False
+    delete_before_insert:
+      field: report_effective_date
+      value: "{date}"
+  - name: workday_hires_monthly
+    path: "/var/lib/etl/peopleteam_dashboard_monthly/hires_{date}.csv"
+    truncate: False
+    delete_before_insert:
+      field: report_effective_date
+      value: "{date}"
+    fields: >
+      employee_id,
+      Gender FILLER VARCHAR(1),
+      Female_Y_N FILLER VARCHAR(1),
+      Male_Y_N FILLER VARCHAR(1),
+      Gender_Decline_Y_N FILLER VARCHAR(1),
+      Gender_Other_Y_N FILLER VARCHAR(1),
+      Gender_Blank_Y_N FILLER VARCHAR(1),
+      Race_Ethnicity__Locale_Sensitive_ FILLER VARCHAR(1),
+      Asian_Y_N FILLER VARCHAR(1),
+      Black_or_African_American_Y_N FILLER VARCHAR(1),
+      Hispanic_or_Latino_Y_N FILLER VARCHAR(1),
+      Race_is_Other_Y_N FILLER VARCHAR(1),
+      White_Y_N FILLER VARCHAR(1),
+      Race_Decline_Y_N FILLER VARCHAR(1),
+      Race_Blank_Y_N FILLER VARCHAR(1),
+      Office_or_Remote_Status FILLER VARCHAR(1),
+      Work_Address__Postal_Code FILLER VARCHAR(1),
+      Work_Country FILLER VARCHAR(1),
+      Worker_Status FILLER VARCHAR(1),
+      People_Partner FILLER VARCHAR(1),
+      Cost_Center_Hierarchy FILLER VARCHAR(1),
+      functional_group FILLER VARCHAR(1),
+      Steering_Committee FILLER VARCHAR(1),
+      SCVP FILLER VARCHAR(1),
+      Job_Family FILLER VARCHAR(1),
+      Management_Level FILLER VARCHAR(1),
+      Hire_Date FILLER VARCHAR(1),
+      Report_Effective_Date_trash FILLER VARCHAR(1),
+      report_effective_date AS '{date}'
+  - name: workday_terminations_monthly
+    path: "/var/lib/etl/peopleteam_dashboard_monthly/terminations_{date}.csv"
+    truncate: False
+    delete_before_insert:
+      field: report_effective_date
+      value: "{date}"
+    fields: >
+      employee_id,
+      Job_Family FILLER VARCHAR(1),
+      Management_Level FILLER VARCHAR(1),
+      Gender FILLER VARCHAR(1),
+      Female_Y_N FILLER VARCHAR(1),
+      Male_Y_N FILLER VARCHAR(1),
+      Gender_Decline_Y_N FILLER VARCHAR(1),
+      Gender_Other_Y_N FILLER VARCHAR(1),
+      Gender_Blank_Y_N FILLER VARCHAR(1),
+      Race_Ethnicity__Locale_Sensitive_ FILLER VARCHAR(1),
+      Asian_Y_N FILLER VARCHAR(1),
+      Black_or_African_American_Y_N FILLER VARCHAR(1),
+      Hispanic_or_Latino_Y_N FILLER VARCHAR(1),
+      Race_is_Other_Y_N FILLER VARCHAR(1),
+      White_Y_N FILLER VARCHAR(1),
+      Race_Decline_Y_N FILLER VARCHAR(1),
+      Race_Blank_Y_N FILLER VARCHAR(1),
+      Office_or_Remote_Status FILLER VARCHAR(1),
+      Work_Address__Postal_Code FILLER VARCHAR(1),
+      Work_Country FILLER VARCHAR(1),
+      Worker_Status FILLER VARCHAR(1),
+      People_Partner FILLER VARCHAR(1),
+      Cost_Center_Hierarchy FILLER VARCHAR(1),
+      Functional_Group FILLER VARCHAR(1),
+      Steering_Committee FILLER VARCHAR(1),
+      SCVP FILLER VARCHAR(1),
+      Manager FILLER VARCHAR(1),
+      Termination_Date FILLER VARCHAR(1),
+      Termination_Category FILLER VARCHAR(1),
+      Primary_Termination_Reason FILLER VARCHAR(1),
+      Report_Effective_Date_trash FILLER VARCHAR(1),
+      report_effective_date AS '{date}'
+  - name: workday_promotions_monthly
+    path: "/var/lib/etl/peopleteam_dashboard_monthly/promotions_{date}.csv"
+    truncate: False
+    delete_before_insert:
+      field: report_effective_date
+      value: "{date}"
+    fields: >
+      employee_id,
+      Job_Family FILLER VARCHAR(1),
+      Management_Level FILLER VARCHAR(1),
+      Gender FILLER VARCHAR(1),
+      Female_Y_N FILLER VARCHAR(1),
+      Male_Y_N FILLER VARCHAR(1),
+      Gender_Decline_Y_N FILLER VARCHAR(1),
+      Gender_Other_Y_N FILLER VARCHAR(1),
+      Gender_Blank_Y_N FILLER VARCHAR(1),
+      Race_Ethnicity__Locale_Sensitive_ FILLER VARCHAR(1),
+      Asian_Y_N FILLER VARCHAR(1),
+      Black_or_African_American_Y_N FILLER VARCHAR(1),
+      Hispanic_or_Latino_Y_N FILLER VARCHAR(1),
+      Race_is_Other_Y_N FILLER VARCHAR(1),
+      White_Y_N FILLER VARCHAR(1),
+      Race_Decline_Y_N FILLER VARCHAR(1),
+      Race_Blank_Y_N FILLER VARCHAR(1),
+      Office_or_Remote_Status FILLER VARCHAR(1),
+      Work_Address__Postal_Code FILLER VARCHAR(1),
+      Work_Country FILLER VARCHAR(1),
+      Worker_Status FILLER VARCHAR(1),
+      People_Partner FILLER VARCHAR(1),
+      cost_center_hierarchy FILLER VARCHAR(1),
+      functional_group FILLER VARCHAR(1),
+      Steering_Committee FILLER VARCHAR(1),
+      SCVP FILLER VARCHAR(1),
+      effective FILLER VARCHAR(1),
+      Business_Process_Reason FILLER VARCHAR(1),
+      Report_Effective_Date_trash FILLER VARCHAR(1),
+      report_effective_date AS '{date}'

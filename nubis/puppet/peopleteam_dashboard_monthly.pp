@@ -2,6 +2,7 @@ cron::monthly { "${project_name}-peopleteam-dashboard-monthly":
   user    => 'etl',
   command => "nubis-cron ${project_name}-peopleteam_dashboard_monthly /opt/etl/peopleteam_dashboard_monthly/run",
   date    => 1,
+  hour    => 16,
 }
 
 file { '/opt/etl/peopleteam_dashboard_monthly':

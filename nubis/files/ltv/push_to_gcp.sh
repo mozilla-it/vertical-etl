@@ -14,6 +14,7 @@ declare LTV_GOOGLE_APPLICATION_CREDENTIALS
 # process current dates in file (data in file should be up to previous date)
 PROCESS_DATE=$(date +%Y%m%d) #YYYYMMDD
 
+export CLOUDSDK_PYTHON=/bin/python2
 export GOOGLE_APPLICATION_CREDENTIALS=${LTV_GOOGLE_APPLICATION_CREDENTIALS:?}
 
 # push ltv and aggr file to GCP                    

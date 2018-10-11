@@ -23,11 +23,11 @@ echo $AWS_ACCESS_KEY_ID
 echo $AWS_SECRET_ACCESS_KEY
 echo "s3://${LTV_Bucket:?}/nawong/cdv6s53_"$PROCESS_DATE
 echo "$APP_DIR/client_details"
-echo "s3://${LTV_Bucket:?}/nawong/scdv3s53_"$PROCESS_DATE
+echo "s3://${LTV_Bucket:?}/nawong/scdv4s53_"$PROCESS_DATE
 
 # sync the objects from $BUCKET/cdv6s53_*$PROCESS_DATE into $APP_DIR/client_details
 #aws s3 cp --recursive "s3://${LTV_Bucket:?}/nawong/cdv6s53_"$PROCESS_DATE "$APP_DIR/client_details"
 
 aws s3 sync "s3://${LTV_Bucket:?}/nawong/cdv6s53_"$PROCESS_DATE "$APP_DIR/client_details" --delete
-aws s3 sync "s3://${LTV_Bucket:?}/nawong/scdv3s53_hist_"$PROCESS_DATE "$APP_DIR/scd" --delete
+aws s3 sync "s3://${LTV_Bucket:?}/nawong/scdv4s53_hist_"$PROCESS_DATE "$APP_DIR/scd" --delete
 

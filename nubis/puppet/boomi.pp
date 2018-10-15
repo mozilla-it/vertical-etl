@@ -41,10 +41,11 @@ file { '/var/lib/etl/boomi':
 }
 
 # Install Mozilla boomi python libraries 
-#python::pip { 'mozilla_etl':
-#  ensure     => 'present',
-#  virtualenv => "${virtualenv_path}/boomi",
-#  url        => 'git+https://github.com/gozer/mozilla_etl.git',
-#  require    => [
-#  ],
-#}
+python::pip { 'mozilla_etl':
+  ensure     => 'present',
+  virtualenv => "${virtualenv_path}/boomi",
+  url        => 'git+https://github.com/gozer/mozilla_etl.git',
+  require    => [
+      Class['mysql::bindings'],
+  ],
+}

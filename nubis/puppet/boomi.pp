@@ -6,7 +6,7 @@ package { 'python36-devel':
   ensure => present,
 }
 
-python::venv { "${virtualenv_path}/boomi" :
+python::pyvenv { "${virtualenv_path}/boomi" :
   ensure  => present,
   version => '3.6',
   require => [

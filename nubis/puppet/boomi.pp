@@ -6,6 +6,10 @@ package { 'python36-devel':
   ensure => present,
 }
 
+class { 'mysql::bindings':
+  daemon_dev => true,
+}
+
 python::pyvenv { "${virtualenv_path}/boomi" :
   ensure  => present,
   version => '3.6',

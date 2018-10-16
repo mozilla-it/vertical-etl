@@ -3,13 +3,24 @@
 group { 'etl':
   ensure => present,
   system => true,
+  gid    => 991,
 }
 
 user { 'etl':
   ensure     => present,
   system     => true,
   gid        => 'etl',
+  uid	     => 994,
   managehome => true,
+}
+
+file { '/home/etl/.ssh':
+  ensure => 'directory',
+  mode   => '0700',
+  require => [
+    User['etl'],
+    Group['etl'],
+  ]
 }
 
 file { '/var/lib/etl':

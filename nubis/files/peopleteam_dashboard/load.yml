@@ -4,13 +4,13 @@ file_spec:
   skip_header: True
 
 tables:
-  - name: workday_employees
+  - name: workday_employees_weekly
     path: "/var/lib/etl/peopleteam_dashboard/headcount_{date}.csv"
     truncate: False
     delete_before_insert:
       field: date
       value: "{date}"
-  - name: workday_hires
+  - name: workday_hires_weekly
     path: "/var/lib/etl/peopleteam_dashboard/hires_{date}.csv"
     truncate: False
     delete_before_insert:
@@ -69,7 +69,7 @@ tables:
       snapshot_date_trash FILLER VARCHAR(1),
       snapshot_date AS '{date}'
       report_name AS 'hires'
-  - name: workday_terminations
+  - name: workday_terminations_weekly
     path: "/var/lib/etl/peopleteam_dashboard/terminations_{date}.csv"
     truncate: False
     delete_before_insert:
@@ -131,7 +131,7 @@ tables:
       snapshot_date_trash FILLER VARCHAR(1),
       snapshot_date AS '{date}',
       report_name AS 'terminations'
-  - name: workday_promotions
+  - name: workday_promotions_weekly
     path: "/var/lib/etl/peopleteam_dashboard/promotions_{date}.csv"
     truncate: False
     delete_before_insert:

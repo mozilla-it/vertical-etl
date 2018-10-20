@@ -67,7 +67,7 @@ tables:
       worker_status,
       people_partner,
       snapshot_date_trash FILLER VARCHAR(1),
-      snapshot_date AS '{date}'
+      snapshot_date AS '{date}',
       report_name AS 'hires'
   - name: workday_terminations_monthly
     path: "/var/lib/etl/peopleteam_dashboard_monthly/terminations_{date}.csv"

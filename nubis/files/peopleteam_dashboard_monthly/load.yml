@@ -127,7 +127,7 @@ tables:
       people_partner,
       date,
       termination_category,
-      primary_termination_reason,
+      reason,
       snapshot_date_trash FILLER VARCHAR(1),
       snapshot_date AS '{date}',
       report_name AS 'terminations'

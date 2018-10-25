@@ -47,4 +47,5 @@ tables:
     fields: >
         client_id FILLER VARCHAR(1), subscriber_key FILLER VARCHAR(1),
         email_address FILLER VARCHAR(1), subscriber_id, status, date_held,
-        date_created, date_unsubscribed, source_file AS '{path}'
+        date_created, date_unsubscribed, source_file AS '{path}',
+        snapshot_date AS '{date}'

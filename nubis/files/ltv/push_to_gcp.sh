@@ -6,7 +6,7 @@ export PATH=/usr/local/bin:$PATH
 
 NUBIS_PROJECT=$(nubis-metadata NUBIS_PROJECT)
 
-declare LTV_GOOGLE_APPLICATION_CREDENTIALS
+declare LTV_GOOGLE_APPLICATION_CREDENTIALS LTV_SampleId
 
 # shellcheck disable=SC1090
 . "/etc/nubis-config/${NUBIS_PROJECT}.sh"
@@ -25,5 +25,9 @@ base64 -d tmp.txt > tmp2.txt
 # activate service account credentials
 gcloud auth activate-service-account --key-file tmp2.txt
 
-gsutil -o GSUtil::parallel_composite_upload_threshold=150M cp ltv_output_v1_$PROCESS_DATE.txt gs://ga-mozilla-org-prod-001/ltv_v1
-gsutil -o GSUtil::parallel_composite_upload_threshold=150M cp ltv_aggr_v1_$PROCESS_DATE.txt gs://ga-mozilla-org-prod-001/ltv_v1
+# add sample id to filename
+mv ltv_output_v1_$PROCESS_DATE.txt ltv_output_v1_sampleid${LTV_SampleId:?}_$PROCESS_DATE.txt
+mv ltv_aggr_v1_$PROCESS_DATE.txt ltv_aggr_v1_sampleid${LTV_SampleId:?}_$PROCESS_DATE.txt
+
+gsutil -o GSUtil::parallel_composite_upload_threshold=150M cp ltv_output_v1_sampleid${LTV_SampleId:?}_$PROCESS_DATE.txt gs://ga-mozilla-org-prod-001/ltv_v1
+gsutil -o GSUtil::parallel_composite_upload_threshold=150M cp ltv_aggr_v1_sampleid${LTV_SampleId:?}_$PROCESS_DATE.txt gs://ga-mozilla-org-prod-001/ltv_v1

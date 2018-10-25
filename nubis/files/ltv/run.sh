@@ -16,4 +16,6 @@ set -e
 
 /opt/etl/ltv/ltv_aggr_v1
 
+/opt/etl/ltv/create_files
+
 /opt/etl/ltv/push_to_gcp

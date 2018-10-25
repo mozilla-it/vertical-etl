@@ -136,6 +136,17 @@ file { '/opt/etl/ltv/ltv_aggr_v1':
   source  => 'puppet:///nubis/files/ltv/ltv_aggr_v1.py',
 }
 
+file { '/opt/etl/ltv/create_files':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/ltv'],
+  ],
+  source  => 'puppet:///nubis/files/ltv/create_files.py',
+}
+
 file { '/opt/etl/ltv/push_to_gcp':
   ensure  => present,
   owner   => root,

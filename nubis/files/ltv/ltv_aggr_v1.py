@@ -67,7 +67,7 @@ def get_stats_better(df4, attribute, calc_date):
 
     df.columns = col_names
 
-    df.insert(loc=0, column='value', value= [ x.encode('utf-8') for x in df.index.get_level_values(0).astype(str) ])
+    df.insert(loc=0, column='value', value= [ x.encode('utf-8') for x in df.index.get_level_values(0).astype(basestring) ])
 
     df.insert(loc=0, column='attribute', value= attribute) #"+".join(groupby_fields))
     df.insert(loc=0, column='calc_date', value= calc_date)
@@ -384,62 +384,62 @@ def os(tmpl, calc_date):
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = os + os_version
-      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(str)
+      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(basestring)
       df = get_stats_better(df4, 'os + os_version', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + os + os_version
-      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(basestring)
       df = get_stats_better(df4, 'country + os + os_version', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = os + os_version + user_status
-      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'os + os_version + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + os + os_version + user_status
-      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'country + os + os_version + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = os + os_version + os_service_pack_major
-      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str)
+      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str)
       df = get_stats_better(df4, 'os + os_version + os_service_pack_major', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + os + os_version + os_service_pack_major
-      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str)
       df = get_stats_better(df4, 'country + os + os_version + os_service_pack_major', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = os + os_version + os_service_pack_major + user_status
-      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'os + os_version + os_service_pack_major + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + os + os_version + os_service_pack_major + user_status
-      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'country + os + os_version + os_service_pack_major + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = os + os_version + os_service_pack_major + os_service_pack_minor
-      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str)
+      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str)
       df = get_stats_better(df4, 'os + os_version + os_service_pack_major + os_service_pack_minor', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + os + os_version + os_service_pack_major + os_service_pack_minor
-      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str)
       df = get_stats_better(df4, 'country + os + os_version + os_service_pack_major + os_service_pack_minor', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = os + os_version + os_service_pack_major + os_service_pack_minor + user_status
-      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'os + os_version + os_service_pack_major + os_service_pack_minor + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + os + os_version + os_service_pack_major + os_service_pack_minor + user_status
-      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(str) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.os.astype(str) + " + " + df4.os_version.astype(basestring) + " + " + df4.os_service_pack_major.astype(str) + " + " + df4.os_service_pack_minor.astype(str) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'country + os + os_version + os_service_pack_major + os_service_pack_minor + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
@@ -733,11 +733,6 @@ def main(calc_date):
         e10_enabled_activity_group_locale_customer_age(global_filter_tmpl, calc_date)
         sync_configured(global_filter_tmpl, calc_date)
         bookmarks_count(global_filter_tmpl, calc_date)
-
-    # write output file
-    fo = "ltv_aggr_v1_"+ datetime.today().strftime('%Y%m%d') + ".txt"
-    fo_sql = "select * from ut_clients_aggr where calc_date='"+ calc_date + "';"
-    util.query_to_file(fo_sql, fo)
 
 
 if __name__ == '__main__':

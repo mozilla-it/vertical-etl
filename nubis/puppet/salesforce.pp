@@ -41,7 +41,7 @@ file { '/usr/local/bin/salesforce-fetcher':
 python::pip { 'vertica-csv-loader':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/vertica-csv-loader",
-  url        => 'git+https://github.com/gozer/vertica-csv-loader@10e263c94a3feeec01039834e86b656efeb0a825',
+  url        => 'git+https://github.com/gozer/vertica-csv-loader@565d6fca68a16cea233511fa1cd08f0acf064211',
   require    => [
   ],
 }
@@ -52,6 +52,19 @@ file { '/usr/local/bin/vertica-csv-loader':
   require => [
     Python::Pip['vertica-csv-loader'],
   ],
+}
+
+file { '/var/log/vertica-csv-loader':
+  ensure  => directory,
+  owner   => 'etl',
+  group   => 'etl',
+  mode    => '0755',
+
+  require => [
+    User['etl'],
+    Group['etl'],
+    File['/var/log'],
+  ]
 }
 
 file { '/opt/etl/salesforce':

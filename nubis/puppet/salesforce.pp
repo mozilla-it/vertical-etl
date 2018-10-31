@@ -63,7 +63,6 @@ file { '/var/log/vertica-csv-loader':
   require => [
     User['etl'],
     Group['etl'],
-    File['/var/log'],
   ]
 }
 

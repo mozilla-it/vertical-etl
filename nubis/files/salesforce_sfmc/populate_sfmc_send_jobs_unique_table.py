@@ -1,7 +1,16 @@
 #!/bin/env python
 
-import os
+import os, re, datetime
 import pyodbc
+
+date = ''
+try:
+  date = sys.argv[1]
+except:
+  pass
+
+if not re.match('\d{4}-\d{2}-\d{2}', date):
+  date = datetime.datetime.now().strftime("%Y-%m-%d")
 
 cnxn = pyodbc.connect("DSN=vertica", autocommit=False)
 cursor = cnxn.cursor()
@@ -41,6 +50,16 @@ ON ssj.send_id=sfmc_send_jobs_unique.send_id
 WHEN NOT MATCHED THEN INSERT VALUES (ssj.send_id,ssj.email_name,ssj.lang,ssj.list);
 """
 cursor.execute(sql)
+
+sql = "DELETE FROM sfmc_events_summary WHERE date=DATE(?)-1"
+cursor.execute(sql, date)
+
+for type in ['Sent', 'Bounce', 'Open', 'Click']:
+  sql = "INSERT INTO sfmc_events_summary (date,event_name,event_value,send_id) " \
+        "SELECT DATE(event_date), ?, COUNT(*), send_id FROM sfmc_events        " \
+        "WHERE event_type=? AND DATE(event_date)=DATE(?)-1 GROUP BY            " \
+        "DATE(event_date), send_id"
+  cursor.execute(sql, type, type, date)
 
 commit_sql = "INSERT INTO last_updated (name, updated_at, updated_by) "  \
               "VALUES ('sfmc_send_jobs_unique', now(), '" + os.path.basename(__file__) + "')"

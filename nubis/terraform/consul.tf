@@ -1,6 +1,6 @@
 # Discover Consul settings from another deplyoment
 module "consul_vertical" {
-  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.3.0"
+  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.3.1"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -34,7 +34,7 @@ provider "consul" {
 }
 
 module "consul" {
-  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.3.0"
+  source       = "github.com/nubisproject/nubis-terraform//consul?ref=v2.3.1"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"

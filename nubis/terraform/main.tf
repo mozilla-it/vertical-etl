@@ -8,7 +8,7 @@ provider "aws" {
 }
 
 module "worker" {
-  source            = "github.com/nubisproject/nubis-terraform//worker?ref=v2.3.0"
+  source            = "github.com/nubisproject/nubis-terraform//worker?ref=v2.3.1"
   region            = "${var.region}"
   environment       = "${var.environment}"
   account           = "${var.account}"
@@ -25,7 +25,7 @@ module "worker" {
 }
 
 module "archive" {
-  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
+  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.1"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -35,7 +35,7 @@ module "archive" {
 }
 
 module "nagios" {
-  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
+  source       = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.1"
   region       = "${var.region}"
   environment  = "${var.environment}"
   account      = "${var.account}"
@@ -49,7 +49,7 @@ module "backups" {
     aws = "aws.backups"
   }
 
-  source                    = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.0"
+  source                    = "github.com/nubisproject/nubis-terraform//bucket?ref=v2.3.1"
   region                    = "${var.backup_region}"
   environment               = "${var.environment}"
   account                   = "${var.account}"

@@ -6,7 +6,7 @@ export PATH=/usr/local/bin:$PATH
 
 NUBIS_PROJECT=$(nubis-metadata NUBIS_PROJECT)
 
-declare LTV_Bucket LTV_AccessKey LTV_SecretKey
+declare LTV_Bucket LTV_AccessKey LTV_SecretKey LTV_SampleId
 
 # shellcheck disable=SC1090
 . "/etc/nubis-config/${NUBIS_PROJECT}.sh"
@@ -19,15 +19,9 @@ APP_DIR=/var/lib/etl/ltv # log directory to put files
 export AWS_ACCESS_KEY_ID=${LTV_AccessKey:?}
 export AWS_SECRET_ACCESS_KEY=${LTV_SecretKey:?}
 
-echo $AWS_ACCESS_KEY_ID
-echo $AWS_SECRET_ACCESS_KEY
-echo "s3://${LTV_Bucket:?}/nawong/cdv6s53_"$PROCESS_DATE
+echo "s3://${LTV_Bucket:?}/nawong/cdv6s${LTV_SampleId:?}_"$PROCESS_DATE
 echo "$APP_DIR/client_details"
-echo "s3://${LTV_Bucket:?}/nawong/scdv4s53_"$PROCESS_DATE
+echo "s3://${LTV_Bucket:?}/nawong/scdv4s${LTV_SampleId:?}_"$PROCESS_DATE
 
-# sync the objects from $BUCKET/cdv6s53_*$PROCESS_DATE into $APP_DIR/client_details
-#aws s3 cp --recursive "s3://${LTV_Bucket:?}/nawong/cdv6s53_"$PROCESS_DATE "$APP_DIR/client_details"
-
-aws s3 sync "s3://${LTV_Bucket:?}/nawong/cdv6s53_"$PROCESS_DATE "$APP_DIR/client_details" --delete
-aws s3 sync "s3://${LTV_Bucket:?}/nawong/scdv4s53_hist_"$PROCESS_DATE "$APP_DIR/scd" --delete
-
+aws s3 sync "s3://${LTV_Bucket:?}/nawong/cdv6s${LTV_SampleId:?}_"$PROCESS_DATE "$APP_DIR/client_details" --delete
+aws s3 sync "s3://${LTV_Bucket:?}/nawong/scdv4s${LTV_SampleId:?}_hist_"$PROCESS_DATE "$APP_DIR/scd" --delete

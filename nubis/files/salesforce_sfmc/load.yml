@@ -31,6 +31,16 @@ tables:
         email_address FILLER VARCHAR(1), subscriber_id, list_id, event_date,
         event_type, send_url_id AS NULL, url_id AS NULL, url AS '', alias AS '',
         batch_id, triggered_send_external_key, source_file AS '{path}'
+  - name: sfmc_events
+    path: "/var/lib/etl/salesforce_sfmc/{date}/Bounces.csv"
+    truncate: False
+    delete_before_insert: True
+    fields: >
+        client_id FILLER VARCHAR(1), send_id, subscriber_key FILLER VARCHAR(1),
+        email_address FILLER VARCHAR(1), subscriber_id, list_id, event_date,
+        event_type, send_url_id AS NULL, url_id AS NULL, url, alias AS '',
+        smtp_code FILLER VARCHAR(1), bounce_reason FILLER VARCHAR(1),
+        batch_id, triggered_send_external_key, source_file AS '{path}'
   - name: sfmc_send_jobs
     path: "/var/lib/etl/salesforce_sfmc/{date}/SendJobs.csv"
     truncate: False
@@ -47,4 +57,5 @@ tables:
     fields: >
         client_id FILLER VARCHAR(1), subscriber_key FILLER VARCHAR(1),
         email_address FILLER VARCHAR(1), subscriber_id, status, date_held,
-        date_created, date_unsubscribed, source_file AS '{path}'
+        date_created, date_unsubscribed, source_file AS '{path}',
+        snapshot_date AS '{date}'

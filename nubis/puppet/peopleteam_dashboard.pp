@@ -2,7 +2,7 @@ cron::weekly { "${project_name}-peopleteam-dashboard":
   user    => 'etl',
   command => "nubis-cron ${project_name}-peopleteam_dashboard /opt/etl/peopleteam_dashboard/run",
   hour    => 16,
-  weekday => 5,
+  weekday => 6,
 }
 
 file { '/usr/local/bin/peopleteam-dashboard-fetcher':

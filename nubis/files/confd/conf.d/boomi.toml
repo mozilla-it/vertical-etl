@@ -1,0 +1,13 @@
+[template]
+src = "boomi.tmpl"
+dest = "/home/etl/.ssh/boomi"
+prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
+
+uid = 994
+gid = 991
+mode = "0600"
+
+keys = [
+    "/config/*",
+    "/config"
+]

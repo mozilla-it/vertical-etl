@@ -14,15 +14,6 @@ user { 'etl':
   managehome => true,
 }
 
-file { '/home/etl/.ssh':
-  ensure => 'directory',
-  mode   => '0700',
-  require => [
-    User['etl'],
-    Group['etl'],
-  ]
-}
-
 file { '/var/lib/etl':
   ensure => 'directory',
 }

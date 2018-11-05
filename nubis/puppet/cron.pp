@@ -34,6 +34,18 @@ file { '/var/data-collectors':
   ]
 }
 
+file { '/home/etl/.ssh':
+  ensure  => directory,
+  owner   => 'etl',
+  group   => 'etl',
+  mode    => '0700',
+
+  require => [
+    User['etl'],
+    Group['etl'],
+  ]
+}
+
 # Cleanup and archive data files
 cron::daily { "${project_name}-snapshot":
   hour    => '6',

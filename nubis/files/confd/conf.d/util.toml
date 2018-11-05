@@ -1,5 +1,5 @@
 [template]
-src = "secrets_util.tmpl"
+src = "secrets_util.py.tmpl"
 dest = "/usr/local/virtualenvs/data-integrations/lib64/python3.4/site-packages/Util/secrets_util.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 

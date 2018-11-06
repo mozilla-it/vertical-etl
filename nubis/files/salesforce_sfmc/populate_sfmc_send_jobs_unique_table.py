@@ -1,6 +1,6 @@
 #!/bin/env python
 
-import os, re, datetime
+import os, re, datetime, sys
 import pyodbc
 
 date = ''

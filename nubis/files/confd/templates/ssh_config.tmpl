@@ -1,3 +1,7 @@
-Host {{ getv "/config/Boomi/SFTPHost" "mozilla.brickftp.com" }}
-    User {{ getv "/config/Boomi/SFTPUsername" "moz-etl" }}
-    IdentityFile ~/.ssh/boomi
+Host {{ getv "/config/Boomi/Brickftp/SFTPHost" "mozilla.brickftp.com" }}
+    User {{ getv "/config/Boomi/Brickftp/SFTPUsername" "moz-etl" }}
+    IdentityFile ~/.ssh/brickftp
+
+Host {{ getv "/config/Boomi/Centerstone/SFTPHost" "ftp.asset-fm.com" }}
+    User {{ getv "/config/Boomi/Centerstone/SFTPUsername" "MozillaBrickFTP" }}
+    IdentityFile ~/.ssh/centerstone

@@ -1,6 +1,6 @@
 [template]
-src = "boomi.tmpl"
-dest = "/home/etl/.ssh/brickftp"
+src = "centerstone.tmpl"
+dest = "/home/etl/.ssh/centerstone"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 994

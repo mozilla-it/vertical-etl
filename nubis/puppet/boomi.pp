@@ -44,7 +44,7 @@ file { '/var/lib/etl/boomi':
 python::pip { 'mozilla_etl':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/boomi",
-  url        => 'git+https://github.com/gozer/mozilla_etl.git',
+  url        => 'git+https://github.com/mozilla-itcloud/mozilla_etl.git',
   require    => [
       Class['mysql::bindings'],
   ],

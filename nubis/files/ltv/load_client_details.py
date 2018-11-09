@@ -85,7 +85,7 @@ def main():
     query_vertica("TRUNCATE TABLE " + vertica_table_name + "; COMMIT;")
 
     logger.debug('loading search history data into Vertica')
-    field_order = ['client_id','os','os_version','city','geo_subdivision1','geo_subdivision2','country','default_search_engine','default_search_engine_data_submission_url','default_search_engine_data_load_path','default_search_engine_data_origin','e10s_enabled','channel','locale','is_default_browser','memory_mb','os_service_pack_major',' os_service_pack_minor','sample_id','profile_creation_date',' profile_age_in_days','active_addons_count_mean',' sync_configured',' sync_count_desktop_sum','sync_count_mobile_sum','places_bookmarks_count_mean','timezone_offset','attribution_site','source','medium','campaign','content','submission_date_s3','max_activity_date','activity_group']
+    field_order = ['client_id','os','os_version','city','geo_subdivision1','geo_subdivision2','country','default_search_engine','default_search_engine_data_submission_url','default_search_engine_data_load_path','default_search_engine_data_origin','e10s_enabled','channel','locale','is_default_browser','memory_mb','os_service_pack_major',' os_service_pack_minor','sample_id','profile_creation_date',' profile_age_in_days','active_addons_count_mean',' sync_configured',' sync_count_desktop_sum','sync_count_mobile_sum','places_bookmarks_count_mean','timezone_offset','attribution_site','source','medium','campaign','content','submission_date_s3','max_activity_date','activity_group','distribution_id']
     for input_fn in input_fns:
         meta = read_meta(input_fn)
 

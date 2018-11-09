@@ -176,22 +176,22 @@ def engine_channel_browser_memory(tmpl, calc_date):
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = channel
-      df4['value'] = df4.channel.astype(str)
+      df4['value'] = df4.channel.astype(basestring)
       df = get_stats_better(df4, 'channel', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + channel
-      df4['value'] = df4.country.astype(str) + " + " + df4.channel.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.channel.astype(basestring)
       df = get_stats_better(df4, 'country + channel', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = channel + user_status
-      df4['value'] = df4.channel.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.channel.astype(basestring) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'channel + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 
       # aggregate on column of groupby_fields value = country + channel + user_status
-      df4['value'] = df4.country.astype(str) + " + " + df4.channel.astype(str) + " + " + df4.user_status.astype(str)
+      df4['value'] = df4.country.astype(str) + " + " + df4.channel.astype(basestring) + " + " + df4.user_status.astype(str)
       df = get_stats_better(df4, 'country + channel + user_status', calc_date)
       df.to_csv(fo, sep='|', header=False, encoding='utf-8', index=False)
 

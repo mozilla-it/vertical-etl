@@ -7,6 +7,20 @@ cron::daily { "${project_name}-boomi-centerstone":
   command => "nubis-cron ${project_name}-boomi-centerstone /usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.centerstone",
 }
 
+cron::daily { "${project_name}-boomi-CCURE-Redshift":
+  hour    => '18',
+  minute  => '45',
+  user    => 'etl',
+  command => "nubis-cron ${project_name}-boomi-ccure-ftp /usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.ccure.ftp",
+}
+
+cron::daily { "${project_name}-boomi-CCURE-IVM-EmailUpdates":
+  hour    => '11',
+  minute  => '45',
+  user    => 'etl',
+  command => "nubis-cron ${project_name}-boomi-ccure-email /usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.ccure.email",
+}
+
 # Install dependencies
 
 package { 'python36':

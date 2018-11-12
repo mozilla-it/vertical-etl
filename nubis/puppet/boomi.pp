@@ -1,3 +1,14 @@
+# Schedule some Boomi jobs
+
+cron::daily { "${project_name}-boomi-centerstone":
+  hour    => '12',
+  minute  => fqdn_rand(60),
+  user    => 'etl',
+  command => "nubis-cron ${project_name}-boomi-centerstone /usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.centerstone",
+}
+
+# Install dependencies
+
 package { 'python36':
   ensure => present,
 }

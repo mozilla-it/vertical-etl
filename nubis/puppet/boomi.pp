@@ -1,4 +1,5 @@
 # Pull in our configuration
+include nubis_configuration
 nubis::configuration{ "boomi":
   prefix  => '/%%STACK%%/%%ENVIRONMENT%%/config/Boomi',
   format  => 'sh',

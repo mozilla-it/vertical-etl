@@ -1,0 +1,19 @@
+# Discovered config values
+{{range gets "/Boomi/*"}}
+{{base .Key}}="{{.Value}}"
+{{end}}
+
+{{ range lsdir "/Boomi" }}
+ {{ $Dir := . }}
+ {{ $Path := printf "/Boomi/%s/*" $Dir}}
+# From {{ $Path }}
+  {{ range gets $Path}}
+{{ $Dir }}_{{base .Key}}="{{.Value}}"
+ {{ end}}
+{{ end}}
+
+# Use the right names
+WD_PASSWORD=$Workday_Password
+WD_TENANT=$Workday_Tenant
+WD_USERNAME=$Workday_Username
+WD_BASE_URL=$Workday_BaseURL

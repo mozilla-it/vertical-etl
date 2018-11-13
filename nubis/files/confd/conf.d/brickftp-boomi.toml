@@ -1,5 +1,5 @@
 [template]
-src = "boomi.tmpl"
+src = "brickftp-boomi.tmpl"
 dest = "/home/etl/.ssh/brickftp"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 

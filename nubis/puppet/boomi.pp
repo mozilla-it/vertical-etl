@@ -1,10 +1,3 @@
-# Pull in our configuration
-include nubis_configuration
-nubis::configuration{ "boomi":
-  prefix  => '/%%STACK%%/%%ENVIRONMENT%%/config/Boomi',
-  format  => 'sh',
-}
-
 # Schedule some Boomi jobs
 
 cron::daily { "${project_name}-boomi-centerstone":

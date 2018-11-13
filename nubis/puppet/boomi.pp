@@ -1,10 +1,18 @@
 # Schedule some Boomi jobs
 
-cron::daily { "${project_name}-boomi-centerstone":
+define boomi::daily($hour, $minute, $command) {
+  cron::daily { "${::project_name}-boomi-${title}":
+    hour    => $hour,
+    minute  => $minute,
+    user    => 'etl',
+    command => ". /etc/nubis-config/boomi.sh && nubis-cron ${::project_name}-boomi-${title} ${::virtualenv_path}/boomi/bin/${command}",
+  }
+}
+
+boomi::daily { 'centerstone':
   hour    => '12',
   minute  => fqdn_rand(60),
-  user    => 'etl',
-  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-centerstone ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.centerstone \$Centerstone_Engine",
+  command => "python -m mozilla_etl.boomi.centerstone \$Centerstone_Engine",
 }
 
 cron::daily { "${project_name}-boomi-ccure-redshift":

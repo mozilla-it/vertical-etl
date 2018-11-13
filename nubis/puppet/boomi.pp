@@ -4,21 +4,21 @@ cron::daily { "${project_name}-boomi-centerstone":
   hour    => '12',
   minute  => fqdn_rand(60),
   user    => 'etl',
-  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-centerstone ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.centerstone",
+  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-centerstone ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.centerstone --engine vertica",
 }
 
 cron::daily { "${project_name}-boomi-CCURE-Redshift":
   hour    => '18',
   minute  => '45',
   user    => 'etl',
-  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-ccure-ftp ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.ccure.ftp",
+  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-ccure-ftp ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.ccure.ftp  --engine vertica",
 }
 
 cron::daily { "${project_name}-boomi-CCURE-IVM-EmailUpdates":
   hour    => '11',
   minute  => '45',
   user    => 'etl',
-  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-ccure-email ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.ccure.email",
+  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-ccure-email ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.ccure.email  --engine vertica",
 }
 
 # Install dependencies

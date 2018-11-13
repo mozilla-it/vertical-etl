@@ -1,3 +1,7 @@
+# Pull in proxy configuration
+
+. /etc/profile.d/proxy.sh
+
 # Discovered config values
 {{range gets "/Boomi/*"}}
 {{base .Key}}="{{.Value}}"

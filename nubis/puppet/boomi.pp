@@ -9,25 +9,42 @@ define boomi::daily($hour, $minute, $command) {
   }
 }
 
+# Centerstone
+
 boomi::daily { 'centerstone':
   hour    => '12',
   minute  => fqdn_rand(60),
   command => "python -m mozilla_etl.boomi.centerstone \$Centerstone_Engine",
 }
 
-cron::daily { "${project_name}-boomi-ccure-redshift":
+# CCure
+
+boomi::daily { 'ccure-redshift':
   hour    => '18',
-  minute  => '45',
-  user    => 'etl',
-  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-ccure-ftp ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.ccure.ftp \$CCure_Engine",
+  minute  => fqdn_rand(60),
+  command => "python -m mozilla_etl.boomi.ccure.ftp \$CCure_Engine",
 }
 
-cron::daily { "${project_name}-boomi-ccure-ivm-email":
+boomi::daily { 'ccure-email':
   hour    => '11',
-  minute  => '45',
-  user    => 'etl',
-  command => ". /etc/nubis-config/boomi.sh && nubis-cron ${project_name}-boomi-ccure-email ${virtualenv_path}/boomi/bin/python -m mozilla_etl.boomi.ccure.email \$CCure_Engine",
+  minute  => fqdn_rand(60),
+  command => "python -m mozilla_etl.boomi.ccure.email \$CCure_Engine",
 }
+
+# IVM
+
+boomi::daily { 'ivm-tickets':
+  hour    => '12',
+  minute  => fqdn_rand(60),
+  command => "python -m mozilla_etl.boomi.ivm.tickets \$IVM_Engine",
+}
+
+boomi::daily { 'ivm-ftp':
+  hour    => '9',
+  minute  => fqdn_rand(60),
+  command => "python -m mozilla_etl.boomi.ivm.ftp \$IVM_Engine",
+}
+
 
 # Install dependencies
 

@@ -16,6 +16,13 @@
  {{ end}}
 {{ end}}
 
+# Environment we are in
+export BOOMI_ENVIRONMENT="{{ getv "/Environment" }}"
+
+if [ "prod" == "$ENVIRONMENT" ]; then
+  export BOOMI_PRODUCTION=true
+fi
+
 # Use the right names
 
 # Workday

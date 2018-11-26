@@ -3,6 +3,7 @@ src = "boomi-env.tmpl"
 dest = "/etc/nubis-config/boomi.sh"
 prefix = "/%%STACK%%/%%ENVIRONMENT%%/config"
 keys = [
-    "/Boomi"
+    "/Boomi",
+    "/Environment"
 ]
 

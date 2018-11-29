@@ -1,5 +1,5 @@
 file_spec:
-  delimiter: "	"
+  delimiter: "\t"
   quoted: False
   skip_header: True
 

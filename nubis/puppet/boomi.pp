@@ -10,7 +10,6 @@ define boomi::daily($hour, $minute, $command) {
 }
 
 # Centerstone
-
 boomi::daily { 'centerstone':
   hour    => '12',
   minute  => fqdn_rand(60),
@@ -18,7 +17,6 @@ boomi::daily { 'centerstone':
 }
 
 # CCure
-
 boomi::daily { 'ccure-redshift':
   hour    => '18',
   minute  => fqdn_rand(60),
@@ -32,7 +30,6 @@ boomi::daily { 'ccure-email':
 }
 
 # IVM
-
 boomi::daily { 'ivm-tickets':
   hour    => '12',
   minute  => fqdn_rand(60),

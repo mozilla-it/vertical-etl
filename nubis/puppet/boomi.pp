@@ -42,6 +42,18 @@ boomi::daily { 'ivm-ftp':
   command => "python -m mozilla_etl.boomi.ivm.ftp \$IVM_Engine",
 }
 
+# Workday
+boomi::daily { 'workday-business_units':
+  hour    => '11',
+  minute  => fqdn_rand(60),
+  command => "python -m mozilla_etl.boomi.workday.business_units \$Workday_Engine",
+}
+
+boomi::daily { 'workday-employees':
+  hour    => '11',
+  minute  => fqdn_rand(60),
+  command => "python -m mozilla_etl.boomi.workday.employees \$Workday_Engine",
+}
 
 # Install dependencies
 

@@ -17,7 +17,7 @@ boomi::daily { 'centerstone':
 }
 
 # CCure
-boomi::daily { 'ccure-redshift':
+boomi::daily { 'ccure-ftp':
   hour    => '18',
   minute  => fqdn_rand(60),
   command => "python -m mozilla_etl.boomi.ccure.ftp \$CCure_Engine",

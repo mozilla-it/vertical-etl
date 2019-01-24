@@ -52,7 +52,15 @@ boomi::daily { 'workday-business_units':
 boomi::daily { 'workday-employees':
   hour    => '11',
   minute  => fqdn_rand(60),
-  command => "python -m mozilla_etl.boomi.workday.employees \$Workday_Engine",
+  command => "/usr/local/bin/boomi-workday-employees",
+}
+
+file { '/usr/local/bin/boomi-workday-employees':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  source  => 'puppet:///nubis/files/boomi/workday-employees',
 }
 
 # Install dependencies

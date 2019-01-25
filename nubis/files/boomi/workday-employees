@@ -7,13 +7,13 @@
 mkdir -p /tmp/etl/brickftp/etl/centerstone/downloads /tmp/etl/centerstone
 
 sftp files.manhattan-online.com:/mozilla/prod/ << EOF
-put /tmp/etl/centerstone/Mozilla_Active_Users.txt
-put /tmp/etl/centerstone/Mozilla_Termed_Users.txt
-put /tmp/etl/centerstone/workday-users.csv
+put /tmp/etl/centerstone/Mozilla_Active_Users.txt*
+put /tmp/etl/centerstone/Mozilla_Termed_Users.txt*
+put /tmp/etl/centerstone/workday-users.csv*
 EOF
 
 sftp mozilla.brickftp.com:etl/centerstone/downloads <<EOF
-put /tmp/etl/centerstone/Mozilla_Active_Users.txt
-put /tmp/etl/centerstone/Mozilla_Termed_Users.txt
-put /tmp/etl/centerstone/workday-users.csv
+put /tmp/etl/centerstone/Mozilla_Active_Users.txt*
+put /tmp/etl/centerstone/Mozilla_Termed_Users.txt*
+put /tmp/etl/centerstone/workday-users.csv*
 EOF

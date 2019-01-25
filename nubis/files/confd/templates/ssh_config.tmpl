@@ -1,11 +1,14 @@
 Host {{ getv "/config/Boomi/Brickftp/SFTPHost" "mozilla.brickftp.com" }}
+    StrictHostKeyChecking no
     User {{ getv "/config/Boomi/Brickftp/SFTPUsername" "moz-etl" }}
     IdentityFile ~/.ssh/brickftp
 
 Host {{ getv "/config/Boomi/Centerstone/SFTPHost" "ftp.asset-fm.com" }}
+    StrictHostKeyChecking no
     User {{ getv "/config/Boomi/Centerstone/SFTPUsername" "MozillaBrickFTP" }}
     IdentityFile ~/.ssh/centerstone
 
 Host {{ getv "/config/Boomi/Workday/SFTPHost" "files.manhattan-online.com" }}
+    StrictHostKeyChecking no
     User {{ getv "/config/Boomi/Workday/SFTPUsername" "mozilla" }}
     IdentityFile ~/.ssh/brickftp

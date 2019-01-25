@@ -52,7 +52,7 @@ boomi::daily { 'workday-business_units':
 boomi::daily { 'workday-employees':
   hour    => '11',
   minute  => fqdn_rand(60),
-  command => "/usr/local/bin/boomi-workday-employees",
+  command => "python -c1 && /usr/local/bin/boomi-workday-employees",
 }
 
 file { '/usr/local/bin/boomi-workday-employees':

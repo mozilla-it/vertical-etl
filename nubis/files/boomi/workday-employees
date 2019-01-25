@@ -2,7 +2,7 @@
 
 . /etc/nubis-config/boomi.sh
 
-/usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.workday.employees "$Workday_Engine" --local
+/usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.workday.employees --local
 
 mkdir -p /tmp/etl/brickftp/etl/centerstone/downloads /tmp/etl/centerstone
 

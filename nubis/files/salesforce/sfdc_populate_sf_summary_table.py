@@ -82,6 +82,14 @@ sql = "INSERT INTO sf_summary "                                                 
 cursor.execute(sql)
 
 sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT '%s','Mozilla Labs Subscriber', COUNT(*), " % date                + \
+      group_attributes                                                          + \
+      " FROM sf_contacts_vw "                                                   + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_labs_subscriber='t' " + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
       "SELECT DATE('%s')-1,'Mozilla Unsubscribes', COUNT(*), " % date           + \
       group_attributes                                                          + \
       " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
@@ -113,6 +121,15 @@ sql = "INSERT INTO sf_summary "                                                 
       group_attributes                                                          + \
       " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
       "WHERE old_value='True' AND new_value='False' AND field='Developer' "     + \
+      "AND DATE(sf_contact_history_vw.created_date)=DATE('%s') - 1" % date      + \
+      group_by
+cursor.execute(sql)
+
+sql = "INSERT INTO sf_summary "                                                 + \
+      "SELECT DATE('%s')-1,'Mozilla Labs Unsubscribes', COUNT(*), " % date      + \
+      group_attributes                                                          + \
+      " FROM sf_contact_history_vw LEFT JOIN sf_contacts_vw ON (contact_id=id) "+ \
+      "WHERE old_value='True' AND new_value='False' AND field='Mozilla_Labs' "  + \
       "AND DATE(sf_contact_history_vw.created_date)=DATE('%s') - 1" % date      + \
       group_by
 cursor.execute(sql)

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. /etc/nubis-config/boomi.sh
+
+mkdir -p /tmp/etl/brickftp/etl/centerstone/downloads /tmp/etl/centerstone
+
+/usr/local/virtualenvs/boomi/bin/python -m mozilla_etl.boomi.workday.business_units --local
+
+sftp files.manhattan-online.com:/mozilla/prod/ << EOF
+put /tmp/etl/centerstone/*Level*.txt*
+EOF
+
+sftp mozilla.brickftp.com:etl/centerstone/downloads <<EOF
+put /tmp/etl/centerstone/*Level*.txt*
+EOF

@@ -46,7 +46,15 @@ boomi::daily { 'ivm-ftp':
 boomi::daily { 'workday-business_units':
   hour    => '11',
   minute  => fqdn_rand(60),
-  command => "python -m mozilla_etl.boomi.workday.business_units \$Workday_Engine",
+  command => "python -c1 && /usr/local/bin/boomi-workday-business-units",
+}
+
+file { '/usr/local/bin/boomi-workday-business-units':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  source  => 'puppet:///nubis/files/boomi/workday-business-units',
 }
 
 boomi::daily { 'workday-employees':

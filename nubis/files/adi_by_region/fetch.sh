@@ -12,8 +12,8 @@ declare ADI_Bucket ADI_AccessKey ADI_SecretKey
 . "/etc/nubis-config/${NUBIS_PROJECT}.sh"
 
 # default is to process for the previous month of data
-PROCESS_YEAR=$(date --date="7 day ago" +%Y-%m-%d+"%Y")
-PROCESS_MONTH=$(date --date="7 day ago" +%Y-%m-%d +"%m")
+PROCESS_YEAR=$(date --date="7 day ago" +%Y)
+PROCESS_MONTH=$(date --date="7 day ago" +%m)
 
 FOLDER="adi_by_region/year=$PROCESS_YEAR/month=$PROCESS_MONTH/"
 

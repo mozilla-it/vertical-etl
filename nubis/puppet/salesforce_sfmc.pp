@@ -16,7 +16,7 @@ python::pyvenv { "${virtualenv_path}/data-integrations" :
 python::pip { 'data-integrations':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/data-integrations",
-  url        => 'git+https://github.com/mozilla-it-data/data-integrations@ecb847bb4d06bf51c23b8e926951980b883ff407',
+  url        => 'git+https://github.com/mozilla-it-data/data-integrations@2f05419d60c4eb110b1ee413bdd1fe51c9e54310',
   require    => [
   ],
 }
@@ -24,6 +24,14 @@ python::pip { 'data-integrations':
 file { '/usr/local/bin/sfmc-fetcher':
   ensure  => link,
   target  => "${virtualenv_path}/data-integrations/bin/brickftp_poc.py",
+  require => [
+    Python::Pip['data-integrations'],
+  ],
+}
+
+file { '/usr/local/bin/salesforce-ftp-fetcher':
+  ensure  => link,
+  target  => "${virtualenv_path}/data-integrations/bin/salesforce_ftp.py",
   require => [
     Python::Pip['data-integrations'],
   ],

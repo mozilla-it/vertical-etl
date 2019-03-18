@@ -1,0 +1,14 @@
+file_spec:
+  delimiter: ","
+  quoted: True
+  skip_header: True
+
+tables:
+  - name: sfmc_daily_email_send_summary
+    path: "/var/lib/etl/salesforce_sfmc/{date}/DailyEmailSendSummary*.csv"
+    truncate: False
+    delete_before_insert: True
+    fields: >
+        send_date, message_id, email_name, sends, deliveries, delivery_rate,
+        unique_opens, open_rate, unique_clicks, click_rate, unsubscribes,
+        unsubscribe_rate, complaints, source_file AS '{path}'

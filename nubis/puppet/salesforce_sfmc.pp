@@ -101,6 +101,17 @@ file { '/opt/etl/salesforce_sfmc/load.yml':
   source  => 'puppet:///nubis/files/salesforce_sfmc/load.yml',
 }
 
+file { '/opt/etl/salesforce_sfmc/load_DESS.yml':
+  ensure  => present,
+  owner   => root,
+  group   => root,
+  mode    => '0755',
+  require => [
+    File['/opt/etl/salesforce_sfmc'],
+  ],
+  source  => 'puppet:///nubis/files/salesforce_sfmc/load_DESS.yml',
+}
+
 file { '/opt/etl/salesforce_sfmc/run':
   ensure  => present,
   owner   => root,

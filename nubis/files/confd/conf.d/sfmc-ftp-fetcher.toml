@@ -1,6 +1,6 @@
 [template]
 src = "secrets_salesforceftp.tmpl"
-dest = "/opt/etl/salesforce_sfmc/secrets_salesforceftp.py"
+dest = "/usr/local/virtualenvs/data-integrations/lib64/python3.4/site-packages/SalesforceFTP/secrets_salesforceftp.py"
 prefix = "/%%PROJECT%%-%%ENVIRONMENT%%/%%ENVIRONMENT%%"
 
 uid = 0

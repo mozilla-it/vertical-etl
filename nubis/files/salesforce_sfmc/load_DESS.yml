@@ -5,7 +5,7 @@ file_spec:
 
 tables:
   - name: sfmc_daily_email_send_summary
-    path: "/var/lib/etl/salesforce_sfmc/{date}/DailyEmailSendSummary*.csv"
+    path: "/var/lib/etl/salesforce_sfmc/{date}/DailyEmailSendSummary.csv"
     truncate: False
     delete_before_insert: True
     fields: >

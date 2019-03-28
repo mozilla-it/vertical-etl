@@ -23,6 +23,10 @@ package { 'GeoIP-update':
   ensure => present,
 }
 
+package { 'lftp':
+  ensure => present,
+}
+
 # Fix missing error XML file
 file { '/opt/vertica/lib64/en-US':
   ensure  => 'link',

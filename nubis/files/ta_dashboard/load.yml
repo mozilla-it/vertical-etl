@@ -1,0 +1,51 @@
+file_spec:
+  delimiter: ","
+  quoted: False
+  skip_header: True
+
+tables:
+  - name: workday_ta_hires
+    path: "/var/lib/etl/ta_dashboard/hires_{date}.csv"
+    truncate: True
+    delete_before_insert: True
+      field: date
+      value: "{date}"
+    fields: >
+      effective,
+      transaction_status,
+      staffing_event_reason,
+      cost_center,
+      cost_center_hierarchy,
+      functional_group,
+      steering_committee,
+      scvp,
+      management_chain_level_01,
+      management_chain_level_02,
+      management_chain_level_03,
+      management_chain_level_04,
+      management_chain_level_05,
+      management_chain_level_06,
+      greenhouse_position_type,
+      postion_id,
+      employee_id,
+      worker_type,
+      position_worker_type,
+      job_family,
+      job_level,
+      is_manager,
+      engineering_nonengineering,
+      original_hire_date,
+      continuous_service_date,
+      company_service_date,
+      benefits_service_date,
+      seniority_date,
+      hire_date,
+      office_or_remote_status,
+      work_address_city,
+      work_address_postal_code,
+      location,
+      location_country,
+      manager_name,
+      worker_status,
+      people_partner,
+      snapshot_date

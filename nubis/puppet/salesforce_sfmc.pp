@@ -16,7 +16,7 @@ python::pyvenv { "${virtualenv_path}/data-integrations" :
 python::pip { 'data-integrations':
   ensure     => 'present',
   virtualenv => "${virtualenv_path}/data-integrations",
-  url        => 'git+https://github.com/mozilla-it-data/data-integrations@15df4745ce5ab777f440f460ea7c6c973359e5b6',
+  url        => 'git+https://github.com/mozilla-it-data/data-integrations@704d2746faa1b97e6636a19eb5344a2a94369da7',
   require    => [
   ],
 }

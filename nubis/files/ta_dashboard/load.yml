@@ -8,8 +8,6 @@ tables:
     path: "/var/lib/etl/ta_dashboard/hires_{date}.csv"
     truncate: True
     delete_before_insert: True
-      field: date
-      value: "{date}"
     fields: >
       effective,
       transaction_status,

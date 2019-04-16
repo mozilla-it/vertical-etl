@@ -53,7 +53,7 @@ sql = "INSERT INTO sf_summary "                                               + 
       "SELECT '%s','Mozilla Subscriber', COUNT(*), " % date                   + \
       group_attributes                                                        + \
       " FROM sf_contacts_vw "                                                 + \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_subscriber='t' " + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_subscriber='t' AND subscriber='t' " + \
       group_by
 cursor.execute(sql)
 
@@ -61,7 +61,7 @@ sql = "INSERT INTO sf_summary "                                               + 
       "SELECT '%s','Developer Subscriber', COUNT(*), " % date                 + \
       group_attributes                                                        + \
       " FROM sf_contacts_vw "                                                 + \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND dev_subscriber='t' " + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND dev_subscriber='t' AND subscriber='t' " + \
       group_by
 cursor.execute(sql)
 
@@ -69,7 +69,7 @@ sql = "INSERT INTO sf_summary "                                              + \
       "SELECT '%s','Firefox Subscriber', COUNT(*), " % date                  + \
       group_attributes                                                       + \
       " FROM sf_contacts_vw "                                                + \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND fx_subscriber='t' " + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND fx_subscriber='t' AND subscriber='t' " + \
       group_by
 cursor.execute(sql)
 
@@ -77,7 +77,7 @@ sql = "INSERT INTO sf_summary "                                                 
       "SELECT '%s','Other Subscriber', COUNT(*), " % date                       + \
       group_attributes                                                          + \
       " FROM sf_contacts_vw "                                                   + \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND other_subscriber='t' " + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND other_subscriber='t' AND subscriber='t' " + \
       group_by
 cursor.execute(sql)
 
@@ -85,7 +85,7 @@ sql = "INSERT INTO sf_summary "                                                 
       "SELECT '%s','Mozilla Labs Subscriber', COUNT(*), " % date                + \
       group_attributes                                                          + \
       " FROM sf_contacts_vw "                                                   + \
-      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_labs_subscriber='t' " + \
+      "WHERE double_opt_in='t' AND email_opt_out='f' AND moz_labs_subscriber='t' AND subscriber='t' " + \
       group_by
 cursor.execute(sql)
 

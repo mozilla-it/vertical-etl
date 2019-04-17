@@ -7,7 +7,6 @@ tables:
   - name: workday_ta_hires
     path: "/var/lib/etl/ta_dashboard/hires_{date}.csv"
     truncate: True
-    delete_before_insert: True
     fields: >
       effective,
       transaction_status,

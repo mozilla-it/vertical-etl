@@ -1,6 +1,6 @@
 file_spec:
   delimiter: ","
-  quoted: False
+  quoted: True
   skip_header: True
 
 tables:

@@ -9,12 +9,12 @@ define boomi::daily($hour, $minute, $command) {
   }
 }
 
-# Centerstone
-boomi::daily { 'centerstone':
-  hour    => '12',
-  minute  => fqdn_rand(60),
-  command => "python -m mozilla_etl.boomi.centerstone \$Centerstone_Engine",
-}
+# Centerstone (Disabled for now)
+# boomi::daily { 'centerstone':
+#   hour    => '12',
+#   minute  => fqdn_rand(60),
+#   command => "python -m mozilla_etl.boomi.centerstone \$Centerstone_Engine",
+# }
 
 # CCure
 boomi::daily { 'ccure-ftp':

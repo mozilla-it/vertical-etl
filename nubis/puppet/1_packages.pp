@@ -1,13 +1,25 @@
 $vsql_major_version = '8.1'
 $vsql_version = "${vsql_major_version}.1-13"
 
+file { "/tmp/vertica.rpm":
+  source          => "puppet:///nubis/files/vertica/vertica-client-fips-${vsql_version}.${::architecture}.rpm",
+  owner   => root,
+  group   => root,
+  mode    => '0644'
+}
+
 package { 'vsql':
   ensure          => present,
   provider        => 'rpm',
   name            => 'vertica-client-fips',
+  source          => "/tmp/vertica.rpm",
+  # Download site is broken atm
   source          => "https://my.vertica.com/client_drivers/${vsql_major_version}.x/${vsql_version}/vertica-client-fips-${vsql_version}.${::architecture}.rpm",
   install_options => [
     '--noscripts',
+  ],
+  require => [
+    File['/tmp/vertica.rpm'],
   ],
 }
 

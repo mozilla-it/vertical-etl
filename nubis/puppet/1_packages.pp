@@ -14,7 +14,7 @@ package { 'vsql':
   name            => 'vertica-client-fips',
   source          => "/tmp/vertica.rpm",
   # Download site is broken atm
-  source          => "https://my.vertica.com/client_drivers/${vsql_major_version}.x/${vsql_version}/vertica-client-fips-${vsql_version}.${::architecture}.rpm",
+  # source          => "https://my.vertica.com/client_drivers/${vsql_major_version}.x/${vsql_version}/vertica-client-fips-${vsql_version}.${::architecture}.rpm",
   install_options => [
     '--noscripts',
   ],

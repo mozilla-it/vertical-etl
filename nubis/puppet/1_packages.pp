@@ -2,7 +2,7 @@ $vsql_major_version = '8.1'
 $vsql_version = "${vsql_major_version}.1-13"
 
 file { "/tmp/vertica.rpm":
-  source          => "puppet:///nubis/files/vertica/vertica-client-fips-${vsql_version}.${::architecture}.rpm",
+  source          => "puppet:///nubis/files/rpms/vertica-client-fips-${vsql_version}.${::architecture}.rpm",
   owner   => root,
   group   => root,
   mode    => '0644'

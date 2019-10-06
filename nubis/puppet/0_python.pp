@@ -5,6 +5,7 @@ exec { 'Enable CR Repo':
 }->
 exec { 'CR Fix':
   command   => "/bin/yum --enablerepo=cr update -y",
+  timeout   => "900",
   logoutput => true,
 }->
 class { 'python':

@@ -5,7 +5,7 @@
     ],
     "project_description": "Vertical ETL Host",
     "project_name": "vertical-etl",
-    "project_version": "v2.3.1_6.{{env `GIT_COMMIT_SHA`}}",
-    "source_ami_project_version": "v2.3.1"
+    "project_version": "v2.4.3_1.{{env `GIT_COMMIT_SHA`}}",
+    "source_ami_project_version": "v2.4.3"
   }
 }

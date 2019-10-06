@@ -4,7 +4,7 @@ exec { 'Enable CR Repo':
   command  => "/bin/yum-config-manager --enable cr",
 }->
 exec { 'CR Fix':
-  command   => "/bin/yum --enablerepo=cr update -y",
+  command   => "/bin/yum --enablerepo=cr update -y --exclude=python-urllib3",
   timeout   => "900",
   logoutput => true,
 }->

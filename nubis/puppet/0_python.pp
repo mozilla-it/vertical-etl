@@ -2,10 +2,9 @@ $virtualenv_path = '/usr/local/virtualenvs'
 
 exec { 'Enable CR Repo':
   command  => "/bin/yum-config-manager --enable cr",
-  logoutput => true,
 }->
 exec { 'CR Fix':
-  command   => "/bin/yum --enablerepo=cr update",
+  command   => "/bin/yum --enablerepo=cr update -y",
   logoutput => true,
 }->
 class { 'python':
